@@ -1,16 +1,4 @@
-import { Button } from '@/components/ui/button';
-
 function HomePage() {
-  return (
-    <div>
-      <h1>HomePage</h1>
-      <Button
-        size="lg"
-        className="capitalize m-8">
-        Click me
-      </Button>
-    </div>
-  );
+  return <h1 className="text-3xl">HomePage</h1>;
 }
-
 export default HomePage;
