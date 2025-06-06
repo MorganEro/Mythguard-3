@@ -1,15 +1,11 @@
 import { Button } from '../ui/button';
 
 function AddToCart({ productId }: { productId: string }) {
+  console.log(`Adding product with ID: ${productId} to cart`);
   return (
     <Button
       className="capitalize mt-8"
-      size={'lg'}
-       onClick={() => {
-        // Logic to toggle favorite status
-        console.log(`Adding to cart for product ID: ${productId}`);
-      }}
-      >
+      size={'lg'}>
       AddToCard
     </Button>
   );
