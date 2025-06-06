@@ -16,7 +16,7 @@ npm run dev
 
 ```tsx
 function HomePage() {
-  return <h1 className='text-3xl'>HomePage</h1>;
+  return <h1 className="text-3xl">HomePage</h1>;
 }
 export default HomePage;
 ```
@@ -116,11 +116,11 @@ import NavSearch from './NavSearch';
 import Container from '../global/Container';
 function Navbar() {
   return (
-    <nav className='border-b '>
-      <Container className='flex flex-col sm:flex-row  sm:justify-between sm:items-center flex-wrap gap-4 py-8'>
+    <nav className="border-b ">
+      <Container className="flex flex-col sm:flex-row  sm:justify-between sm:items-center flex-wrap gap-4 py-8">
         <Logo />
         <NavSearch />
-        <div className='flex gap-4 items-center '>
+        <div className="flex gap-4 items-center ">
           <CartButton />
           <DarkMode />
           <LinksDropdown />
@@ -139,10 +139,10 @@ import Navbar from '@/components/navbar/Navbar';
 import Container from '@/components/global/Container';
 
 return (
-  <html lang='en'>
+  <html lang="en">
     <body className={inter.className}>
       <Navbar />
-      <Container className='py-20'>{children}</Container>
+      <Container className="py-20">{children}</Container>
     </body>
   </html>
 );
@@ -166,9 +166,11 @@ import { VscCode } from 'react-icons/vsc';
 
 function Logo() {
   return (
-    <Button size='icon' asChild>
-      <Link href='/'>
-        <VscCode className='w-6 h-6' />
+    <Button
+      size="icon"
+      asChild>
+      <Link href="/">
+        <VscCode className="w-6 h-6" />
       </Link>
     </Button>
   );
@@ -185,9 +187,9 @@ import { Input } from '../ui/input';
 function NavSearch() {
   return (
     <Input
-      type='search'
-      placeholder='search product...'
-      className='max-w-xs dark:bg-muted '
+      type="search"
+      placeholder="search product..."
+      className="max-w-xs dark:bg-muted "
     />
   );
 }
@@ -206,13 +208,12 @@ async function CartButton() {
   return (
     <Button
       asChild
-      variant='outline'
-      size='icon'
-      className='flex justify-center items-center relative'
-    >
-      <Link href='/cart'>
+      variant="outline"
+      size="icon"
+      className="flex justify-center items-center relative">
+      <Link href="/cart">
         <LuShoppingCart />
-        <span className='absolute -top-3 -right-3 bg-primary text-white rounded-full h-6 w-6 flex items-center justify-center text-xs'>
+        <span className="absolute -top-3 -right-3 bg-primary text-white rounded-full h-6 w-6 flex items-center justify-center text-xs">
           {numItemsInCart}
         </span>
       </Link>
@@ -248,11 +249,13 @@ layout.tsx
 import Providers from './providers';
 
 return (
-  <html lang='en' suppressHydrationWarning>
+  <html
+    lang="en"
+    suppressHydrationWarning>
     <body className={inter.className}>
       <Providers>
         <Navbar />
-        <Container className='py-20'>{children}</Container>
+        <Container className="py-20">{children}</Container>
       </Providers>
     </body>
   </html>
@@ -290,11 +293,10 @@ import { ThemeProvider } from './theme-provider';
 function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
-      attribute='class'
-      defaultTheme='system'
+      attribute="class"
+      defaultTheme="system"
       enableSystem
-      disableTransitionOnChange
-    >
+      disableTransitionOnChange>
       {children}
     </ThemeProvider>
   );
@@ -327,13 +329,15 @@ export default function ModeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' size='icon'>
-          <SunIcon className='h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0' />
-          <MoonIcon className='absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100' />
-          <span className='sr-only'>Toggle theme</span>
+        <Button
+          variant="outline"
+          size="icon">
+          <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align='end'>
+      <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme('light')}>
           Light
         </DropdownMenuItem>
@@ -388,15 +392,22 @@ function LinksDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' className='flex gap-4 max-w-[100px]'>
-          <LuAlignLeft className='w-6 h-6' />
+        <Button
+          variant="outline"
+          className="flex gap-4 max-w-[100px]">
+          <LuAlignLeft className="w-6 h-6" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-40' align='start' sideOffset={10}>
-        {links.map((link) => {
+      <DropdownMenuContent
+        className="w-40"
+        align="start"
+        sideOffset={10}>
+        {links.map(link => {
           return (
             <DropdownMenuItem key={link.href}>
-              <Link href={link.href} className='capitalize w-full'>
+              <Link
+                href={link.href}
+                className="capitalize w-full">
                 {link.label}
               </Link>
             </DropdownMenuItem>
@@ -605,9 +616,11 @@ async function AboutPage() {
 
   return (
     <div>
-      {users.map((user) => {
+      {users.map(user => {
         return (
-          <h2 key={user.id} className='text-2xl font-bold'>
+          <h2
+            key={user.id}
+            className="text-2xl font-bold">
             {user.name}
           </h2>
         );
@@ -692,11 +705,11 @@ npm run dev
 
 ### Seed File
 
-- create prisma/seed.js
+- create prisma/seed.mjs
 
 ```js
-const { PrismaClient } = require('@prisma/client');
-const products = require('./products.json');
+import { PrismaClient } from '@prisma/client';
+import products from './products.json' with { type: 'json' };
 const prisma = new PrismaClient();
 
 async function main() {
@@ -710,11 +723,12 @@ main()
   .then(async () => {
     await prisma.$disconnect();
   })
-  .catch(async (e) => {
+  .catch(async e => {
     console.error(e);
     await prisma.$disconnect();
     process.exit(1);
   });
+
 ```
 
 ```sh
@@ -769,7 +783,7 @@ import { Separator } from '@/components/ui/separator';
 function SectionTitle({ text }: { text: string }) {
   return (
     <div>
-      <h2 className='text-3xl font-medium tracking-wider capitalize mb-8'>
+      <h2 className="text-3xl font-medium tracking-wider capitalize mb-8">
         {text}
       </h2>
       <Separator />
@@ -833,8 +847,8 @@ async function FeaturedProducts() {
   const products = await fetchFeaturedProducts();
   if (products.length === 0) return <EmptyList />;
   return (
-    <section className='pt-24'>
-      <SectionTitle text='featured products' />
+    <section className="pt-24">
+      <SectionTitle text="featured products" />
       <ProductsGrid products={products} />
     </section>
   );
@@ -863,7 +877,10 @@ import { FaHeart } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
 function FavoriteToggleButton({ productId }: { productId: string }) {
   return (
-    <Button size='icon' variant='outline' className='p-2 cursor-pointer'>
+    <Button
+      size="icon"
+      variant="outline"
+      className="p-2 cursor-pointer">
       <FaHeart />
     </Button>
   );
@@ -883,36 +900,38 @@ import FavoriteToggleButton from './FavoriteToggleButton';
 
 function ProductsGrid({ products }: { products: Product[] }) {
   return (
-    <div className='pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
-      {products.map((product) => {
+    <div className="pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {products.map(product => {
         const { name, price, image } = product;
         const productId = product.id;
         const dollarsAmount = formatCurrency(price);
         return (
-          <article key={productId} className='group relative'>
+          <article
+            key={productId}
+            className="group relative">
             <Link href={`/products/${productId}`}>
-              <Card className='transform group-hover:shadow-xl transition-shadow duration-500'>
-                <CardContent className='p-4'>
-                  <div className='relative h-64 md:h-48 rounded overflow-hidden '>
+              <Card className="transform group-hover:shadow-xl transition-shadow duration-500">
+                <CardContent className="p-4">
+                  <div className="relative h-64 md:h-48 rounded overflow-hidden ">
                     <Image
                       src={image}
                       alt={name}
                       fill
-                      sizes='(max-width:768px) 100vw,(max-width:1200px) 50vw,33vw'
+                      sizes="(max-width:768px) 100vw,(max-width:1200px) 50vw,33vw"
                       priority
-                      className='rounded w-full object-cover transform group-hover:scale-110 transition-transform duration-500'
+                      className="rounded w-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                     />
                   </div>
-                  <div className='mt-4 text-center'>
-                    <h2 className='text-lg  capitalize'>{name}</h2>
-                    <p className='text-muted-foreground  mt-2'>
+                  <div className="mt-4 text-center">
+                    <h2 className="text-lg  capitalize">{name}</h2>
+                    <p className="text-muted-foreground  mt-2">
                       {dollarsAmount}
                     </p>
                   </div>
                 </CardContent>
               </Card>
             </Link>
-            <div className='absolute top-7 right-7 z-5'>
+            <div className="absolute top-7 right-7 z-5">
               <FavoriteToggleButton productId={productId} />
             </div>
           </article>
@@ -951,19 +970,22 @@ import HeroCarousel from './HeroCarousel';
 
 function Hero() {
   return (
-    <section className='grid grid-cols-1 lg:grid-cols-2 gap-24 items-center'>
+    <section className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
       <div>
-        <h1 className='max-w-2xl font-bold text-4xl tracking-tight sm:text-6xl'>
+        <h1 className="max-w-2xl font-bold text-4xl tracking-tight sm:text-6xl">
           We are changing the way people shop
         </h1>
-        <p className='mt-8 max-w-xl text-lg leading-8 text-muted-foreground'>
+        <p className="mt-8 max-w-xl text-lg leading-8 text-muted-foreground">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque et
           voluptas saepe in quae voluptate, laborum maiores possimus illum
           reprehenderit aut delectus veniam cum perferendis unde sint doloremque
           non nam.
         </p>
-        <Button asChild size='lg' className='mt-10'>
-          <Link href='/products'>Our Products</Link>
+        <Button
+          asChild
+          size="lg"
+          className="mt-10">
+          <Link href="/products">Our Products</Link>
         </Button>
       </div>
       <HeroCarousel />
@@ -998,18 +1020,18 @@ const carouselImages = [hero1, hero2, hero3, hero4];
 
 function HeroCarousel() {
   return (
-    <div className='hidden lg:block'>
+    <div className="hidden lg:block">
       <Carousel>
         <CarouselContent>
           {carouselImages.map((image, index) => {
             return (
               <CarouselItem key={index}>
                 <Card>
-                  <CardContent className='p-2'>
+                  <CardContent className="p-2">
                     <Image
                       src={image}
-                      alt='hero'
-                      className='w-full h-96 rounded-md object-cover'
+                      alt="hero"
+                      className="w-full h-96 rounded-md object-cover"
                     />
                   </CardContent>
                 </Card>
@@ -1032,13 +1054,13 @@ export default HeroCarousel;
 function AboutPage() {
   return (
     <section>
-      <h1 className='flex flex-wrap gap-2 sm:gap-x-6 items-center justify-center text-4xl font-bold leading-none tracking-wide sm:text-6xl'>
+      <h1 className="flex flex-wrap gap-2 sm:gap-x-6 items-center justify-center text-4xl font-bold leading-none tracking-wide sm:text-6xl">
         We love
-        <span className='bg-primary py-2 px-4 rounded-lg tracking-widest text-white'>
+        <span className="bg-primary py-2 px-4 rounded-lg tracking-widest text-white">
           store
         </span>
       </h1>
-      <p className='mt-6 text-lg tracking-wide leading-8 max-w-2xl mx-auto text-muted-foreground'>
+      <p className="mt-6 text-lg tracking-wide leading-8 max-w-2xl mx-auto text-muted-foreground">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero hic
         distinctio ducimus temporibus nobis autem laboriosam repellat, magni
         fugiat minima excepturi neque, tenetur possimus nihil atque! Culpa nulla
@@ -1080,7 +1102,7 @@ import { Card, CardContent } from '../ui/card';
 
 function LoadingContainer() {
   return (
-    <div className='pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
+    <div className="pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <LoadingProduct />
       <LoadingProduct />
       <LoadingProduct />
@@ -1091,10 +1113,10 @@ function LoadingContainer() {
 function LoadingProduct() {
   return (
     <Card>
-      <CardContent className='p-4'>
-        <Skeleton className='h-48 w-full' />
-        <Skeleton className='h-4 w-3/4 mt-4' />
-        <Skeleton className='h-4 w-1/4 mt-4' />
+      <CardContent className="p-4">
+        <Skeleton className="h-48 w-full" />
+        <Skeleton className="h-4 w-3/4 mt-4" />
+        <Skeleton className="h-4 w-1/4 mt-4" />
       </CardContent>
     </Card>
   );
@@ -1131,7 +1153,10 @@ async function ProductsPage({
   const search = searchParams.search || '';
   return (
     <>
-      <ProductsContainer layout={layout} search={search} />
+      <ProductsContainer
+        layout={layout}
+        search={search}
+      />
     </>
   );
 }
@@ -1163,37 +1188,35 @@ async function ProductsContainer({
     <>
       {/* HEADER */}
       <section>
-        <div className='flex justify-between items-center'>
-          <h4 className='font-medium text-lg'>
+        <div className="flex justify-between items-center">
+          <h4 className="font-medium text-lg">
             {totalProducts} product{totalProducts > 1 && 's'}
           </h4>
-          <div className='flex gap-x-4'>
+          <div className="flex gap-x-4">
             <Button
               variant={layout === 'grid' ? 'default' : 'ghost'}
-              size='icon'
-              asChild
-            >
+              size="icon"
+              asChild>
               <Link href={`/products?layout=grid${searchTerm}`}>
                 <LuLayoutGrid />
               </Link>
             </Button>
             <Button
               variant={layout === 'list' ? 'default' : 'ghost'}
-              size='icon'
-              asChild
-            >
+              size="icon"
+              asChild>
               <Link href={`/products?layout=list${searchTerm}`}>
                 <LuList />
               </Link>
             </Button>
           </div>
         </div>
-        <Separator className='mt-4' />
+        <Separator className="mt-4" />
       </section>
       {/* PRODUCTS */}
       <div>
         {totalProducts === 0 ? (
-          <h5 className='text-2xl mt-16'>
+          <h5 className="text-2xl mt-16">
             Sorry, no products matched your search...
           </h5>
         ) : layout === 'grid' ? (
@@ -1219,38 +1242,40 @@ import Image from 'next/image';
 import FavoriteToggleButton from './FavoriteToggleButton';
 function ProductsList({ products }: { products: Product[] }) {
   return (
-    <div className='mt-12 grid gap-y-8'>
-      {products.map((product) => {
+    <div className="mt-12 grid gap-y-8">
+      {products.map(product => {
         const { name, price, image, company } = product;
         const dollarsAmount = formatCurrency(price);
         const productId = product.id;
         return (
-          <article key={productId} className='group relative'>
+          <article
+            key={productId}
+            className="group relative">
             <Link href={`/products/${productId}`}>
-              <Card className='transform group-hover:shadow-xl transition-shadow duration-500'>
-                <CardContent className='p-8 gap-y-4 grid md:grid-cols-3'>
-                  <div className='relative h-64  md:h-48 md:w-48'>
+              <Card className="transform group-hover:shadow-xl transition-shadow duration-500">
+                <CardContent className="p-8 gap-y-4 grid md:grid-cols-3">
+                  <div className="relative h-64  md:h-48 md:w-48">
                     <Image
                       src={image}
                       alt={name}
                       fill
-                      sizes='(max-width:768px) 100vw,(max-width:1200px) 50vw,33vw'
+                      sizes="(max-width:768px) 100vw,(max-width:1200px) 50vw,33vw"
                       priority
-                      className='w-full rounded-md object-cover'
+                      className="w-full rounded-md object-cover"
                     />
                   </div>
 
                   <div>
-                    <h2 className='text-xl font-semibold capitalize'>{name}</h2>
-                    <h4 className='text-muted-foreground'>{company}</h4>
+                    <h2 className="text-xl font-semibold capitalize">{name}</h2>
+                    <h4 className="text-muted-foreground">{company}</h4>
                   </div>
-                  <p className='text-muted-foreground text-lg md:ml-auto'>
+                  <p className="text-muted-foreground text-lg md:ml-auto">
                     {dollarsAmount}
                   </p>
                 </CardContent>
               </Card>
             </Link>
-            <div className='absolute bottom-8 right-8 z-5'>
+            <div className="absolute bottom-8 right-8 z-5">
               <FavoriteToggleButton productId={productId} />
             </div>
           </article>
@@ -1300,10 +1325,10 @@ function NavSearch() {
   }, [searchParams.get('search')]);
   return (
     <Input
-      type='search'
-      placeholder='search product...'
-      className='max-w-xs dark:bg-muted '
-      onChange={(e) => {
+      type="search"
+      placeholder="search product..."
+      className="max-w-xs dark:bg-muted "
+      onChange={e => {
         setSearch(e.target.value);
         handleSearch(e.target.value);
       }}
@@ -1394,7 +1419,9 @@ import { Button } from '../ui/button';
 
 function AddToCart({ productId }: { productId: string }) {
   return (
-    <Button className='capitalize mt-8' size='lg'>
+    <Button
+      className="capitalize mt-8"
+      size="lg">
       add to cart
     </Button>
   );
@@ -1419,21 +1446,25 @@ function BreadCrumbs({ name }: { name: string }) {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href='/' className='capitalize text-lg'>
+          <BreadcrumbLink
+            href="/"
+            className="capitalize text-lg">
             home
           </BreadcrumbLink>
         </BreadcrumbItem>
 
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href='/products' className='capitalize text-lg'>
+          <BreadcrumbLink
+            href="/products"
+            className="capitalize text-lg">
             products
           </BreadcrumbLink>
         </BreadcrumbItem>
 
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage className='capitalize text-lg'>{name}</BreadcrumbPage>
+          <BreadcrumbPage className="capitalize text-lg">{name}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
@@ -1455,7 +1486,7 @@ async function ProductRating({ productId }: { productId: string }) {
   const countValue = `(${count}) reviews`;
   return (
     <span className={className}>
-      <FaStar className='w-3 h-3' />
+      <FaStar className="w-3 h-3" />
       {rating} {countValue}
     </span>
   );
@@ -1483,30 +1514,30 @@ async function SingleProductPage({ params }: { params: { id: string } }) {
   return (
     <section>
       <BreadCrumbs name={product.name} />
-      <div className='mt-6 grid gap-y-8 lg:grid-cols-2 lg:gap-x-16'>
+      <div className="mt-6 grid gap-y-8 lg:grid-cols-2 lg:gap-x-16">
         {/* IMAGE FIRST COL */}
-        <div className='relative h-full'>
+        <div className="relative h-full">
           <Image
             src={image}
             alt={name}
             fill
-            sizes='(max-width:768px) 100vw,(max-width:1200px) 50vw,33vw'
+            sizes="(max-width:768px) 100vw,(max-width:1200px) 50vw,33vw"
             priority
-            className='w-full rounded-md object-cover'
+            className="w-full rounded-md object-cover"
           />
         </div>
         {/* PRODUCT INFO SECOND COL */}
         <div>
-          <div className='flex gap-x-8 items-center'>
-            <h1 className='capitalize text-3xl font-bold'>{name}</h1>
+          <div className="flex gap-x-8 items-center">
+            <h1 className="capitalize text-3xl font-bold">{name}</h1>
             <FavoriteToggleButton productId={params.id} />
           </div>
           <ProductRating productId={params.id} />
-          <h4 className='text-xl mt-2'>{company}</h4>
-          <p className='mt-3 text-md bg-muted inline-block p-2 rounded-md'>
+          <h4 className="text-xl mt-2">{company}</h4>
+          <p className="mt-3 text-md bg-muted inline-block p-2 rounded-md">
             {dollarsAmount}
           </p>
-          <p className='mt-6 leading-8 text-muted-foreground'>{description}</p>
+          <p className="mt-6 leading-8 text-muted-foreground">{description}</p>
           <AddToCart productId={params.id} />
         </div>
       </div>
@@ -1560,11 +1591,10 @@ function Providers({ children }: { children: React.ReactNode }) {
     <>
       <Toaster />
       <ThemeProvider
-        attribute='class'
-        defaultTheme='system'
+        attribute="class"
+        defaultTheme="system"
         enableSystem
-        disableTransitionOnChange
-      >
+        disableTransitionOnChange>
         {children}
       </ThemeProvider>
     </>
@@ -1604,11 +1634,13 @@ import { ClerkProvider } from '@clerk/nextjs';
 
 return (
   <ClerkProvider>
-    <html lang='en' suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning>
       <body className={inter.className}>
         <Providers>
           <Navbar />
-          <Container className='py-20'>{children}</Container>
+          <Container className="py-20">{children}</Container>
         </Providers>
       </body>
     </html>
@@ -1654,7 +1686,10 @@ function SignOutLink() {
   };
   return (
     <SignOutButton>
-      <Link href='/' className='w-full text-left' onClick={handleLogout}>
+      <Link
+        href="/"
+        className="w-full text-left"
+        onClick={handleLogout}>
         Logout
       </Link>
     </SignOutButton>
@@ -1673,9 +1708,12 @@ async function UserIcon() {
   const profileImage = user?.imageUrl;
   if (profileImage)
     return (
-      <img src={profileImage} className='w-6 h-6 rounded-full object-cover' />
+      <img
+        src={profileImage}
+        className="w-6 h-6 rounded-full object-cover"
+      />
     );
-  return <LuUser2 className='w-6 h-6 bg-primary rounded-full text-white' />;
+  return <LuUser2 className="w-6 h-6 bg-primary rounded-full text-white" />;
 }
 export default UserIcon;
 ```
@@ -1702,30 +1740,37 @@ function LinksDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' className='flex gap-4 max-w-[100px]'>
-          <LuAlignLeft className='w-6 h-6' />
+        <Button
+          variant="outline"
+          className="flex gap-4 max-w-[100px]">
+          <LuAlignLeft className="w-6 h-6" />
           <UserIcon />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-48' align='start' sideOffset={10}>
+      <DropdownMenuContent
+        className="w-48"
+        align="start"
+        sideOffset={10}>
         <SignedOut>
           <DropdownMenuItem>
-            <SignInButton mode='modal'>
-              <button className='w-full text-left'>Login</button>
+            <SignInButton mode="modal">
+              <button className="w-full text-left">Login</button>
             </SignInButton>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <SignUpButton mode='modal'>
-              <button className='w-full text-left'>Register</button>
+            <SignUpButton mode="modal">
+              <button className="w-full text-left">Register</button>
             </SignUpButton>
           </DropdownMenuItem>
         </SignedOut>
         <SignedIn>
-          {links.map((link) => {
+          {links.map(link => {
             return (
               <DropdownMenuItem key={link.href}>
-                <Link href={link.href} className='capitalize w-full'>
+                <Link
+                  href={link.href}
+                  className="capitalize w-full">
                   {link.label}
                 </Link>
               </DropdownMenuItem>
@@ -1797,16 +1842,17 @@ function Sidebar() {
 
   return (
     <aside>
-      {adminLinks.map((link) => {
+      {adminLinks.map(link => {
         const isActivePage = pathname === link.href;
         const variant = isActivePage ? 'default' : 'ghost';
         return (
           <Button
             asChild
-            className='w-full mb-2 capitalize font-normal justify-start'
-            variant={variant}
-          >
-            <Link key={link.href} href={link.href}>
+            className="w-full mb-2 capitalize font-normal justify-start"
+            variant={variant}>
+            <Link
+              key={link.href}
+              href={link.href}>
               {link.label}
             </Link>
           </Button>
@@ -1827,13 +1873,13 @@ import Sidebar from './Sidebar';
 function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <h2 className='text-2xl pl-4'>Dashboard</h2>
-      <Separator className='mt-2' />
-      <section className='grid lg:grid-cols-12 gap-12 mt-12'>
-        <div className='lg:col-span-2'>
+      <h2 className="text-2xl pl-4">Dashboard</h2>
+      <Separator className="mt-2" />
+      <section className="grid lg:grid-cols-12 gap-12 mt-12">
+        <div className="lg:col-span-2">
           <Sidebar />
         </div>
-        <div className='lg:col-span-10 px-4'>{children}</div>
+        <div className="lg:col-span-10 px-4">{children}</div>
       </section>
     </>
   );
@@ -1881,11 +1927,13 @@ function LinksDropdown() {
   const isAdmin = userId === process.env.ADMIN_USER_ID;
   return (
     <>
-      {links.map((link) => {
+      {links.map(link => {
         if (link.label === 'dashboard' && !isAdmin) return null;
         return (
           <DropdownMenuItem key={link.href}>
-            <Link href={link.href} className='capitalize w-full'>
+            <Link
+              href={link.href}
+              className="capitalize w-full">
               {link.label}
             </Link>
           </DropdownMenuItem>
@@ -1912,14 +1960,20 @@ const createProductAction = async (formData: FormData) => {
 function CreateProductPage() {
   return (
     <section>
-      <h1 className='text-2xl font-semibold mb-8 capitalize'>create product</h1>
-      <div className='border p-8 rounded-md'>
+      <h1 className="text-2xl font-semibold mb-8 capitalize">create product</h1>
+      <div className="border p-8 rounded-md">
         <form action={createProductAction}>
-          <div className='mb-2'>
-            <Label htmlFor='name'>Product Name</Label>
-            <Input id='name' name='name' type='text' />
+          <div className="mb-2">
+            <Label htmlFor="name">Product Name</Label>
+            <Input
+              id="name"
+              name="name"
+              type="text"
+            />
           </div>
-          <Button type='submit' size='lg'>
+          <Button
+            type="submit"
+            size="lg">
             Submit
           </Button>
         </form>
@@ -1946,7 +2000,14 @@ function CreateProductPage() {
   const company = faker.company.name();
   const description = faker.lorem.paragraph({ min: 10, max: 12 });
 
-  return <Input id='name' name='name' type='text' defaultValue={name} />;
+  return (
+    <Input
+      id="name"
+      name="name"
+      type="text"
+      defaultValue={name}
+    />
+  );
 }
 export default CreateProductPage;
 ```
@@ -1985,8 +2046,10 @@ function FormInput({
   placeholder,
 }: FormInputProps) {
   return (
-    <div className='mb-2'>
-      <Label htmlFor={name} className='capitalize'>
+    <div className="mb-2">
+      <Label
+        htmlFor={name}
+        className="capitalize">
         {label || name}
       </Label>
       <Input
@@ -2017,13 +2080,15 @@ type FormInputNumberProps = {
 
 function PriceInput({ defaultValue }: FormInputNumberProps) {
   return (
-    <div className='mb-2'>
-      <Label htmlFor='price' className='capitalize'>
+    <div className="mb-2">
+      <Label
+        htmlFor="price"
+        className="capitalize">
         Price ($)
       </Label>
       <Input
         id={name}
-        type='number'
+        type="number"
         name={name}
         min={0}
         defaultValue={defaultValue || 100}
@@ -2044,11 +2109,19 @@ import { Input } from '../ui/input';
 function ImageInput() {
   const name = 'image';
   return (
-    <div className='mb-2'>
-      <Label htmlFor={name} className='capitalize'>
+    <div className="mb-2">
+      <Label
+        htmlFor={name}
+        className="capitalize">
         Image
       </Label>
-      <Input id={name} name={name} type='file' required accept='image/*' />
+      <Input
+        id={name}
+        name={name}
+        type="file"
+        required
+        accept="image/*"
+      />
     </div>
   );
 }
@@ -2069,8 +2142,10 @@ type TextAreaInputProps = {
 
 function TextAreaInput({ name, labelText, defaultValue }: TextAreaInputProps) {
   return (
-    <div className='mb-2'>
-      <Label htmlFor={name} className='capitalize'>
+    <div className="mb-2">
+      <Label
+        htmlFor={name}
+        className="capitalize">
         {labelText || name}
       </Label>
       <Textarea
@@ -2079,7 +2154,7 @@ function TextAreaInput({ name, labelText, defaultValue }: TextAreaInputProps) {
         defaultValue={defaultValue}
         rows={5}
         required
-        className='leading-loose'
+        className="leading-loose"
       />
     </div>
   );
@@ -2107,12 +2182,15 @@ export default function CheckboxInput({
   defaultChecked = false,
 }: CheckboxInputProps) {
   return (
-    <div className='flex items-center space-x-2'>
-      <Checkbox id={name} name={name} defaultChecked={defaultChecked} />
+    <div className="flex items-center space-x-2">
+      <Checkbox
+        id={name}
+        name={name}
+        defaultChecked={defaultChecked}
+      />
       <label
         htmlFor={name}
-        className='text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 capitalize'
-      >
+        className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 capitalize">
         {label}
       </label>
     </div>
@@ -2152,14 +2230,13 @@ export function SubmitButton({
 
   return (
     <Button
-      type='submit'
+      type="submit"
       disabled={pending}
       className={cn('capitalize', className)}
-      size={size}
-    >
+      size={size}>
       {pending ? (
         <>
-          <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
+          <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
           Please wait...
         </>
       ) : (
@@ -2268,35 +2345,41 @@ function CreateProduct() {
 
   return (
     <section>
-      <h1 className='text-2xl font-semibold mb-8 capitalize'>create product</h1>
-      <div className='border p-8 rounded-md'>
+      <h1 className="text-2xl font-semibold mb-8 capitalize">create product</h1>
+      <div className="border p-8 rounded-md">
         <FormContainer action={createProductAction}>
-          <div className='grid gap-4 md:grid-cols-2 my-4'>
+          <div className="grid gap-4 md:grid-cols-2 my-4">
             <FormInput
-              type='text'
-              name='name'
-              label='product name'
+              type="text"
+              name="name"
+              label="product name"
               defaultValue={name}
             />
             <FormInput
-              type='text'
-              name='company'
-              label='company'
+              type="text"
+              name="company"
+              label="company"
               defaultValue={company}
             />
             <PriceInput />
             <ImageInput />
           </div>
           <TextAreaInput
-            name='description'
-            labelText='product description'
+            name="description"
+            labelText="product description"
             defaultValue={description}
           />
-          <div className='mt-6'>
-            <CheckboxInput name='featured' label='featured' />
+          <div className="mt-6">
+            <CheckboxInput
+              name="featured"
+              label="featured"
+            />
           </div>
 
-          <SubmitButton text='Create Product' className='mt-8' />
+          <SubmitButton
+            text="Create Product"
+            className="mt-8"
+          />
         </FormContainer>
       </div>
     </section>
@@ -2445,7 +2528,7 @@ export const productSchema = z.object({
     message: 'price must be a positive number.',
   }),
   description: z.string().refine(
-    (description) => {
+    description => {
       const wordCount = description.split(' ').length;
       return wordCount >= 10 && wordCount <= 1000;
     },
@@ -2488,7 +2571,7 @@ export function validateWithZodSchema<T>(
 ): T {
   const result = schema.safeParse(data);
   if (!result.success) {
-    const errors = result.error.errors.map((error) => error.message);
+    const errors = result.error.errors.map(error => error.message);
     throw new Error(errors.join(', '));
   }
   return result.data;
@@ -2527,12 +2610,12 @@ function validateImageFile() {
   const acceptedFileTypes = ['image/'];
   return z
     .instanceof(File)
-    .refine((file) => {
+    .refine(file => {
       return !file || file.size <= maxUploadSize;
     }, `File size must be less than 1 MB`)
-    .refine((file) => {
+    .refine(file => {
       return (
-        !file || acceptedFileTypes.some((type) => file.type.startsWith(type))
+        !file || acceptedFileTypes.some(type => file.type.startsWith(type))
       );
     }, 'File must be an image');
 }
@@ -2705,7 +2788,7 @@ async function ItemsPage() {
   return (
     <section>
       <Table>
-        <TableCaption className='capitalize'>
+        <TableCaption className="capitalize">
           total products : {items.length}
         </TableCaption>
         <TableHeader>
@@ -2717,22 +2800,21 @@ async function ItemsPage() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {items.map((item) => {
+          {items.map(item => {
             const { id: productId, name, company, price } = item;
             return (
               <TableRow key={productId}>
                 <TableCell>
                   <Link
                     href={`/products/${productId}`}
-                    className='underline text-muted-foreground tracking-wide capitalize'
-                  >
+                    className="underline text-muted-foreground tracking-wide capitalize">
                     {name}
                   </Link>
                 </TableCell>
                 <TableCell>{company}</TableCell>
                 <TableCell>{formatCurrency(price)}</TableCell>
 
-                <TableCell className='flex items-center gap-x-2'></TableCell>
+                <TableCell className="flex items-center gap-x-2"></TableCell>
               </TableRow>
             );
           })}
@@ -2766,12 +2848,11 @@ export const IconButton = ({ actionType }: { actionType: actionType }) => {
 
   return (
     <Button
-      type='submit'
-      size='icon'
-      variant='link'
-      className='p-2 cursor-pointer'
-    >
-      {pending ? <ReloadIcon className=' animate-spin' /> : renderIcon()}
+      type="submit"
+      size="icon"
+      variant="link"
+      className="p-2 cursor-pointer">
+      {pending ? <ReloadIcon className=" animate-spin" /> : renderIcon()}
     </Button>
   );
 };
@@ -2812,9 +2893,9 @@ import { deleteProductAction } from '@/utils/actions';
 
 return (
   <>
-    <TableCell className='flex items-center gap-x-2'>
+    <TableCell className="flex items-center gap-x-2">
       <Link href={`/admin/products/${productId}/edit`}>
-        <IconButton actionType='edit'></IconButton>
+        <IconButton actionType="edit"></IconButton>
       </Link>
       <DeleteProduct productId={productId} />
     </TableCell>
@@ -2825,7 +2906,7 @@ function DeleteProduct({ productId }: { productId: string }) {
   const deleteProduct = deleteProductAction.bind(null, { productId });
   return (
     <FormContainer action={deleteProduct}>
-      <IconButton actionType='delete' />
+      <IconButton actionType="delete" />
     </FormContainer>
   );
 }
@@ -2910,40 +2991,47 @@ async function EditProductPage({ params }: { params: { id: string } }) {
   const { name, company, description, featured, price } = product;
   return (
     <section>
-      <h1 className='text-2xl font-semibold mb-8 capitalize'>update product</h1>
-      <div className='border p-8 rounded-md'>
+      <h1 className="text-2xl font-semibold mb-8 capitalize">update product</h1>
+      <div className="border p-8 rounded-md">
         {/* Image Input Container */}
         <FormContainer action={updateProductAction}>
-          <div className='grid gap-4 md:grid-cols-2 my-4'>
-            <input type='hidden' name='id' value={id} />
+          <div className="grid gap-4 md:grid-cols-2 my-4">
+            <input
+              type="hidden"
+              name="id"
+              value={id}
+            />
             <FormInput
-              type='text'
-              name='name'
-              label='product name'
+              type="text"
+              name="name"
+              label="product name"
               defaultValue={name}
             />
             <FormInput
-              type='text'
-              name='company'
-              label='company'
+              type="text"
+              name="company"
+              label="company"
               defaultValue={company}
             />
 
             <PriceInput defaultValue={price} />
           </div>
           <TextAreaInput
-            name='description'
-            labelText='product description'
+            name="description"
+            labelText="product description"
             defaultValue={description}
           />
-          <div className='mt-6'>
+          <div className="mt-6">
             <CheckboxInput
-              name='featured'
-              label='featured'
+              name="featured"
+              label="featured"
               defaultChecked={featured}
             />
           </div>
-          <SubmitButton text='update product' className='mt-8' />
+          <SubmitButton
+            text="update product"
+            className="mt-8"
+          />
         </FormContainer>
       </div>
     </section>
@@ -3009,28 +3097,27 @@ function ImageInputContainer(props: ImageInputContainerProps) {
   const [isUpdateFormVisible, setUpdateFormVisible] = useState(false);
 
   return (
-    <div className='mb-8'>
+    <div className="mb-8">
       <Image
         src={image}
         width={200}
         height={200}
-        className='rounded-md object-cover mb-4 w-[200px] h-[200px]'
+        className="rounded-md object-cover mb-4 w-[200px] h-[200px]"
         alt={name}
       />
 
       <Button
-        variant='outline'
-        size='sm'
-        onClick={() => setUpdateFormVisible((prev) => !prev)}
-      >
+        variant="outline"
+        size="sm"
+        onClick={() => setUpdateFormVisible(prev => !prev)}>
         {text}
       </Button>
       {isUpdateFormVisible && (
-        <div className='max-w-md mt-4'>
+        <div className="max-w-md mt-4">
           <FormContainer action={action}>
             {props.children}
             <ImageInput />
-            <SubmitButton size='sm' />
+            <SubmitButton size="sm" />
           </FormContainer>
         </div>
       )}
@@ -3044,16 +3131,23 @@ EditProductPage.tsx
 
 ```tsx
 return (
-  <div className='border p-8 rounded-md'>
+  <div className="border p-8 rounded-md">
     {/* Image Input Container */}
     <ImageInputContainer
       action={updateProductImageAction}
       name={name}
       image={product.image}
-      text='update image'
-    >
-      <input type='hidden' name='id' value={id} />
-      <input type='hidden' name='url' value={product.image} />
+      text="update image">
+      <input
+        type="hidden"
+        name="id"
+        value={id}
+      />
+      <input
+        type="hidden"
+        name="url"
+        value={product.image}
+      />
     </ImageInputContainer>
   </div>
 );
@@ -3103,8 +3197,10 @@ import { Skeleton } from '../ui/skeleton';
 function LoadingTable({ rows = 5 }: { rows?: number }) {
   const tableRows = Array.from({ length: rows }, (_, index) => {
     return (
-      <div className='mb-4' key={index}>
-        <Skeleton className='w-full h-8 rounded' />
+      <div
+        className="mb-4"
+        key={index}>
+        <Skeleton className="w-full h-8 rounded" />
       </div>
     );
   });
@@ -3156,14 +3252,13 @@ npx prisma db push
 ```tsx
 export const CardSignInButton = () => {
   return (
-    <SignInButton mode='modal'>
+    <SignInButton mode="modal">
       <Button
-        type='button'
-        size='icon'
-        variant='outline'
-        className='p-2 cursor-pointer'
-        asChild
-      >
+        type="button"
+        size="icon"
+        variant="outline"
+        className="p-2 cursor-pointer"
+        asChild>
         <FaRegHeart />
       </Button>
     </SignInButton>
@@ -3174,13 +3269,12 @@ export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
   const { pending } = useFormStatus();
   return (
     <Button
-      type='submit'
-      size='icon'
-      variant='outline'
-      className=' p-2 cursor-pointer'
-    >
+      type="submit"
+      size="icon"
+      variant="outline"
+      className=" p-2 cursor-pointer">
       {pending ? (
-        <ReloadIcon className=' animate-spin' />
+        <ReloadIcon className=" animate-spin" />
       ) : isFavorite ? (
         <FaHeart />
       ) : (
@@ -3229,7 +3323,12 @@ async function FavoriteToggleButton({ productId }: { productId: string }) {
   if (!userId) return <CardSignInButton />;
   const favoriteId = await fetchFavoriteId({ productId });
 
-  return <FavoriteToggleForm favoriteId={favoriteId} productId={productId} />;
+  return (
+    <FavoriteToggleForm
+      favoriteId={favoriteId}
+      productId={productId}
+    />
+  );
 }
 export default FavoriteToggleButton;
 ```
@@ -3347,11 +3446,11 @@ import ProductsGrid from '@/components/products/ProductsGrid';
 async function FavoritesPage() {
   const favorites = await fetchUserFavorites();
   if (favorites.length === 0)
-    return <SectionTitle text='You have no favorites yet.' />;
+    return <SectionTitle text="You have no favorites yet." />;
   return (
     <div>
-      <SectionTitle text='Favorites' />
-      <ProductsGrid products={favorites.map((favorite) => favorite.product)} />
+      <SectionTitle text="Favorites" />
+      <ProductsGrid products={favorites.map(favorite => favorite.product)} />
     </div>
   );
 }
@@ -3398,24 +3497,41 @@ function ShareButton({ productId, name }: { productId: string; name: string }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant='outline' size='icon' className='p-2'>
+        <Button
+          variant="outline"
+          size="icon"
+          className="p-2">
           <LuShare2 />
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        side='top'
-        align='end'
+        side="top"
+        align="end"
         sideOffset={10}
-        className='flex items-center gap-x-2 justify-center w-full'
-      >
-        <TwitterShareButton url={shareLink} title={name}>
-          <TwitterIcon size={32} round />
+        className="flex items-center gap-x-2 justify-center w-full">
+        <TwitterShareButton
+          url={shareLink}
+          title={name}>
+          <TwitterIcon
+            size={32}
+            round
+          />
         </TwitterShareButton>
-        <LinkedinShareButton url={shareLink} title={name}>
-          <LinkedinIcon size={32} round />
+        <LinkedinShareButton
+          url={shareLink}
+          title={name}>
+          <LinkedinIcon
+            size={32}
+            round
+          />
         </LinkedinShareButton>
-        <EmailShareButton url={shareLink} subject={name}>
-          <EmailIcon size={32} round />
+        <EmailShareButton
+          url={shareLink}
+          subject={name}>
+          <EmailIcon
+            size={32}
+            round
+          />
         </EmailShareButton>
       </PopoverContent>
     </Popover>
@@ -3430,11 +3546,14 @@ export default ShareButton;
 import ShareButton from '@/components/single-product/ShareButton';
 
 return (
-  <div className='flex gap-x-8 items-center'>
-    <h1 className='capitalize text-3xl font-bold'>{name}</h1>
-    <div className='flex items-center gap-x-2'>
+  <div className="flex gap-x-8 items-center">
+    <h1 className="capitalize text-3xl font-bold">{name}</h1>
+    <div className="flex items-center gap-x-2">
       <FavoriteToggleButton productId={params.id} />
-      <ShareButton name={product.name} productId={params.id} />
+      <ShareButton
+        name={product.name}
+        productId={params.id}
+      />
     </div>
   </div>
 );
@@ -3518,18 +3637,25 @@ const RatingInput = ({
   }).reverse();
 
   return (
-    <div className='mb-2 max-w-xs'>
-      <Label htmlFor={name} className='capitalize'>
+    <div className="mb-2 max-w-xs">
+      <Label
+        htmlFor={name}
+        className="capitalize">
         {labelText || name}
       </Label>
-      <Select defaultValue={numbers[0]} name={name} required>
+      <Select
+        defaultValue={numbers[0]}
+        name={name}
+        required>
         <SelectTrigger>
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          {numbers.map((number) => {
+          {numbers.map(number => {
             return (
-              <SelectItem key={number} value={number}>
+              <SelectItem
+                key={number}
+                value={number}>
                 {number}
               </SelectItem>
             );
@@ -3562,33 +3688,36 @@ function SubmitReview({ productId }: { productId: string }) {
   return (
     <div>
       <Button
-        size='lg'
-        className='capitalize'
-        onClick={() => setIsReviewFormVisible((prev) => !prev)}
-      >
+        size="lg"
+        className="capitalize"
+        onClick={() => setIsReviewFormVisible(prev => !prev)}>
         leave review
       </Button>
       {isReviewFormVisible && (
-        <Card className='p-8 mt-8'>
+        <Card className="p-8 mt-8">
           <FormContainer action={createReviewAction}>
-            <input type='hidden' name='productId' value={productId} />
             <input
-              type='hidden'
-              name='authorName'
+              type="hidden"
+              name="productId"
+              value={productId}
+            />
+            <input
+              type="hidden"
+              name="authorName"
               value={user?.firstName || 'user'}
             />
             <input
-              type='hidden'
-              name='authorImageUrl'
+              type="hidden"
+              name="authorImageUrl"
               value={user?.imageUrl || ''}
             />
-            <RatingInput name='rating' />
+            <RatingInput name="rating" />
             <TextAreaInput
-              name='comment'
-              labelText='feedback'
-              defaultValue='Outstanding product!!!'
+              name="comment"
+              labelText="feedback"
+              defaultValue="Outstanding product!!!"
             />
-            <SubmitButton className='mt-4' />
+            <SubmitButton className="mt-4" />
           </FormContainer>
         </Card>
       )}
@@ -3619,13 +3748,13 @@ return (
 
 ```ts
 export const reviewSchema = z.object({
-  productId: z.string().refine((value) => value !== '', {
+  productId: z.string().refine(value => value !== '', {
     message: 'Product ID cannot be empty',
   }),
-  authorName: z.string().refine((value) => value !== '', {
+  authorName: z.string().refine(value => value !== '', {
     message: 'Author name cannot be empty',
   }),
-  authorImageUrl: z.string().refine((value) => value !== '', {
+  authorImageUrl: z.string().refine(value => value !== '', {
     message: 'Author image URL cannot be empty',
   }),
   rating: z.coerce
@@ -3681,15 +3810,21 @@ function Rating({ rating }: { rating: number }) {
   const stars = Array.from({ length: 5 }, (_, i) => i + 1 <= rating);
 
   return (
-    <div className='flex items-center gap-x-1'>
+    <div className="flex items-center gap-x-1">
       {stars.map((isFilled, i) => {
         const className = `w-3 h-3 ${
           isFilled ? 'text-primary' : 'text-gray-400'
         }`;
         return isFilled ? (
-          <FaStar className={className} key={i} />
+          <FaStar
+            className={className}
+            key={i}
+          />
         ) : (
-          <FaRegStar className={className} key={i} />
+          <FaRegStar
+            className={className}
+            key={i}
+          />
         );
       })}
     </div>
@@ -3717,13 +3852,12 @@ function Comment({ comment }: { comment: string }) {
 
   return (
     <div>
-      <p className='text-sm'>{displayComment}</p>
+      <p className="text-sm">{displayComment}</p>
       {longComment && (
         <Button
-          variant='link'
-          className='pl-0 text-muted-foreground'
-          onClick={toggleExpanded}
-        >
+          variant="link"
+          className="pl-0 text-muted-foreground"
+          onClick={toggleExpanded}>
           {isExpanded ? 'Show Less' : 'Show More'}
         </Button>
       )}
@@ -3761,11 +3895,11 @@ async function ProductReviews({ productId }: { productId: string }) {
   const reviews = await fetchProductReviews(productId);
 
   return (
-    <div className='mt-16'>
-      <SectionTitle text='product reviews' />
+    <div className="mt-16">
+      <SectionTitle text="product reviews" />
 
-      <div className='grid md:grid-cols-2 gap-8 my-8'>
-        {reviews.map((review) => {
+      <div className="grid md:grid-cols-2 gap-8 my-8">
+        {reviews.map(review => {
           const { comment, rating, authorImageUrl, authorName } = review;
           const reviewInfo = {
             comment,
@@ -3773,7 +3907,12 @@ async function ProductReviews({ productId }: { productId: string }) {
             image: authorImageUrl,
             name: authorName,
           };
-          return <ReviewCard key={review.id} reviewInfo={reviewInfo} />;
+          return (
+            <ReviewCard
+              key={review.id}
+              reviewInfo={reviewInfo}
+            />
+          );
         })}
       </div>
     </div>
@@ -3802,18 +3941,18 @@ type ReviewCardProps = {
 
 function ReviewCard({ reviewInfo, children }: ReviewCardProps) {
   return (
-    <Card className='relative'>
+    <Card className="relative">
       <CardHeader>
-        <div className='flex items-center'>
+        <div className="flex items-center">
           <Image
             src={reviewInfo.image}
             alt={reviewInfo.name}
             width={48}
             height={48}
-            className='w-12 h-12 rounded-full object-cover'
+            className="w-12 h-12 rounded-full object-cover"
           />
-          <div className='ml-4'>
-            <h3 className='text-sm font-bold capitalize mb-1'>
+          <div className="ml-4">
+            <h3 className="text-sm font-bold capitalize mb-1">
               {reviewInfo.name}
             </h3>
             <Rating rating={reviewInfo.rating} />
@@ -3823,7 +3962,7 @@ function ReviewCard({ reviewInfo, children }: ReviewCardProps) {
       <CardContent>
         <Comment comment={reviewInfo.comment} />
       </CardContent>
-      <div className='absolute top-3 right-3'>{children}</div>
+      <div className="absolute top-3 right-3">{children}</div>
     </Card>
   );
 }
@@ -3931,13 +4070,13 @@ import { IconButton } from '@/components/form/Buttons';
 async function ReviewsPage() {
   const reviews = await fetchProductReviewsByUser();
   if (reviews.length === 0)
-    return <SectionTitle text='you have no reviews yet' />;
+    return <SectionTitle text="you have no reviews yet" />;
 
   return (
     <>
-      <SectionTitle text='Your Reviews' />
-      <section className='grid md:grid-cols-2 gap-8 mt-4 '>
-        {reviews.map((review) => {
+      <SectionTitle text="Your Reviews" />
+      <section className="grid md:grid-cols-2 gap-8 mt-4 ">
+        {reviews.map(review => {
           const { comment, rating } = review;
           const { name, image } = review.product;
           const reviewInfo = {
@@ -3947,7 +4086,9 @@ async function ReviewsPage() {
             image,
           };
           return (
-            <ReviewCard key={review.id} reviewInfo={reviewInfo}>
+            <ReviewCard
+              key={review.id}
+              reviewInfo={reviewInfo}>
               <DeleteReview reviewId={review.id} />
             </ReviewCard>
           );
@@ -3961,7 +4102,7 @@ const DeleteReview = ({ reviewId }: { reviewId: string }) => {
   const deleteReview = deleteReviewAction.bind(null, { reviewId });
   return (
     <FormContainer action={deleteReview}>
-      <IconButton actionType='delete' />
+      <IconButton actionType="delete" />
     </FormContainer>
   );
 };
@@ -3978,7 +4119,7 @@ import { Card, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 function loading() {
   return (
-    <section className='grid md:grid-cols-2 gap-8 mt-4 '>
+    <section className="grid md:grid-cols-2 gap-8 mt-4 ">
       <ReviewLoadingCard />
       <ReviewLoadingCard />
     </section>
@@ -3989,11 +4130,11 @@ const ReviewLoadingCard = () => {
   return (
     <Card>
       <CardHeader>
-        <div className='flex items-center'>
-          <Skeleton className='w-12 h-12 rounded-full' />
-          <div className='ml-4'>
-            <Skeleton className='w-[150px] h-4 mb-2' />
-            <Skeleton className='w-[100px] h-4' />
+        <div className="flex items-center">
+          <Skeleton className="w-12 h-12 rounded-full" />
+          <div className="ml-4">
+            <Skeleton className="w-[150px] h-4 mb-2" />
+            <Skeleton className="w-[100px] h-4" />
           </div>
         </div>
       </CardHeader>
@@ -4129,8 +4270,11 @@ async function CartButton() {
 ```tsx
 export const ProductSignInButton = () => {
   return (
-    <SignInButton mode='modal'>
-      <Button type='button' size='default' className='mt-8'>
+    <SignInButton mode="modal">
+      <Button
+        type="button"
+        size="default"
+        className="mt-8">
         Please Sign In
       </Button>
     </SignInButton>
@@ -4178,12 +4322,11 @@ function SelectProductAmount(
 
   return (
     <>
-      <h4 className='mb-2'>Amount : </h4>
+      <h4 className="mb-2">Amount : </h4>
       <Select
         defaultValue={amount.toString()}
-        onValueChange={(value) => setAmount(Number(value))}
-        disabled={cartItem ? props.isLoading : false}
-      >
+        onValueChange={value => setAmount(Number(value))}
+        disabled={cartItem ? props.isLoading : false}>
         <SelectTrigger className={cartItem ? 'w-[100px]' : 'w-[150px]'}>
           <SelectValue placeholder={amount} />
         </SelectTrigger>
@@ -4191,7 +4334,9 @@ function SelectProductAmount(
           {Array.from({ length: cartItem ? amount + 10 : 10 }, (_, index) => {
             const selectValue = (index + 1).toString();
             return (
-              <SelectItem key={index} value={selectValue}>
+              <SelectItem
+                key={index}
+                value={selectValue}>
                 {selectValue}
               </SelectItem>
             );
@@ -4221,7 +4366,7 @@ function AddToCart({ productId }: { productId: string }) {
   const [amount, setAmount] = useState(1);
   const { userId } = useAuth();
   return (
-    <div className='mt-4'>
+    <div className="mt-4">
       <SelectProductAmount
         mode={Mode.SingleProduct}
         amount={amount}
@@ -4229,9 +4374,21 @@ function AddToCart({ productId }: { productId: string }) {
       />
       {userId ? (
         <FormContainer action={addToCartAction}>
-          <input type='hidden' name='productId' value={productId} />
-          <input type='hidden' name='amount' value={amount} />
-          <SubmitButton text='add to cart' size='default' className='mt-8' />
+          <input
+            type="hidden"
+            name="productId"
+            value={productId}
+          />
+          <input
+            type="hidden"
+            name="amount"
+            value={amount}
+          />
+          <SubmitButton
+            text="add to cart"
+            size="default"
+            className="mt-8"
+          />
         </FormContainer>
       ) : (
         <ProductSignInButton />
@@ -4406,16 +4563,16 @@ async function CartPage() {
   await updateCart(cart);
 
   if (cart.numItemsInCart === 0) {
-    return <SectionTitle text='Empty cart' />;
+    return <SectionTitle text="Empty cart" />;
   }
   return (
     <>
-      <SectionTitle text='Shopping Cart' />
-      <div className='mt-8 grid gap-4 lg:grid-cols-12'>
-        <div className='lg:col-span-8'>
+      <SectionTitle text="Shopping Cart" />
+      <div className="mt-8 grid gap-4 lg:grid-cols-12">
+        <div className="lg:col-span-8">
           <CartItemsList cartItems={cart.cartItems} />
         </div>
-        <div className='lg:col-span-4 lg:pl-4'>
+        <div className="lg:col-span-4 lg:pl-4">
           <CartTotals cart={cart} />
         </div>
       </div>
@@ -4440,16 +4597,32 @@ function CartTotals({ cart }: { cart: Cart }) {
   const { cartTotal, shipping, tax, orderTotal } = cart;
   return (
     <div>
-      <Card className='p-8 '>
-        <CartTotalRow label='Subtotal' amount={cartTotal} />
-        <CartTotalRow label='Shipping' amount={shipping} />
-        <CartTotalRow label='Tax' amount={tax} />
-        <CardTitle className='mt-8'>
-          <CartTotalRow label='Order Total' amount={orderTotal} lastRow />
+      <Card className="p-8 ">
+        <CartTotalRow
+          label="Subtotal"
+          amount={cartTotal}
+        />
+        <CartTotalRow
+          label="Shipping"
+          amount={shipping}
+        />
+        <CartTotalRow
+          label="Tax"
+          amount={tax}
+        />
+        <CardTitle className="mt-8">
+          <CartTotalRow
+            label="Order Total"
+            amount={orderTotal}
+            lastRow
+          />
         </CardTitle>
       </Card>
       <FormContainer action={createOrderAction}>
-        <SubmitButton text='Place Order' className='w-full mt-8' />
+        <SubmitButton
+          text="Place Order"
+          className="w-full mt-8"
+        />
       </FormContainer>
     </div>
   );
@@ -4466,11 +4639,11 @@ function CartTotalRow({
 }) {
   return (
     <>
-      <p className='flex justify-between text-sm'>
+      <p className="flex justify-between text-sm">
         <span>{label}</span>
         <span>{formatCurrency(amount)}</span>
       </p>
-      {lastRow ? null : <Separator className='my-2' />}
+      {lastRow ? null : <Separator className="my-2" />}
     </>
   );
 }
@@ -4494,14 +4667,14 @@ export const FirstColumn = ({
   name: string;
 }) => {
   return (
-    <div className='relative h-24 w-24 sm:h-32 sm:w-32'>
+    <div className="relative h-24 w-24 sm:h-32 sm:w-32">
       <Image
         src={image}
         alt={name}
         fill
-        sizes='(max-width:768px) 100vw,(max-width:1200px) 50vw,33vw'
+        sizes="(max-width:768px) 100vw,(max-width:1200px) 50vw,33vw"
         priority
-        className='w-full rounded-md object-cover'
+        className="w-full rounded-md object-cover"
       />
     </div>
   );
@@ -4516,17 +4689,17 @@ export const SecondColumn = ({
   productId: string;
 }) => {
   return (
-    <div className=' sm:w-48'>
+    <div className=" sm:w-48">
       <Link href={`/products/${productId}`}>
-        <h3 className='capitalize font-medium hover:underline'>{name}</h3>
+        <h3 className="capitalize font-medium hover:underline">{name}</h3>
       </Link>
-      <h4 className='mt-2 capitalize text-xs'>{company}</h4>
+      <h4 className="mt-2 capitalize text-xs">{company}</h4>
     </div>
   );
 };
 
 export const FourthColumn = ({ price }: { price: number }) => {
-  return <p className='font-medium md:ml-auto'>{formatCurrency(price)}</p>;
+  return <p className="font-medium md:ml-auto">{formatCurrency(price)}</p>;
 };
 ```
 
@@ -4550,17 +4723,26 @@ import { CartItemWithProduct } from '@/utils/types';
 function CartItemsList({ cartItems }: { cartItems: CartItemWithProduct[] }) {
   return (
     <div>
-      {cartItems.map((cartItem) => {
+      {cartItems.map(cartItem => {
         const { id, amount } = cartItem;
         const { id: productId, image, name, company, price } = cartItem.product;
         return (
           <Card
             key={id}
-            className='flex flex-col gap-y-4 md:flex-row flex-wrap p-6 mb-8 gap-x-4'
-          >
-            <FirstColumn image={image} name={name} />
-            <SecondColumn name={name} company={company} productId={productId} />
-            <ThirdColumn id={id} quantity={amount} />
+            className="flex flex-col gap-y-4 md:flex-row flex-wrap p-6 mb-8 gap-x-4">
+            <FirstColumn
+              image={image}
+              name={name}
+            />
+            <SecondColumn
+              name={name}
+              company={company}
+              productId={productId}
+            />
+            <ThirdColumn
+              id={id}
+              quantity={amount}
+            />
             <FourthColumn price={price} />
           </Card>
         );
@@ -4604,7 +4786,7 @@ function ThirdColumn({ quantity, id }: { quantity: number; id: string }) {
   };
 
   return (
-    <div className='md:ml-8'>
+    <div className="md:ml-8">
       <SelectProductAmount
         amount={amount}
         setAmount={handleAmountChange}
@@ -4612,8 +4794,16 @@ function ThirdColumn({ quantity, id }: { quantity: number; id: string }) {
         isLoading={false}
       />
       <FormContainer action={removeCartItemAction}>
-        <input type='hidden' name='id' value={id} />
-        <SubmitButton size='sm' className='mt-4' text='remove' />
+        <input
+          type="hidden"
+          name="id"
+          value={id}
+        />
+        <SubmitButton
+          size="sm"
+          className="mt-4"
+          text="remove"
+        />
       </FormContainer>
     </div>
   );
@@ -4722,7 +4912,7 @@ function ThirdColumn({ quantity, id }: { quantity: number; id: string }) {
   };
 
   return (
-    <div className='md:ml-8'>
+    <div className="md:ml-8">
       <SelectProductAmount
         amount={amount}
         setAmount={handleAmountChange}
@@ -4730,8 +4920,16 @@ function ThirdColumn({ quantity, id }: { quantity: number; id: string }) {
         isLoading={isLoading}
       />
       <FormContainer action={removeCartItemAction}>
-        <input type='hidden' name='id' value={id} />
-        <SubmitButton size='sm' className='mt-4' text='remove' />
+        <input
+          type="hidden"
+          name="id"
+          value={id}
+        />
+        <SubmitButton
+          size="sm"
+          className="mt-4"
+          text="remove"
+        />
       </FormContainer>
     </div>
   );
@@ -4805,16 +5003,16 @@ async function CartPage() {
   const { cartItems, currentCart } = await updateCart(previousCart);
 
   if (cartItems.length === 0) {
-    return <SectionTitle text='Empty cart' />;
+    return <SectionTitle text="Empty cart" />;
   }
   return (
     <>
-      <SectionTitle text='Shopping Cart' />
-      <div className='mt-8 grid gap-4 lg:grid-cols-12'>
-        <div className='lg:col-span-8'>
+      <SectionTitle text="Shopping Cart" />
+      <div className="mt-8 grid gap-4 lg:grid-cols-12">
+        <div className="lg:col-span-8">
           <CartItemsList cartItems={cartItems} />
         </div>
-        <div className='lg:col-span-4 lg:pl-4'>
+        <div className="lg:col-span-4 lg:pl-4">
           <CartTotals cart={currentCart} />
         </div>
       </div>
@@ -4949,7 +5147,7 @@ async function OrdersPage() {
 
   return (
     <>
-      <SectionTitle text='Your Orders' />
+      <SectionTitle text="Your Orders" />
       <div>
         <Table>
           <TableCaption>Total orders : {orders.length}</TableCaption>
@@ -4963,7 +5161,7 @@ async function OrdersPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {orders.map((order) => {
+            {orders.map(order => {
               const { id, products, orderTotal, tax, shipping, createdAt } =
                 order;
 
@@ -5034,7 +5232,7 @@ async function SalesPage() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {orders.map((order) => {
+          {orders.map(order => {
             const {
               id,
               products,
@@ -5177,8 +5375,10 @@ export default function CheckoutPage() {
   const options = { fetchClientSecret };
 
   return (
-    <div id='checkout'>
-      <EmbeddedCheckoutProvider stripe={stripePromise} options={options}>
+    <div id="checkout">
+      <EmbeddedCheckoutProvider
+        stripe={stripePromise}
+        options={options}>
         <EmbeddedCheckout />
       </EmbeddedCheckoutProvider>
     </div>
@@ -5225,7 +5425,7 @@ export const POST = async (req: NextRequest) => {
       statusText: 'Not Found',
     });
   }
-  const line_items = cart.cartItems.map((cartItem) => {
+  const line_items = cart.cartItems.map(cartItem => {
     return {
       quantity: cartItem.amount,
       price_data: {
