@@ -16,7 +16,7 @@ function Hero() {
           asChild
           size="lg"
           className="mt-10">
-          <Link href="/guardians">View the Guardians</Link>
+          <Link href="/programs">View our Programs</Link>
         </Button>
       </div>
       <HeroCarousel />

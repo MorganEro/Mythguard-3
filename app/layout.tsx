@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from '@/components/navbar/Navbar';
 import Container from '@/components/global/Container';
 import Providers from './providers';
+import { ClerkProvider } from '@clerk/nextjs';
 
 const cinzel = Cinzel({
   variable: '--font-cinzel',
@@ -26,15 +27,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning>
-      <body className={`${cinzel.variable} ${open_Sans.variable} antialiased`}>
-        <Providers>
-          <Navbar />
-          <Container className="py-20">{children}</Container>
-        </Providers>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html
+        lang="en"
+        suppressHydrationWarning>
+        <body
+          className={`${cinzel.variable} ${open_Sans.variable} antialiased`}>
+          <Providers>
+            <Navbar />
+            <Container className="py-20">{children}</Container>
+          </Providers>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
