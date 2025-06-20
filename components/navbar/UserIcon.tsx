@@ -12,6 +12,8 @@ function UserIcon() {
         src={profileImage}
         alt="User Profile"
         className="w-6 h-6 bg-primary rounded-full object-cover"
+        width={24}
+        height={24}
         priority
         unoptimized
         referrerPolicy="no-referrer"

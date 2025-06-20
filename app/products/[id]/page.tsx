@@ -1,10 +1,10 @@
 import BreadCrumbs from '@/components/single-product/BreadCrumbs';
-import { fetchSingleProduct } from '@/utils/actions';
 import Image from 'next/image';
 import { formatCurrency } from '@/utils/format';
 import FavoriteToggleButton from '@/components/products/FavoriteToggleButton';
 import AddToCart from '@/components/single-product/AddToCart';
 import ProductRating from '@/components/single-product/ProductRating';
+import { fetchSingleProduct } from '@/utils/actions/product/product-client-actions';
 
 async function SingleProductPage({
   params,
@@ -35,7 +35,10 @@ async function SingleProductPage({
         <div>
           <div className="flex gap-x-8 items-center">
             <h1 className="capitalize text-3xl font-bold"> {name}</h1>
-            <FavoriteToggleButton productId={id} />
+            <FavoriteToggleButton
+              productId={id}
+              productName={name}
+            />
           </div>
           <ProductRating productId={id} />
           <h4 className="text-xl mt-2"> {company}</h4>

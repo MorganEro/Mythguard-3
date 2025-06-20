@@ -1,31 +1,34 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
   DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { LuAlignLeft } from 'react-icons/lu';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
 import {
+  agencyLinks,
+  guardiansLinks,
   links,
   productsLinks,
-  guardiansLinks,
-  agencyLinks,
   signedOutLinks,
 } from '@/utils/links';
-import { Button } from '@/components/ui/button';
+import { LuAlignLeft } from 'react-icons/lu';
 
+import Link from 'next/link';
+import { useIsAdmin } from '@/utils/hooks/useAdmin';
+import { usePathname } from 'next/navigation';
+import { SignedIn, SignedOut, SignUpButton } from '@clerk/nextjs';
+
+import SignInLink from './SignInLink';
 import SignOutLink from './SignOutLink';
 import UserIcon from './UserIcon';
-import { SignedIn, SignedOut, SignUpButton } from '@clerk/nextjs';
-import SignInLink from './SignInLink';
 
 function LinksDropDown() {
   const pathname = usePathname();
+  const isAdmin = useIsAdmin();
   const activeClassName =
     'bg-secondary text-secondary-foreground font-semibold';
   const linkClassName = 'grid grid-cols-6 gap-6 items-center capitalize w-full';
@@ -69,18 +72,20 @@ function LinksDropDown() {
           ))}
         </SignedOut>
         <SignedIn>
-          {links.map(link => (
-            <DropdownMenuItem
-              key={link.href}
-              className={pathname === link.href ? activeClassName : ''}>
-              <Link
-                href={link.href}
-                className={linkClassName}>
-                {link.icon && <link.icon className={iconClassName} />}
-                {link.label}
-              </Link>
-            </DropdownMenuItem>
-          ))}
+          {links
+            .filter(link => !link.admin || (link.admin && isAdmin))
+            .map(link => (
+              <DropdownMenuItem
+                key={link.href}
+                className={pathname === link.href ? activeClassName : ''}>
+                <Link
+                  href={link.href}
+                  className={linkClassName}>
+                  {link.icon && <link.icon className={iconClassName} />}
+                  {link.label}
+                </Link>
+              </DropdownMenuItem>
+            ))}
           <DropdownMenuSeparator />
           {guardiansLinks.map(link => (
             <DropdownMenuItem

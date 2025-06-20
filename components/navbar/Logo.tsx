@@ -11,7 +11,7 @@ function Logo() {
         <span>Myth</span>
         <Image
           src={orangeLogo}
-          alt="MythGuard Logo"
+          alt="Orange MythGuard Logo"
           className="w-9 h-9 inline-block -mx-1"
           priority
           width={36}

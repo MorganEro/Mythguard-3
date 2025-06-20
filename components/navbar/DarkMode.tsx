@@ -38,6 +38,7 @@ function DarkMode() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem
+          className= {isDark === false ? 'bg-secondary text-secondary-foreground' : ''}
           onClick={() => {
             setIsDark(false);
             setTheme('light');
@@ -45,6 +46,7 @@ function DarkMode() {
           <Sun /> Light
         </DropdownMenuItem>
         <DropdownMenuItem
+          className= {isDark === true ? 'bg-secondary text-secondary-foreground' : ''}
           onClick={() => {
             setIsDark(true);
             setTheme('dark');
