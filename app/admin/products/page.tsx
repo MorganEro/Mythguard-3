@@ -1,8 +1,6 @@
 import { cookies } from 'next/headers';
 import EmptyList from '@/components/global/EmptyList';
-import { deleteProductAction } from '@/utils/actions/product/product-server-actions';
 import Link from 'next/link';
-import { formatCurrency } from '@/utils/format';
 import {
   Table,
   TableBody,
@@ -15,12 +13,16 @@ import {
 import { IconButton } from '@/components/form/Button';
 import FormContainer from '@/components/form/FormContainer';
 import ToastMessage from '@/components/global/ToastMessage';
-import { fetchAdminProducts } from '@/utils/actions/product/product-client-actions';
+import { deleteProductAction } from '@/actions/product/product-server-actions';
+import { fetchAdminProducts } from '@/actions/product/product-client-actions';
+import { formatCurrency } from '@/lib/format';
+import { Product } from '@/types';
+import { PlusIcon } from 'lucide-react';
 
 async function AdminProductsPage() {
   const cookieStore = await cookies();
   const success = cookieStore.get('success')?.value;
-  const items = await fetchAdminProducts();
+  const items: Product[] = await fetchAdminProducts();
   if (items.length === 0) return <EmptyList />;
 
   function DeleteProduct({ productId }: { productId: string }) {
@@ -35,44 +37,80 @@ async function AdminProductsPage() {
   return (
     <section>
       {success && <ToastMessage message={success} />}
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Product Name</TableHead>
-            <TableHead>Company</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {items.map(item => {
-            const { name, company, price, id: productId } = item;
-            return (
-              <TableRow key={productId}>
-                <TableCell>
-                  <Link
-                    href={`/products/${productId}`}
-                    className="underline font-semibold text-foreground tracking-wide capitalize">
-                    {name}
-                  </Link>
-                </TableCell>
-                <TableCell className="capitalize">{company}</TableCell>
-                <TableCell>{formatCurrency(price)}</TableCell>
-                <TableCell className="flex items-center gap-x-2">
-                  <Link href={`/admin/products/${productId}/edit`}>
-                    <IconButton actionType="edit" />
-                  </Link>
-                  <DeleteProduct productId={productId} />
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-      <div className="flex items-center justify-center ">
-        <TableCaption className="capitalize">
-          total products: {items.length}
-        </TableCaption>
+
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">Products</h1>
+        <Link
+          href="/admin/products/create"
+          className="bg-primary text-primary-foreground p-2 rounded-md hover:bg-primary/90">
+          <PlusIcon className="w-4 h-4" />
+        </Link>
+      </div>
+
+      {/* TABLE for larger screens */}
+      <div className="hidden sm:block">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Product Name</TableHead>
+              <TableHead>Company</TableHead>
+              <TableHead>Price</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {items.map(item => {
+              const { name, company, price, id: productId } = item;
+              return (
+                <TableRow key={productId}>
+                  <TableCell>
+                    <Link
+                      href={`/products/${productId}`}
+                      className="underline font-semibold text-foreground tracking-wide capitalize">
+                      {name}
+                    </Link>
+                  </TableCell>
+                  <TableCell className="capitalize">{company}</TableCell>
+                  <TableCell>{formatCurrency(price)}</TableCell>
+                  <TableCell className="flex items-center gap-x-2">
+                    <Link href={`/admin/products/${productId}/edit`}>
+                      <IconButton actionType="edit" />
+                    </Link>
+                    <DeleteProduct productId={productId} />
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+          <TableCaption className="capitalize">
+            total products: {items.length}
+          </TableCaption>
+        </Table>
+      </div>
+
+      {/* CARD LAYOUT FOR MOBILE SCREENS */}
+      <div className="block sm:hidden space-y-4">
+        {items.map(item => (
+          <div
+            key={item.id}
+            className="rounded-lg border p-4 shadow-sm bg-background flex flex-col gap-2"
+          >
+            <div>
+              <h4 className="text-lg font-semibold capitalize">{item.name}</h4>
+              <span className="ml-auto"> {formatCurrency(item.price)}</span>
+            </div>
+
+
+            <p className="text-muted-foreground text-sm">{item.company}</p>
+            <div className="flex gap-2 mt-2 justify-end">
+              <Link href={`/admin/products/${item.id}/edit`}>
+                <IconButton actionType="edit" />
+              </Link>
+              <DeleteProduct productId={item.id} />
+            </div>
+          </div>
+        ))}
+        <p className="text-center text-muted-foreground mt-4 text-sm">total products: {items.length}</p>
       </div>
     </section>
   );

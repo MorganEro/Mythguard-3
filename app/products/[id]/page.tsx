@@ -1,10 +1,11 @@
-import BreadCrumbs from '@/components/single-product/BreadCrumbs';
+import BreadCrumbs from '@/components/products/single-product/BreadCrumbs';
 import Image from 'next/image';
-import { formatCurrency } from '@/utils/format';
 import FavoriteToggleButton from '@/components/products/FavoriteToggleButton';
-import AddToCart from '@/components/single-product/AddToCart';
-import ProductRating from '@/components/single-product/ProductRating';
-import { fetchSingleProduct } from '@/utils/actions/product/product-client-actions';
+import AddToCart from '@/components/products/single-product/AddToCart';
+import ProductRating from '@/components/products/single-product/ProductRating';
+import { fetchSingleProduct } from '@/actions/product/product-client-actions';
+import { formatCurrency } from '@/lib/format';
+import ZoomableImage from '@/components/ui/zoomable-image';
 
 async function SingleProductPage({
   params,
@@ -21,7 +22,7 @@ async function SingleProductPage({
       <BreadCrumbs name={name} />
       <div className="mt-6 grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:gap-x-16 lg:h-[30rem]">
         {/* IMAGE FIRST COL */}
-        <div className="relative h-[20rem] lg:h-[30rem]">
+        {/* <div className="relative h-[20rem] lg:h-[30rem]">
           <Image
             src={image}
             alt={name}
@@ -30,7 +31,17 @@ async function SingleProductPage({
             priority
             className="object-cover w-full rounded"
           />
-        </div>
+        </div> */}
+        <ZoomableImage
+          src={image}
+          alt={name}
+          width={800}
+          height={1000}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="aspect-[4/5] w-full md:max-h-[30rem]"
+          imageClassName="w-full h-full"
+          objectPosition="center"
+        />
         {/* PRODUCT INFO SECOND COL */}
         <div>
           <div className="flex gap-x-8 items-center">

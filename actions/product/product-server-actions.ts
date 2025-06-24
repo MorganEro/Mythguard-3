@@ -1,18 +1,14 @@
 'use server';
 
-import db from '@/utils/db';
-import {
-  imageSchema,
-  productSchema,
-  validateWithZodSchema,
-} from '../../schema';
-import type { Product } from '@/utils/types';
+import db from '@/lib/db';
+
+import { imageSchema, productSchema, validateWithZodSchema, type Product } from '@/types';
 import { currentUser } from '@clerk/nextjs/server';
-import { deleteImage, uploadImage } from '../../supabase';
+import { deleteImage, uploadImage } from '@/lib/supabase';
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { checkRole } from '../../roles';
+import { checkRole } from '@/lib/roles';
 
 const renderError = (error: unknown): { message: string } => {
   return {
@@ -42,7 +38,7 @@ export const createProductAction = async (
       image: file,
     });
 
-    uploadedImagePath = await uploadImage(validatedFile.image);
+    uploadedImagePath = await uploadImage(validatedFile.image, 'PRODUCTS');
 
     await db.product.create({
       data: {
@@ -61,7 +57,7 @@ export const createProductAction = async (
   } catch (error) {
     if (uploadedImagePath) {
       try {
-        await deleteImage(uploadedImagePath);
+        await deleteImage(uploadedImagePath, 'PRODUCTS');
       } catch (deleteError) {
         console.error('Failed to delete image after error:', deleteError);
       }
@@ -79,7 +75,7 @@ export const deleteProductAction = async (prevState: { productId: string }) => {
       },
     });
 
-    await deleteImage(deletedProduct.image);
+    await deleteImage(deletedProduct.image, 'PRODUCTS');
     const cookieStore = await cookies();
     cookieStore.set(
       'success',
@@ -156,8 +152,8 @@ export const updateProductImageAction = async (
     const oldImageUrl = formData.get('url') as string;
 
     const validatedFile = validateWithZodSchema(imageSchema, { image });
-    const uploadedImagePath = await uploadImage(validatedFile.image);
-    await deleteImage(oldImageUrl);
+    const uploadedImagePath = await uploadImage(validatedFile.image, 'PRODUCTS');
+    await deleteImage(oldImageUrl, 'PRODUCTS');
     await db.product.update({
       where: {
         id: productId,

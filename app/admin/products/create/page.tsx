@@ -1,3 +1,4 @@
+import { createProductAction } from '@/actions/product/product-server-actions';
 import { SubmitButton } from '@/components/form/Button';
 import CheckboxInput from '@/components/form/CheckboxInput';
 import FormContainer from '@/components/form/FormContainer';
@@ -5,7 +6,6 @@ import FormInput from '@/components/form/FormInput';
 import ImageInput from '@/components/form/ImageInput';
 import PriceInput from '@/components/form/PriceInput';
 import TextAreaInput from '@/components/form/TextAreaInput';
-import { createProductAction } from '@/utils/actions/product/product-server-actions';
 
 function CreateProductPage() {
   return (
@@ -24,9 +24,9 @@ function CreateProductPage() {
               type="text"
               name="company"
               label="Company"
-              defaultValue=""
+              defaultValue="MythGuard"
             />
-            <PriceInput />
+            <PriceInput defaultValue={0} />
             <ImageInput />
             <TextAreaInput
               name="description"

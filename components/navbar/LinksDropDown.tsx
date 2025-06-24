@@ -14,17 +14,17 @@ import {
   links,
   productsLinks,
   signedOutLinks,
-} from '@/utils/links';
-import { LuAlignLeft } from 'react-icons/lu';
+} from '@/lib/utils/links';
+import { RxDoubleArrowDown } from "react-icons/rx";
 
 import Link from 'next/link';
-import { useIsAdmin } from '@/utils/hooks/useAdmin';
 import { usePathname } from 'next/navigation';
 import { SignedIn, SignedOut, SignUpButton } from '@clerk/nextjs';
 
 import SignInLink from './SignInLink';
 import SignOutLink from './SignOutLink';
 import UserIcon from './UserIcon';
+import { useIsAdmin } from '@/lib/hooks/useAdmin';
 
 function LinksDropDown() {
   const pathname = usePathname();
@@ -33,14 +33,13 @@ function LinksDropDown() {
     'bg-secondary text-secondary-foreground font-semibold';
   const linkClassName = 'grid grid-cols-6 gap-6 items-center capitalize w-full';
   const iconClassName = 'w-4 h-4 text-inherit col-span-1';
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="flex gap-4 max-w-[100px]">
-          <LuAlignLeft className="w-6 h-6" />
+          className="flex gap-4 max-w-[100px] group">
+          <RxDoubleArrowDown className="w-7 h-7 text-orange-500 transition-transform group-data-[state=open]:rotate-180" />
           <UserIcon />
         </Button>
       </DropdownMenuTrigger>

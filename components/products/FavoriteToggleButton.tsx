@@ -1,5 +1,5 @@
+import { fetchFavoriteId } from '@/actions/product/product-server-actions';
 import { CardSignInButton } from '../form/Button';
-import { fetchFavoriteId } from '@/utils/actions/product/product-server-actions';
 import FavoriteToggleForm from './FavoriteToggleForm';
 import { auth } from '@clerk/nextjs/server';
 

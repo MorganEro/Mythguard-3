@@ -1,3 +1,8 @@
+import {
+  fetchAdminProductDetails,
+  updateProductAction,
+  updateProductImageAction,
+} from '@/actions/product/product-server-actions';
 import { SubmitButton } from '@/components/form/Button';
 import CheckboxInput from '@/components/form/CheckboxInput';
 import FormContainer from '@/components/form/FormContainer';
@@ -6,11 +11,6 @@ import ImageInputContainer from '@/components/form/ImageInputContainer';
 import PriceInput from '@/components/form/PriceInput';
 import TextAreaInput from '@/components/form/TextAreaInput';
 import { Button } from '@/components/ui/button';
-import {
-  fetchAdminProductDetails,
-  updateProductAction,
-  updateProductImageAction,
-} from '@/utils/actions/product/product-server-actions';
 
 async function EditProductPage({
   params,
@@ -31,13 +31,13 @@ async function EditProductPage({
       price,
       description,
       featured,
-    } = product;
+    } = product;  
 
     return (
       <section>
-        <h1 className="text-2xl font-semibold mb-8 capitalize">
+        <h3 className="text-2xl font-semibold mb-8 capitalize">
           Update Product
-        </h1>
+        </h3>
         <div className="border p-8 rounded-md">
           <ImageInputContainer
             action={updateProductImageAction}

@@ -1,15 +1,15 @@
-import { formatCurrency } from '@/utils/format';
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Product } from '@prisma/client';
 import Image from 'next/image';
 import FavoriteToggleButton from './FavoriteToggleButton';
+import { formatCurrency } from '@/lib/format';
 
 function ProductsList({ products }: { products: Product[] }) {
   return (
     <div className="mt-12 grid gap-y-8">
       {products.map(product => {
-        const { name, price, image, company } = product;
+        const { name, price, image, company, description } = product;
         const dollarsAmount = formatCurrency(price);
         const productId = product.id;
 
@@ -18,7 +18,7 @@ function ProductsList({ products }: { products: Product[] }) {
             key={productId}
             className="group relative">
             <Link href={`/products/${productId}`}>
-              <Card className="transform group-hover:shadow-xl transition-shadow duration-500">
+              <Card className="transform group-hover:shadow-xl transition-shadow duration-500 max-w-[100rem]">
                 <CardContent className="p-8 gap-y-4 grid md:grid-cols-3">
                   <div className="relative h-64 md:h-48 md:w-48">
                     <Image
@@ -33,6 +33,7 @@ function ProductsList({ products }: { products: Product[] }) {
                   <div>
                     <h2 className="text-xl font-semibold capitalize">{name}</h2>
                     <h4 className="text-sm text-muted-foreground">{company}</h4>
+                    <p className="text-sm mt-4">{description}</p>
                   </div>
                   <p className="text-2xl font-semibold">{dollarsAmount}</p>
                 </CardContent>

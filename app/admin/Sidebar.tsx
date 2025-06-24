@@ -8,7 +8,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
-import { adminLinks } from '@/utils/links';
+import { adminLinks } from '@/lib/utils/links';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 

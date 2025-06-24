@@ -1,22 +1,14 @@
 import { IoHomeOutline } from 'react-icons/io5';
-import { TbShield } from 'react-icons/tb';
-import { TbShieldDollar } from 'react-icons/tb';
-import { TbContract } from 'react-icons/tb';
-import { IoCartOutline } from 'react-icons/io5';
-import { MdStarBorder } from 'react-icons/md';
-import { IoLocationOutline } from 'react-icons/io5';
+import { TbShield, TbShieldDollar, TbContract } from 'react-icons/tb';
+import { IoCartOutline, IoLocationOutline } from 'react-icons/io5';
+import { MdStarBorder, MdOutlinePeopleAlt } from 'react-icons/md';
 import { SlEvent } from 'react-icons/sl';
 import { BsBoxSeam } from 'react-icons/bs';
-import { MdOutlinePeopleAlt } from 'react-icons/md';
 import { RxDashboard } from 'react-icons/rx';
+import { NavLink } from '@/types/navigation';
+import { GrLike } from 'react-icons/gr';
+import { LiaUserShieldSolid } from "react-icons/lia";
 
-type NavLink = {
-  href: string;
-  label: string;
-  icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  admin?: boolean;
-  section?: string;
-};
 
 export const links: NavLink[] = [
   { href: '/', label: 'home', icon: IoHomeOutline },
@@ -88,9 +80,11 @@ export const guardiansLinks: NavLink[] = [
   { href: '/contracts', label: 'Contracts', icon: TbContract },
   { href: '/guardians', label: 'Guardians', icon: MdOutlinePeopleAlt },
   { href: '/programs', label: 'Programs', icon: TbShield },
+  { href: '/likes', label: 'Likes', icon: GrLike },
 ];
 
 export const agencyLinks: NavLink[] = [
   { href: '/events', label: 'Events', icon: SlEvent },
   { href: '/locations', label: 'Locations', icon: IoLocationOutline },
+  { href: '/about', label: 'About', icon: LiaUserShieldSolid },
 ];

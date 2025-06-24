@@ -2,8 +2,8 @@
 
 import { useActionState, useEffect, useRef } from 'react';
 import { toast } from 'sonner';
-import { actionFunction } from '@/utils/types';
 import { useRouter } from 'next/navigation';
+import { actionFunction } from '@/types';
 
 type FormState = {
   message: string;
@@ -17,9 +17,11 @@ const initialState: FormState = {
 function FormContainer({
   action,
   children,
+  className,
 }: {
   action: actionFunction;
   children: React.ReactNode;
+  className?: string;
 }) {
   const [state, formAction] = useActionState(action, initialState);
   const router = useRouter();
@@ -59,7 +61,9 @@ function FormContainer({
   return (
     <form
       ref={formRef}
-      action={formAction}>
+      action={formAction}
+      className={className}
+    >
       {children}
     </form>
   );

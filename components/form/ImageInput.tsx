@@ -5,7 +5,11 @@ import { Input } from '../ui/input';
 import { useRef } from 'react';
 import { toast } from 'sonner';
 
-function ImageInput() {
+interface ImageInputProps {
+  defaultValue?: string;
+}
+
+function ImageInput({ defaultValue }: ImageInputProps) {
   const name = 'image';
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -28,6 +32,7 @@ function ImageInput() {
       <Input
         id={name}
         name={name}
+        defaultValue={defaultValue}
         type="file"
         required
         accept="image/*"

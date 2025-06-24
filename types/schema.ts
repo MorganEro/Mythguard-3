@@ -13,13 +13,57 @@ export const productSchema: ZodSchema = z.object({
   description: z.string().refine(
     description => {
       const wordCount = description.split(' ').length;
-      return wordCount >= 2 && wordCount <= 1000;
+      return wordCount >= 2 && wordCount <= 800;
     },
     {
-      message: 'Description must have between 2 and 1000 words',
+      message: 'Description must have between 2 and 800 words',
     }
   ),
+ 
   featured: z.coerce.boolean(),
+});
+
+export const guardianSchema: ZodSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: 'Name must be at least 2 characters' })
+    .max(50, { message: 'name must be less than 50 characters' }),
+  description: z.string().refine(
+    description => {
+      const wordCount = description.split(' ').length;
+      return wordCount >= 2 && wordCount <= 400;
+    },
+    
+    {
+      message: 'Description must have between 2 and 400 words',
+    }
+  ),
+  shortDescription: z.string().refine(
+    description => {
+      const wordCount = description.split(' ').length;
+      return wordCount >= 2 && wordCount <= 40;
+    },
+
+    {
+      message: 'Description must have between 2 and 40 words',
+    }
+  ),
+});
+export const programSchema: ZodSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: 'Name must be at least 2 characters' })
+    .max(50, { message: 'name must be less than 50 characters' }),
+  description: z.string().refine(
+    description => {
+      const wordCount = description.split(' ').length;
+      return wordCount >= 2 && wordCount <= 400;
+    },
+    
+    {
+      message: 'Description must have between 2 and 400 words',
+    }
+  ),
 });
 
 export const imageSchema = z.object({

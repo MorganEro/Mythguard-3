@@ -13,13 +13,11 @@ function NavSearch() {
   const [searchTerm, setSearchTerm] = useState(searchValue?.toString() || '');
 
   const handleSearch = useDebouncedCallback((value: string) => {
-    const params = new URLSearchParams(searchParams);
-    if (value) {
-      params.set('search', value);
-    } else {
-      params.delete('search');
-    }
-    replace(`/products?${params.toString()}`);
+    if (!value.trim()) return;
+    
+    const params = new URLSearchParams();
+    params.set('q', value);
+    replace(`/search?${params.toString()}`);
   }, 500);
 
   useEffect(() => {
@@ -35,7 +33,7 @@ function NavSearch() {
       </span>
       <Input
         type="search"
-        placeholder="What do you seek?"
+        placeholder="Search..."
         className="pl-10 dark:bg-muted"
         value={searchTerm}
         onChange={e => {

@@ -17,7 +17,9 @@ function Navbar() {
           <ContractButton />
           <CartButton />
           <DarkMode />
-          <LinksDropDown />
+          <div className="ml-auto">
+            <LinksDropDown />
+          </div>
         </div>
         <Suspense>
           <NavSearch />

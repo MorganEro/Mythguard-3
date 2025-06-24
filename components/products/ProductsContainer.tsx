@@ -4,7 +4,7 @@ import { LuLayoutGrid, LuList } from 'react-icons/lu';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
-import { fetchAllProducts } from '@/utils/actions/product/product-client-actions';
+import { fetchAllProducts } from '@/actions/product/product-client-actions';
 
 async function ProductsContainer({
   layout,

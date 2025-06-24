@@ -1,14 +1,14 @@
 'use client';
-
+import { AiOutlineLike } from "react-icons/ai";
+import { AiFillLike } from "react-icons/ai";
 import { IoReload } from 'react-icons/io5';
 import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
 import { LuTrash2 } from 'react-icons/lu';
 import { LiaEditSolid } from 'react-icons/lia';
-// import SignInLink from '../navbar/SignInLink';
 import { SignInButton } from '@clerk/nextjs';
+import { cn } from "@/lib/utils";
 
 type btnSize = 'default' | 'lg' | 'sm';
 
@@ -90,6 +90,20 @@ export const CardSignInButton = () => {
     </SignInButton>
   );
 };
+export const LikeSignInButton = () => {
+  return (
+    <SignInButton mode="modal">
+      <Button
+        type="button"
+        variant="outline"
+        asChild
+        className="p-2 cursor-pointer"
+        size="icon">
+        <AiOutlineLike />
+      </Button>
+    </SignInButton>
+  );
+};
 
 export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
   const { pending } = useFormStatus();
@@ -105,6 +119,24 @@ export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
         <FaHeart className="text-orange-700" />
       ) : (
         <FaRegHeart />
+      )}
+    </Button>
+  );
+};
+export const LikeSubmitButton = ({ isLiked }: { isLiked: boolean }) => {
+  const { pending } = useFormStatus();
+  return (
+    <Button
+      type="submit"
+      size="icon"
+      variant="outline"
+      className="p-2 cursor-pointer">
+      {pending ? (
+        <IoReload className="mr-2 h-4 w-4 animate-spin" />
+      ) : isLiked ? (
+        <AiFillLike className="text-yellow-500" />
+      ) : (
+        <AiOutlineLike />
       )}
     </Button>
   );
