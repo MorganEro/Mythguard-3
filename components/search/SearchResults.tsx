@@ -1,6 +1,6 @@
 'use client';
 
-import { SearchResponse, SearchableEntity } from '@/types/search';
+import { SearchResponse, SearchCategory } from '@/types/search';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Badge } from '../ui/badge';
@@ -12,15 +12,15 @@ import {
   CardHeader,
   CardTitle,
 } from '../ui/card';
-import { Checkbox } from '../ui/checkbox';
+import CategoryFilter from '../ui/categoryFilter';
 
-interface SearchResultsProps {
+type SearchResultsProps = {
   response: SearchResponse;
   currentQuery: string;
-  selectedTypes?: SearchableEntity[];
+  selectedTypes?: SearchCategory[];
 }
 
-const typeLabels: Record<SearchableEntity, string> = {
+const typeLabels: Record<SearchCategory, string> = {
   products: 'Products',
   programs: 'Programs',
   guardians: 'Guardians',
@@ -28,12 +28,12 @@ const typeLabels: Record<SearchableEntity, string> = {
   locations: 'Locations',
 };
 
-const typeColors: Record<SearchableEntity, string> = {
-  products: 'bg-blue-500',
-  programs: 'bg-green-500',
-  guardians: 'bg-purple-500',
+const typeColors: Record<SearchCategory, string> = {
+  products: 'bg-blue-800',
+  programs: 'bg-orange-800',
+  guardians: 'bg-orange-500',
   events: 'bg-yellow-500',
-  locations: 'bg-red-500',
+  locations: 'bg-green-500',
 };
 
 export default function SearchResults({
@@ -44,7 +44,7 @@ export default function SearchResults({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const updateTypes = (type: SearchableEntity, checked: boolean) => {
+  const updateTypes = (type: SearchCategory, checked: boolean) => {
     const params = new URLSearchParams(searchParams);
     const currentTypes = params.get('types')?.split(',') || [];
 
@@ -70,27 +70,11 @@ export default function SearchResults({
 
   return (
     <div className="space-y-6">
-      <div className="flex gap-4 flex-wrap">
-        {Object.entries(typeLabels).map(([type, label]) => (
-          <div
-            key={type}
-            className="flex items-center space-x-2">
-            <Checkbox
-              id={type}
-              checked={selectedTypes?.includes(type as SearchableEntity)}
-              onCheckedChange={checked =>
-                updateTypes(type as SearchableEntity, checked as boolean)
-              }
-            />
-            <label
-              htmlFor={type}
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              {label}
-            </label>
-          </div>
-        ))}
-      </div>
-
+      <CategoryFilter
+        categories={typeLabels}
+        selected={ selectedTypes || []}
+        onchange={updateTypes}
+      />
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {response.results.map(result => (
           <Card key={`${result.type}-${result.id}`}>

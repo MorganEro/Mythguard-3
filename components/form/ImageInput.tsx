@@ -7,10 +7,11 @@ import { toast } from 'sonner';
 
 interface ImageInputProps {
   defaultValue?: string;
+  field?: 'image' | 'mapIcon';
 }
 
-function ImageInput({ defaultValue }: ImageInputProps) {
-  const name = 'image';
+function ImageInput({ defaultValue, field = 'image' }: ImageInputProps) {
+  const name = field;
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +28,7 @@ function ImageInput({ defaultValue }: ImageInputProps) {
       <Label
         htmlFor={name}
         className="capitalize">
-        Image
+        {field === 'mapIcon' ? 'Map Icon' : 'Image'}
       </Label>
       <Input
         id={name}

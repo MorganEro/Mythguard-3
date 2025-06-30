@@ -10,6 +10,7 @@ import FormInput from '@/components/form/FormInput';
 import ImageInputContainer from '@/components/form/ImageInputContainer';
 import PriceInput from '@/components/form/PriceInput';
 import TextAreaInput from '@/components/form/TextAreaInput';
+import BreadCrumbs from '@/components/ui/BreadCrumbs';
 import { Button } from '@/components/ui/button';
 
 async function EditProductPage({
@@ -21,7 +22,6 @@ async function EditProductPage({
   const product = await fetchAdminProductDetails(id);
 
   if ('message' in product) {
-    // handle error case
     return <div>{product.message}</div>;
   } else {
     const {
@@ -35,6 +35,13 @@ async function EditProductPage({
 
     return (
       <section>
+        <BreadCrumbs
+          homeName="Admin"
+          homeLink="/admin"
+          previousName="Products"
+          previousLink="/admin/products"
+          currentName="Update Product"
+        />
         <h3 className="text-2xl font-semibold mb-8 capitalize">
           Update Product
         </h3>

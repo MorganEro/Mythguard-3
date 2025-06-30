@@ -8,6 +8,32 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+model Guardian {
+  id          String            @id @default(uuid())
+  name        String
+  description String
+  shortDescription String
+  image       String
+  programs    GuardianProgram[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  likes       Like[]
+  contracts   Contract[]
+  reviews     Review[]
+}
+
+model Program {
+  id          String            @id @default(uuid())
+  name        String
+  description String
+  image       String
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  guardians   GuardianProgram[]
+  contracts   Contract[]
+  reviews     Review[]
+}
+
 model Product {
   id          String     @id @default(uuid())
   name        String
@@ -20,6 +46,26 @@ model Product {
   updatedAt   DateTime   @updatedAt
   clerkId     String
   favorites   Favorite[]
+  reviews     Review[]
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  productId String?
+  guardianId String?
+  programId String?
+  clerkId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  rating    Int
+  comment   String
+  authorName String
+  authorImageUrl String
+
+  product Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  guardian Guardian? @relation(fields: [guardianId], references: [id], onDelete: Cascade)
+  program Program? @relation(fields: [programId], references: [id], onDelete: Cascade)
+  
 }
 
 model Favorite {
@@ -30,30 +76,6 @@ model Favorite {
   updatedAt DateTime @updatedAt
 
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-}
-
-model Guardian {
-  id          String            @id @default(uuid())
-  name        String
-  description String
-  shortDescription String
-  image       String
-  programs    GuardianProgram[]
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
-  likes       Like[]
-  contracts   Contract[]
-}
-
-model Program {
-  id          String            @id @default(uuid())
-  name        String
-  description String
-  image       String
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
-  guardians   GuardianProgram[]
-  contracts   Contract[]
 }
 
 model GuardianProgram {
@@ -88,3 +110,19 @@ model Contract {
   programId   String
   program     Program  @relation(fields: [programId], references: [id], onDelete: Cascade)
 }
+
+model Location {
+  id          String   @id @default(uuid())
+  name        String
+  subtitle    String 
+  shortDescription String 
+  description String
+  address     String  
+  image       String
+  mapIcon     String   @default("/map-pin.svg")
+  lat         Float    
+  lng         Float    
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+

@@ -4,10 +4,18 @@ import FormContainer from '@/components/form/FormContainer';
 import FormInput from '@/components/form/FormInput';
 import ImageInput from '@/components/form/ImageInput';
 import TextAreaInput from '@/components/form/TextAreaInput';
+import BreadCrumbs from '@/components/ui/BreadCrumbs';
 
 function CreateGuardianPage() {
   return (
     <section>
+      <BreadCrumbs
+        homeName="Admin"
+        homeLink="/admin"
+        previousName="Guardians"
+        previousLink="/admin/guardians"
+        currentName="Create Guardian"
+      />
       <h1 className="text-2xl font-semibold mb-8 capitalize">create guardian</h1>
       <div className="border p-8 rounded-md">
         <FormContainer action={createGuardianAction}>

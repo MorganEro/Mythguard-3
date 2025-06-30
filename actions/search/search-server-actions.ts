@@ -1,5 +1,5 @@
 import db from '@/lib/db';
-import { SearchParams, SearchResult, SearchableEntity } from '@/types/search';
+import { SearchParams, SearchResult, SearchCategory } from '@/types/search';
 
 async function searchProducts(query: string): Promise<SearchResult[]> {
   const products = await db.product.findMany({
@@ -18,9 +18,9 @@ async function searchProducts(query: string): Promise<SearchResult[]> {
     },
   });
 
-  return products.map((product) => ({
+  return products.map(product => ({
     id: product.id,
-    type: 'products' as SearchableEntity,
+    type: 'products' as SearchCategory,
     name: product.name,
     description: product.description || '',
     image: product.image,
@@ -45,9 +45,9 @@ async function searchPrograms(query: string): Promise<SearchResult[]> {
     },
   });
 
-  return programs.map((program) => ({
+  return programs.map(program => ({
     id: program.id,
-    type: 'programs' as SearchableEntity,
+    type: 'programs' as SearchCategory,
     name: program.name,
     description: program.description || '',
     image: program.image,
@@ -55,30 +55,93 @@ async function searchPrograms(query: string): Promise<SearchResult[]> {
   }));
 }
 
+async function searchGuardians(query: string): Promise<SearchResult[]> {
+  const guardians = await db.guardian.findMany({
+    where: {
+      OR: [
+        { name: { contains: query, mode: 'insensitive' } },
+        { description: { contains: query, mode: 'insensitive' } },
+      ],
+    },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      image: true,
+    },
+  });
+
+  return guardians.map(guardian => ({
+    id: guardian.id,
+    type: 'guardians' as SearchCategory,
+    name: guardian.name,
+    description: guardian.description || '',
+    image: guardian.image,
+    url: `/guardians/${guardian.id}`,
+  }));
+}
+
+async function searchLocations(query: string): Promise<SearchResult[]> {
+  const locations = await db.location.findMany({
+    where: {
+      OR: [
+        { name: { contains: query, mode: 'insensitive' } },
+        { description: { contains: query, mode: 'insensitive' } },
+      ],
+    },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      address: true,
+      image: true,
+    },
+  });
+
+  return locations.map(location => ({
+    id: location.id,
+    type: 'locations' as SearchCategory,
+    name: location.name,
+    description: location.description || '',
+    address: location.address || '',
+    image: location.image,
+    url: `/locations/${location.id}`,
+  }));
+}
+
 // Add more search functions for other entities as needed...
 
-export async function searchAll({ 
-  query, 
-  types = ['products', 'programs'], 
-  page = 1, 
-  limit = 10 
+export async function searchAll({
+  query,
+  types = [
+    'products',
+    'programs',
+    'guardians',
+    'events',
+    'locations',
+  ] as SearchCategory[],
+  page = 1,
+  limit = 10,
 }: SearchParams) {
-  const searchFunctions: Record<SearchableEntity, (q: string) => Promise<SearchResult[]>> = {
+  const searchFunctions: Record<
+    SearchCategory,
+    (q: string) => Promise<SearchResult[]>
+  > = {
     products: searchProducts,
     programs: searchPrograms,
-    guardians: async () => [], // Implement when needed
-    events: async () => [],    // Implement when needed
-    locations: async () => [], // Implement when needed
+    guardians: searchGuardians,
+    events: async () => [], // Implement when needed
+    locations: searchLocations,
   };
 
   // Execute searches in parallel for selected types
   const searchPromises = types.map(type => searchFunctions[type](query));
   const results = await Promise.all(searchPromises);
-  
+
   // Combine and sort results
-  const allResults = results.flat().sort((a, b) => 
-    a.name.toLowerCase().localeCompare(b.name.toLowerCase())
-  );
+  const allResults = results
+    .flat()
+    .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
 
   // Calculate pagination
   const startIndex = (page - 1) * limit;

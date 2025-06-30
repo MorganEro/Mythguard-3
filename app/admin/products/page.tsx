@@ -18,6 +18,7 @@ import { fetchAdminProducts } from '@/actions/product/product-client-actions';
 import { formatCurrency } from '@/lib/format';
 import { Product } from '@/types';
 import { PlusIcon } from 'lucide-react';
+import Image from 'next/image';
 
 async function AdminProductsPage() {
   const cookieStore = await cookies();
@@ -52,17 +53,28 @@ async function AdminProductsPage() {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead>Picture</TableHead>
               <TableHead>Product Name</TableHead>
-              <TableHead>Company</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {items.map(item => {
-              const { name, company, price, id: productId } = item;
+              const { name, price, id: productId } = item;
               return (
                 <TableRow key={productId}>
+                  <TableCell>
+                    <div className="relative w-[40px] h-[40px]">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-cover rounded-sm"
+                        sizes="40px"
+                      />
+                    </div>
+                  </TableCell>
                   <TableCell>
                     <Link
                       href={`/products/${productId}`}
@@ -70,7 +82,6 @@ async function AdminProductsPage() {
                       {name}
                     </Link>
                   </TableCell>
-                  <TableCell className="capitalize">{company}</TableCell>
                   <TableCell>{formatCurrency(price)}</TableCell>
                   <TableCell className="flex items-center gap-x-2">
                     <Link href={`/admin/products/${productId}/edit`}>

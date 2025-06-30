@@ -8,6 +8,7 @@ import { RxDashboard } from 'react-icons/rx';
 import { NavLink } from '@/types/navigation';
 import { GrLike } from 'react-icons/gr';
 import { LiaUserShieldSolid } from "react-icons/lia";
+import { PiShieldStar } from 'react-icons/pi';
 
 
 export const links: NavLink[] = [
@@ -36,14 +37,14 @@ export const adminLinks: NavLink[] = [
   },
   {
     href: '/admin/products/create',
-    label: 'new product',
+    label: 'add product',
     admin: true,
     section: 'products',
   },
 
   {
     href: '/admin/guardians/create',
-    label: 'new guardian',
+    label: 'add guardian',
     admin: true,
     section: 'guardians',
   },
@@ -55,7 +56,19 @@ export const adminLinks: NavLink[] = [
   },
   {
     href: '/admin/programs/create',
-    label: 'new program',
+    label: 'add program',
+    admin: true,
+    section: 'programs',
+  },
+  {
+    href: '/admin/locations',
+    label: 'Locations',
+    admin: true,
+    section: 'programs',
+  },
+  {
+    href: '/admin/locations/create',
+    label: 'add location',
     admin: true,
     section: 'programs',
   },
@@ -70,17 +83,18 @@ export const signedOutLinks: NavLink[] = [
 ];
 
 export const productsLinks: NavLink[] = [
-  { href: '/cart', label: 'Cart', icon: IoCartOutline },
-  { href: '/favorites', label: 'Favorites', icon: MdStarBorder },
-  { href: '/orders', label: 'Orders', icon: BsBoxSeam },
   { href: '/products', label: 'Products', icon: TbShieldDollar },
+  { href: '/favorites', label: 'Favorites', icon: MdStarBorder },
+  { href: '/cart', label: 'Cart', icon: IoCartOutline },
+  { href: '/orders', label: 'Orders', icon: BsBoxSeam },
 ];
 
 export const guardiansLinks: NavLink[] = [
-  { href: '/contracts', label: 'Contracts', icon: TbContract },
   { href: '/guardians', label: 'Guardians', icon: MdOutlinePeopleAlt },
   { href: '/programs', label: 'Programs', icon: TbShield },
   { href: '/likes', label: 'Likes', icon: GrLike },
+  { href: '/contracts', label: 'Contracts', icon: TbContract },
+  { href: '/reviews', label: 'Reviews', icon: PiShieldStar },
 ];
 
 export const agencyLinks: NavLink[] = [

@@ -1,11 +1,15 @@
-import BreadCrumbs from '@/components/products/single-product/BreadCrumbs';
-import Image from 'next/image';
+import BreadCrumbs from '@/components/ui/BreadCrumbs';
 import FavoriteToggleButton from '@/components/products/FavoriteToggleButton';
 import AddToCart from '@/components/products/single-product/AddToCart';
 import ProductRating from '@/components/products/single-product/ProductRating';
 import { fetchSingleProduct } from '@/actions/product/product-client-actions';
 import { formatCurrency } from '@/lib/format';
 import ZoomableImage from '@/components/ui/zoomable-image';
+import SubmitReview from '@/components/reviews/SubmitReview';
+import Reviews from '@/components/reviews/Reviews';
+import { Separator } from '@/components/ui/separator';
+import { fetchExistingReview } from '@/actions/review/review-server-actions';
+import { auth } from '@clerk/nextjs/server';
 
 async function SingleProductPage({
   params,
@@ -16,22 +20,26 @@ async function SingleProductPage({
   const product = await fetchSingleProduct(id);
   const { name, image, company, description, price } = product;
   const dollarsAmount = formatCurrency(price);
+  const { userId } = await auth();
+  const reviewDoesNotExist =
+    userId &&
+    !(await fetchExistingReview({
+      userId,
+      categoryId: id,
+      category: 'product',
+    }));
 
   return (
     <section>
-      <BreadCrumbs name={name} />
+      <BreadCrumbs
+        homeName="Home"
+        homeLink="/"
+        previousName="Products"
+        previousLink="/products"
+        currentName={name}
+      />
       <div className="mt-6 grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:gap-x-16 lg:h-[30rem]">
         {/* IMAGE FIRST COL */}
-        {/* <div className="relative h-[20rem] lg:h-[30rem]">
-          <Image
-            src={image}
-            alt={name}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            priority
-            className="object-cover w-full rounded"
-          />
-        </div> */}
         <ZoomableImage
           src={image}
           alt={name}
@@ -51,7 +59,10 @@ async function SingleProductPage({
               productName={name}
             />
           </div>
-          <ProductRating productId={id} />
+          <ProductRating
+            productId={id}
+            category="product"
+          />
           <h4 className="text-xl mt-2"> {company}</h4>
           <p className="mt-3 text-md bg-muted inline-block p-2 rounded">
             {dollarsAmount}
@@ -60,6 +71,17 @@ async function SingleProductPage({
           <AddToCart productId={id} />
         </div>
       </div>
+      <Separator className="my-6" />
+      <Reviews
+        categoryId={id}
+        category="product"
+      />
+      {reviewDoesNotExist && (
+        <SubmitReview
+          categoryId={id}
+          category="product"
+        />
+      )}
     </section>
   );
 }

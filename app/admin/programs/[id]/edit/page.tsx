@@ -5,6 +5,7 @@ import FormInput from '@/components/form/FormInput';
 import ImageInputContainer from '@/components/form/ImageInputContainer';
 import TextAreaInput from '@/components/form/TextAreaInput';
 import { Button } from '@/components/ui/button';
+import BreadCrumbs from '@/components/ui/BreadCrumbs';
 
 async function EditProgramPage({
   params,
@@ -15,7 +16,6 @@ async function EditProgramPage({
   const program = await fetchAdminProgramDetails(id);
 
   if ('message' in program) {
-    // handle error case
     return <div>{program.message}</div>;
   } else {
     const {
@@ -26,6 +26,13 @@ async function EditProgramPage({
 
     return (
       <section>
+        <BreadCrumbs
+          homeName="Admin"
+          homeLink="/admin"
+          previousName="Programs"
+          previousLink="/admin/programs"
+          currentName="Update Program"
+        />
         <h1 className="text-2xl font-semibold mb-8 capitalize">
           Update Program
         </h1>

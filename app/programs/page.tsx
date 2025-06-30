@@ -1,4 +1,4 @@
-import ProgramsContainer from '@/components/programs/programsContainer';
+import ProgramsContainer from '@/components/programs/ProgramsContainer';
 import { use } from 'react';
 
 function ProgramsPage(props: {
@@ -7,10 +7,6 @@ function ProgramsPage(props: {
   const searchParams = use(props.searchParams);
   const { search = '' } = searchParams;
 
-  return (
-    <ProgramsContainer
-    search={search}
-    />
-  );
+  return <ProgramsContainer search={search} />;
 }
 export default ProgramsPage;

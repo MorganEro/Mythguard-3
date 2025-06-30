@@ -7,28 +7,28 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 
-function BreadCrumbs({ name }: { name?: string }) {
+function BreadCrumbs({homeName, homeLink,previousName, previousLink, currentName }: { homeName?: string, homeLink?: string, previousName?: string, previousLink?: string, currentName?: string }) {
   return (
-    <Breadcrumb>
+    <Breadcrumb className="mb-4">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink
-            href="/"
-            className="capitalize text-lg">
-            Home
+            href={homeLink || "/"}
+            className="capitalize text-md">
+            {homeName || "Home"}
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink
-            href="/products"
-            className="capitalize text-lg">
-            Products
+            href={previousLink || "/products"}
+            className="capitalize text-md">
+            {previousName || "Products"}
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage className="capitalize text-lg">{name}</BreadcrumbPage>
+          <BreadcrumbPage className="capitalize text-md">{currentName}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

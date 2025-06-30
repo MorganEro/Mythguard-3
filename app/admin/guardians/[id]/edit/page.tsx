@@ -5,6 +5,7 @@ import FormInput from '@/components/form/FormInput';
 import ImageInputContainer from '@/components/form/ImageInputContainer';
 import TextAreaInput from '@/components/form/TextAreaInput';
 import { Button } from '@/components/ui/button';
+import BreadCrumbs from '@/components/ui/BreadCrumbs';
 
 async function EditGuardianPage({
   params,
@@ -15,7 +16,6 @@ async function EditGuardianPage({
   const guardian = await fetchAdminGuardianDetails(id);
 
   if ('message' in guardian) {
-    // handle error case
     return <div>{guardian.message}</div>;
   } else {
     const {
@@ -27,6 +27,13 @@ async function EditGuardianPage({
 
     return (
       <section>
+        <BreadCrumbs
+          homeName="Admin"
+          homeLink="/admin"
+          previousName="Guardians"
+          previousLink="/admin/guardians"
+          currentName="Update Guardian"
+        />
         <h1 className="text-2xl font-semibold mb-8 capitalize">
           Update Guardian
         </h1>

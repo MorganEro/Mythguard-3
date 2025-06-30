@@ -1,7 +1,7 @@
-import { fetchSingleProgram } from "@/actions/program/program-client-actions";
-import CreateContract from "@/components/guardians/single-guardian/CreateContract";
-import ProgramBreadCrumbs from "@/components/programs/GuardianBreadCrumbs";
-import Image from "next/image";
+import { fetchSingleProgram } from '@/actions/program/program-client-actions';
+import CreateContract from '@/components/guardians/single-guardian/CreateContract';
+import BreadCrumbs from '@/components/ui/BreadCrumbs';
+import Image from 'next/image';
 
 async function SingleGuardianPage({
   params,
@@ -14,11 +14,21 @@ async function SingleGuardianPage({
 
   return (
     <section>
-      <ProgramBreadCrumbs name={name} />
+      <BreadCrumbs
+        homeName="Home"
+        homeLink="/"
+        previousName="Programs"
+        previousLink="/programs"
+        currentName={name}
+      />
       <div className="mt-6 flex flex-col gap-y-8">
-
         <div className="flex gap-x-4 items-center sm:items-baseline">
-          <Image src={image} alt={name} width={40} height={40} />
+          <Image
+            src={image}
+            alt={name}
+            width={40}
+            height={40}
+          />
           <h1 className="capitalize text-3xl font-bold"> {name}</h1>
         </div>
 

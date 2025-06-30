@@ -17,6 +17,7 @@ import { deleteProgramAction } from '@/actions/program/program-server-actions';
 import { fetchAdminPrograms } from '@/actions/program/program-client-actions';
 import { Program } from '@/types';
 import { PlusIcon } from 'lucide-react';
+import BreadCrumbs from '@/components/ui/BreadCrumbs';
 
 async function AdminProgramsPage() {
   const cookieStore = await cookies();
@@ -36,6 +37,13 @@ async function AdminProgramsPage() {
 
   return (
     <section>
+      <BreadCrumbs
+        homeName="Admin"
+        homeLink="/admin"
+        previousName="Programs"
+        previousLink="/admin/programs"
+        currentName="Programs"
+      />
     {success && <ToastMessage message={success} />}
   
     <div className="flex justify-between items-center mb-4">
@@ -52,7 +60,7 @@ async function AdminProgramsPage() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
+            <TableHead>Program</TableHead>
             <TableHead>Description</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>

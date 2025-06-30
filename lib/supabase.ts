@@ -10,6 +10,7 @@ export const Buckets = {
   PRODUCTS: 'mythguard-products',
   GUARDIANS: 'mythguard-guardians',
   PROGRAMS: 'mythguard-programs',
+  LOCATIONS: 'mythguard-locations',
 } as const;
 
 export type BucketName = keyof typeof Buckets;

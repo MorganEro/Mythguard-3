@@ -6,10 +6,18 @@ import FormInput from '@/components/form/FormInput';
 import ImageInput from '@/components/form/ImageInput';
 import PriceInput from '@/components/form/PriceInput';
 import TextAreaInput from '@/components/form/TextAreaInput';
+import BreadCrumbs from '@/components/ui/BreadCrumbs';
 
 function CreateProductPage() {
   return (
     <section>
+      <BreadCrumbs
+        homeName="Admin"
+        homeLink="/admin"
+        previousName="Products"
+        previousLink="/admin/products"
+        currentName="Create Product"
+      />
       <h1 className="text=2xl font-semibold mb-8 capitalize">create product</h1>
       <div className="border p-8 rounded-md">
         <FormContainer action={createProductAction}>

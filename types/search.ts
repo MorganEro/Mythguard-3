@@ -1,23 +1,28 @@
-export type SearchableEntity = 'products' | 'programs' | 'guardians' | 'events' | 'locations';
+export type SearchCategory =
+  | 'products'
+  | 'programs'
+  | 'guardians'
+  | 'events'
+  | 'locations';
 
-export interface SearchResult {
+export type SearchResult = {
   id: string;
-  type: SearchableEntity;
+  type: SearchCategory;
   name: string;
   description?: string;
   image?: string;
   url: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
-export interface SearchParams {
+export type SearchParams = {
   query: string;
-  types?: SearchableEntity[];
+  types?: SearchCategory[];
   page?: number;
   limit?: number;
 }
 
-export interface SearchResponse {
+export type SearchResponse = {
   results: SearchResult[];
   total: number;
   page: number;

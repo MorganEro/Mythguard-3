@@ -3,7 +3,7 @@
 import db from '@/lib/db';
 
 import { imageSchema, productSchema, validateWithZodSchema, type Product } from '@/types';
-import { currentUser } from '@clerk/nextjs/server';
+import { auth } from '@clerk/nextjs/server';
 import { deleteImage, uploadImage } from '@/lib/supabase';
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
@@ -21,7 +21,7 @@ export const createProductAction = async (
   prevState: unknown,
   formData: FormData
 ): Promise<{ message: string; redirectTo?: string }> => {
-  const user = await currentUser();
+  const { userId } = await auth();
   if (!checkRole('admin')) {
     return { message: 'Unauthorized. Admin access required.' };
   }
@@ -44,7 +44,7 @@ export const createProductAction = async (
       data: {
         ...validatedFields,
         image: uploadedImagePath,
-        clerkId: user?.id || '',
+        clerkId: userId || '',
       },
     });
 
@@ -174,9 +174,12 @@ export const updateProductImageAction = async (
 };
 
 export const fetchFavoriteId = async ({ productId }: { productId: string }) => {
-  const user = await currentUser();
+  const { userId } = await auth();
+  if (!userId) {
+    return { message: 'Unauthorized. Please sign in.' };
+  }
   const favorite = await db.favorite.findFirst({
-    where: { productId, clerkId: user?.id },
+    where: { productId, clerkId: userId },
     select: { id: true },
   });
   return favorite?.id || null;
@@ -189,9 +192,9 @@ export const toggleFavoriteAction = async (prevState: {
   pathname: string;
 }) => {
   const { productId, favoriteId, pathname, productName } = prevState;
-  const user = await currentUser();
+  const { userId } = await auth();
 
-  if (!user) {
+  if (!userId) {
     return { message: 'Unauthorized. Please log in.' };
   }
 
@@ -206,7 +209,7 @@ export const toggleFavoriteAction = async (prevState: {
       await db.favorite.create({
         data: {
           productId,
-          clerkId: user.id,
+          clerkId: userId,
         },
       });
     }
@@ -222,10 +225,14 @@ export const toggleFavoriteAction = async (prevState: {
 };
 
 export const fetchUserFavorites = async () => {
-  const user = await currentUser();
+  const { userId } = await auth();
+
+  if (!userId) {
+    return { message: 'Unauthorized. Please sign in.' };
+  }
 
   const favorites = await db.favorite.findMany({
-    where: { clerkId: user?.id },
+    where: { clerkId: userId },
     include: { product: true },
   });
   return favorites;

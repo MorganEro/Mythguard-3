@@ -5,8 +5,13 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { checkRole } from '@/lib/roles';
-import { currentUser } from '@clerk/nextjs/server';
-import { imageSchema, programSchema, validateWithZodSchema, type Program } from '@/types';
+import { auth } from '@clerk/nextjs/server';
+import {
+  imageSchema,
+  programSchema,
+  validateWithZodSchema,
+  type Program,
+} from '@/types';
 import { deleteImage, uploadImage } from '@/lib/supabase';
 const renderError = (error: unknown): { message: string } => {
   return {
@@ -19,7 +24,6 @@ export const createProgramAction = async (
   prevState: unknown,
   formData: FormData
 ): Promise<{ message: string; redirectTo?: string }> => {
-  const user = await currentUser();
   if (!checkRole('admin')) {
     return { message: 'Unauthorized. Admin access required.' };
   }
@@ -125,7 +129,10 @@ export const updateProgramImageAction = async (
     const oldImageUrl = formData.get('url') as string;
 
     const validatedFile = validateWithZodSchema(imageSchema, { image });
-    const uploadedImagePath = await uploadImage(validatedFile.image, 'PROGRAMS');
+    const uploadedImagePath = await uploadImage(
+      validatedFile.image,
+      'PROGRAMS'
+    );
     await deleteImage(oldImageUrl, 'PROGRAMS');
     await db.program.update({
       where: {
@@ -146,9 +153,9 @@ export const updateProgramImageAction = async (
   }
 };
 
-export const deleteProgramAction = async (
-  prevState: { programId: string }
-): Promise<{ message: string }> => {
+export const deleteProgramAction = async (prevState: {
+  programId: string;
+}): Promise<{ message: string }> => {
   if (!checkRole('admin')) {
     return { message: 'Unauthorized. Admin access required.' };
   }
@@ -165,5 +172,6 @@ export const deleteProgramAction = async (
   }
 };
 
-
-
+export const fetchRelatedGuardians = async (
+  programId: string
+): Promise<Guardian[] | ErrorMessage> => await db.guardian.findMany({});

@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { checkRole } from '@/lib/roles';
-import { currentUser } from '@clerk/nextjs/server';
+import { auth, currentUser } from '@clerk/nextjs/server';
 import { imageSchema, guardianSchema, validateWithZodSchema, type Guardian } from '@/types';
 import { deleteImage, uploadImage } from '@/lib/supabase';
 const renderError = (error: unknown): { message: string } => {
@@ -19,7 +19,6 @@ export const createGuardianAction = async (
   prevState: unknown,
   formData: FormData
 ): Promise<{ message: string; redirectTo?: string }> => {
-  const user = await currentUser();
   if (!checkRole('admin')) {
     return { message: 'Unauthorized. Admin access required.' };
   }
@@ -166,9 +165,13 @@ export const deleteGuardianAction = async (
 };
 
 export const fetchLikeId = async ({ guardianId }: { guardianId: string }) => {
-  const user = await currentUser();
+  const { userId} = await auth();
+
+  if (!userId) {
+    return { message: 'Unauthorized. Please sign in.' };
+  }
   const like = await db.like.findFirst({
-    where: { guardianId, clerkId: user?.id },
+    where: { guardianId, clerkId: userId },
     select: { id: true },
   });
   return like?.id || null;
@@ -181,12 +184,12 @@ export const toggleLikeAction = async (prevState: {
   pathname: string;
 }) => {
   const { guardianId, likeId, pathname, guardianName } = prevState;
-  const user = await currentUser();
+  const { userId} = await auth();
 
-  if (!user) {
-    return { message: 'Unauthorized. Please log in.' };
+  if (!userId) {
+    return { message: 'Unauthorized. Please sign in.' };
   }
-
+  
   try {
     if (likeId) {
       // Remove favorite
@@ -198,7 +201,7 @@ export const toggleLikeAction = async (prevState: {
       await db.like.create({
         data: {
           guardianId,
-          clerkId: user.id,
+          clerkId: userId,
         },
       });
     }
@@ -214,10 +217,14 @@ export const toggleLikeAction = async (prevState: {
 };
 
 export const fetchUserLikes = async () => {
-  const user = await currentUser();
+  const { userId} = await auth();
+
+  if (!userId) {
+    return { message: 'Unauthorized. Please sign in.' };
+  }
 
   const likes = await db.like.findMany({
-    where: { clerkId: user?.id },
+    where: { clerkId: userId },
     include: { guardian: true },
   });
   return likes;
