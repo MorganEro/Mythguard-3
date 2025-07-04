@@ -4,11 +4,18 @@ import { fetchUserFavorites } from '@/actions/product/product-server-actions';
 
 async function FavoritesPage() {
   const favorites = await fetchUserFavorites();
-  if (!favorites || favorites.length === 0)
+  
+ if ('message' in favorites) {
+    return console.error(favorites.message);
+  }
+  
+  if (favorites.length === 0) {
     return <SectionTitle text="You have no favorites yet." />;
+  }
+
   return (
     <div>
-      <SectionTitle text="Your FavoriteProducts" />
+      <SectionTitle text="Your Favorite Products" />
       <ProductsGrid products={favorites.map(favorite => favorite.product)} />
     </div>
   );

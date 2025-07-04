@@ -14,6 +14,23 @@ import {
 import { deleteImage, uploadImage } from '@/lib/supabase';
 import { renderError } from '@/lib/utils/error';
 
+export const fetchAllLocations = async ({ search = '' }: { search: string }) => {
+  return db.location.findMany({
+      where: {
+          OR: [
+              {
+                  name: {
+                      contains: search,
+                      mode: 'insensitive',
+                  },
+              },
+          ],
+      },
+      orderBy: {
+          name: 'asc',
+      },
+  });
+};
 
 export const fetchAdminLocations = async () => {
   const locations = await db.location.findMany({

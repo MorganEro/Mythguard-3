@@ -12,7 +12,7 @@ async function LikeToggleButton({
 }) {
   const { userId } = await auth();
   if (!userId) return <CardSignInButton />;
-  const likeId = await fetchLikeId({ guardianId });
+  const likeId = await fetchLikeId({ guardianId }) as string;
 
   return (
     <LikeToggleForm
