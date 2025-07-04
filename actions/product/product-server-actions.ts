@@ -16,6 +16,24 @@ import { redirect } from 'next/navigation';
 import { checkRole } from '@/lib/roles';
 import { renderError } from '@/lib/utils/error';
 
+export const fetchAllProducts = async ({ search = '' }: { search: string }) => {
+  return db.product.findMany({
+      where: {
+          OR: [
+              {
+                  name: {
+                      contains: search,
+                      mode: 'insensitive',
+                  },
+              },
+          ],
+      },
+      orderBy: {
+          name: 'asc',
+      },
+  });
+};
+
 
 export const fetchFeaturedProducts = async () => {
   const products = await db.product.findMany({

@@ -14,37 +14,7 @@ import {
 import { deleteImage, uploadImage } from '@/lib/supabase';
 import { renderError } from '@/lib/utils/error';
 
-export const fetchAllLocations = ({ search = '' }: { search: string }) => {
-  return db.location.findMany({
-      where: {
-          OR: [
-              {
-                  name: {
-                      contains: search,
-                      mode: 'insensitive',
-                  },
-              },
-          ],
-      },
-      select: {
-        id: true,
-        name: true,
-        subtitle: true,
-        shortDescription: true,
-        description: true,
-        address: true,
-        image: true,
-        mapIcon: true,
-        lat: true,
-        lng: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-      orderBy: {
-          name: 'asc',
-      },
-  });
-};
+
 export const fetchAdminLocations = async () => {
   const locations = await db.location.findMany({
       select: {

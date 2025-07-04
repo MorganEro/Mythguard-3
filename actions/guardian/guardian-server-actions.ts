@@ -15,7 +15,7 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-export const fetchAllGuardians = ({ search = '' }: { search: string }) => {
+export const fetchAllGuardians = async ({ search = '' }: { search: string }) => {
   return db.guardian.findMany({
       where: {
           OR: [

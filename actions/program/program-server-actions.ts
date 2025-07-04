@@ -15,21 +15,21 @@ import {
 import { deleteImage, uploadImage } from '@/lib/supabase';
 import { renderError } from '@/lib/utils/error';
 
-export const fetchAllPrograms = ({ search = '' }: { search: string }) => {
+export const fetchAllPrograms = async ({ search = '' }: { search: string }) => {
   return db.program.findMany({
-    where: {
-      OR: [
-        {
-          name: {
-            contains: search,
-            mode: 'insensitive',
-          },
-        },
-      ],
-    },
-    orderBy: {
-      name: 'asc',
-    },
+      where: {
+          OR: [
+              {
+                  name: {
+                      contains: search,
+                      mode: 'insensitive',
+                  },
+              },
+          ],
+      },
+      orderBy: {
+          name: 'asc',
+      },
   });
 };
 export const fetchAdminPrograms = async () => {
