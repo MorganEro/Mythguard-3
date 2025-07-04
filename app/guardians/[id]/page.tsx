@@ -1,5 +1,5 @@
 import GuardianRating from '@/components/guardians/single-guardian/GuardianRating';
-import { fetchSingleGuardian } from '@/actions/guardian/guardian-client-actions';
+import { fetchSingleGuardian } from '@/actions/guardian/guardian-server-actions';
 import LikeToggleButton from '@/components/guardians/LikeToggleButton';
 import CreateContract from '@/components/guardians/single-guardian/CreateContract';
 import ZoomableImage from '@/components/ui/zoomable-image';

@@ -2,7 +2,7 @@ import BreadCrumbs from '@/components/ui/BreadCrumbs';
 import FavoriteToggleButton from '@/components/products/FavoriteToggleButton';
 import AddToCart from '@/components/products/single-product/AddToCart';
 import ProductRating from '@/components/products/single-product/ProductRating';
-import { fetchSingleProduct } from '@/actions/product/product-client-actions';
+import { fetchSingleProduct } from '@/actions/product/product-server-actions';
 import { formatCurrency } from '@/lib/format';
 import ZoomableImage from '@/components/ui/zoomable-image';
 import SubmitReview from '@/components/reviews/SubmitReview';

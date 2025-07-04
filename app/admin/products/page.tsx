@@ -14,7 +14,7 @@ import { IconButton } from '@/components/form/Button';
 import FormContainer from '@/components/form/FormContainer';
 import ToastMessage from '@/components/global/ToastMessage';
 import { deleteProductAction } from '@/actions/product/product-server-actions';
-import { fetchAdminProducts } from '@/actions/product/product-client-actions';
+import { fetchAdminProducts } from '@/actions/product/product-server-actions';
 import { formatCurrency } from '@/lib/format';
 import { Product } from '@/types';
 import { PlusIcon } from 'lucide-react';

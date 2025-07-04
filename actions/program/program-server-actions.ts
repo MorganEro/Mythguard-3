@@ -5,20 +5,54 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { checkRole } from '@/lib/roles';
-import { auth } from '@clerk/nextjs/server';
 import {
+  Guardian,
   imageSchema,
   programSchema,
   validateWithZodSchema,
   type Program,
 } from '@/types';
 import { deleteImage, uploadImage } from '@/lib/supabase';
-const renderError = (error: unknown): { message: string } => {
-  return {
-    message:
-      error instanceof Error ? error.message : 'An unexpected error occurred',
-  };
+import { renderError } from '@/lib/utils/error';
+
+export const fetchAllPrograms = ({ search = '' }: { search: string }) => {
+  return db.program.findMany({
+    where: {
+      OR: [
+        {
+          name: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+      ],
+    },
+    orderBy: {
+      name: 'asc',
+    },
+  });
 };
+export const fetchAdminPrograms = async () => {
+  const programs = await db.program.findMany({
+    orderBy: {
+      name: 'asc',
+    },
+  });
+  return programs;
+};
+export const fetchSingleProgram = async (programId: string) => {
+  const program = await db.program.findUnique({
+    where: {
+      id: programId,
+    },
+  });
+
+  if (!program) redirect('/programs');
+
+  return program;
+};
+
+
 
 export const createProgramAction = async (
   prevState: unknown,
@@ -27,12 +61,24 @@ export const createProgramAction = async (
   if (!checkRole('admin')) {
     return { message: 'Unauthorized. Admin access required.' };
   }
+  console.log('Creating program with formData:', formData);
 
   let uploadedImagePath: string | undefined;
 
   try {
     const rawData = Object.fromEntries(formData);
-    const validatedFields = validateWithZodSchema(programSchema, rawData);
+    const guardianIdsRaw = formData.getAll('guardianIds');
+    const guardianIds = guardianIdsRaw
+      .flatMap(ids => ids.toString().split(','))
+      .filter(Boolean);
+    const dataWithGuardians = {
+      ...rawData,
+      guardians: guardianIds,
+    };
+    const validatedFields = validateWithZodSchema(
+      programSchema,
+      dataWithGuardians
+    );
 
     const file = formData.get('image') as File;
     const validatedFile = validateWithZodSchema(imageSchema, {
@@ -45,6 +91,9 @@ export const createProgramAction = async (
       data: {
         ...validatedFields,
         image: uploadedImagePath,
+        guardians: guardianIds.length
+          ? { connect: guardianIds.map(id => ({ id })) }
+          : undefined,
       },
     });
 
@@ -97,7 +146,19 @@ export const updateProgramAction = async (
   try {
     const programId = formData.get('id') as string;
     const rawData = Object.fromEntries(formData);
-    const validatedFields = validateWithZodSchema(programSchema, rawData);
+
+    const guardianIdsRaw = formData.getAll('guardianIds');
+    const guardianIds = guardianIdsRaw
+      .flatMap(ids => ids.toString().split(','))
+      .filter(Boolean);
+    const dataWithGuardians = {
+      ...rawData,
+      guardians: guardianIds,
+    };
+    const validatedFields = validateWithZodSchema(
+      programSchema,
+      dataWithGuardians
+    );
 
     await db.program.update({
       where: {
@@ -105,6 +166,10 @@ export const updateProgramAction = async (
       },
       data: {
         ...validatedFields,
+        guardians: {
+          set: [],
+          connect: guardianIds.map(id => ({ id })),
+        },
       },
     });
     revalidatePath(`/admin/programs/${programId}/edit`);
@@ -174,4 +239,25 @@ export const deleteProgramAction = async (prevState: {
 
 export const fetchRelatedGuardians = async (
   programId: string
-): Promise<Guardian[] | ErrorMessage> => await db.guardian.findMany({});
+): Promise<Guardian[] | ErrorMessage> => {
+  if (!checkRole('admin')) {
+    return { message: 'Unauthorized. Admin access required.' };
+  }
+  try {
+    const programs = await db.program.findMany({
+      where: {
+        id: programId,
+      },
+      select: {
+        guardians: true,
+      },
+    });
+    const guardians = programs.length > 0 ? programs[0].guardians : [];
+    if (guardians.length === 0) {
+      return [];
+    }
+    return guardians;
+  } catch (error) {
+    return renderError(error);
+  }
+};

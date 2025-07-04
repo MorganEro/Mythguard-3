@@ -1,6 +1,6 @@
 'use client';
-import { AiOutlineLike } from "react-icons/ai";
-import { AiFillLike } from "react-icons/ai";
+import { AiOutlineLike } from 'react-icons/ai';
+import { AiFillLike } from 'react-icons/ai';
 import { IoReload } from 'react-icons/io5';
 import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
@@ -8,7 +8,12 @@ import { FaRegHeart, FaHeart } from 'react-icons/fa';
 import { LuTrash2 } from 'react-icons/lu';
 import { LiaEditSolid } from 'react-icons/lia';
 import { SignInButton } from '@clerk/nextjs';
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 type btnSize = 'default' | 'lg' | 'sm';
 
@@ -104,40 +109,71 @@ export const LikeSignInButton = () => {
     </SignInButton>
   );
 };
+export const CartSignInButton = () => {
+  return (
+    <SignInButton mode="modal">
+      <Button
+        type="button"
+        className="mt-8 capitalize">
+        sign in
+      </Button>
+    </SignInButton>
+  );
+};
 
 export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
   const { pending } = useFormStatus();
   return (
-    <Button
-      type="submit"
-      size="icon"
-      variant="outline"
-      className="p-2 cursor-pointer">
-      {pending ? (
-        <IoReload className="mr-2 h-4 w-4 animate-spin" />
-      ) : isFavorite ? (
-        <FaHeart className="text-orange-700" />
-      ) : (
-        <FaRegHeart />
-      )}
-    </Button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          type="submit"
+          size="icon"
+          variant="outline"
+          className="p-2 cursor-pointer">
+          {pending ? (
+            <IoReload className="mr-2 h-4 w-4 animate-spin" />
+          ) : isFavorite ? (
+            <FaHeart className="text-orange-700" />
+          ) : (
+            <FaRegHeart />
+          )}
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>
+          {pending
+            ? 'Please wait...'
+            : isFavorite
+            ? 'Favorite'
+            : 'Add to Favorite'}
+        </p>
+      </TooltipContent>
+    </Tooltip>
   );
 };
 export const LikeSubmitButton = ({ isLiked }: { isLiked: boolean }) => {
   const { pending } = useFormStatus();
   return (
-    <Button
-      type="submit"
-      size="icon"
-      variant="outline"
-      className="p-2 cursor-pointer">
-      {pending ? (
-        <IoReload className="mr-2 h-4 w-4 animate-spin" />
-      ) : isLiked ? (
-        <AiFillLike className="text-yellow-500" />
-      ) : (
-        <AiOutlineLike />
-      )}
-    </Button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          type="submit"
+          size="icon"
+          variant="outline"
+          className="p-2 cursor-pointer">
+          {pending ? (
+            <IoReload className="mr-2 h-4 w-4 animate-spin" />
+          ) : isLiked ? (
+            <AiFillLike className="text-yellow-500" />
+          ) : (
+            <AiOutlineLike />
+          )}
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>{pending ? 'Please wait...' : isLiked ? 'Liked' : 'Like'}</p>
+      </TooltipContent>
+    </Tooltip>
   );
 };

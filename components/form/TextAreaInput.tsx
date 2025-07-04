@@ -9,10 +9,10 @@ type TextAreaInputProps = {
 
 function TextAreaInput({ name, labelText, defaultValue }: TextAreaInputProps) {
   return (
-    <div className="grid w-full items-center gap-2 mb-2">
+    <div className="grid w-full gap-2 mb-2 items-start content-start">
       <Label
         htmlFor={name}
-        className="capitalize">
+        className="capitalize h-fit">
         {labelText || name}
       </Label>
       <Textarea

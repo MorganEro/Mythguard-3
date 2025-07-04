@@ -1,6 +1,6 @@
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
-import { fetchAllPrograms } from '@/actions/program/program-client-actions';
+import { fetchAllPrograms } from '@/actions/program/program-server-actions';
 import { Card, CardContent } from '../ui/card';
 import Image from 'next/image';
 

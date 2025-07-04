@@ -1,4 +1,4 @@
-import { fetchSingleLocation } from '@/actions/location/location-client-actions';
+import { fetchSingleLocation } from '@/actions/location/location-server-actions';
 import ZoomableImage from '@/components/ui/zoomable-image';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
 

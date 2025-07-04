@@ -14,7 +14,7 @@ import { IconButton } from '@/components/form/Button';
 import FormContainer from '@/components/form/FormContainer';
 import ToastMessage from '@/components/global/ToastMessage';
 import { deleteLocationAction } from '@/actions/location/location-server-actions';
-import { fetchAdminLocations } from '@/actions/location/location-client-actions';
+import { fetchAdminLocations } from '@/actions/location/location-server-actions';
 import { Location } from '@/types';
 import { PlusIcon } from 'lucide-react';
 

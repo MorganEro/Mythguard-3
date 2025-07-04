@@ -6,19 +6,46 @@ import DarkMode from './DarkMode';
 import LinksDropDown from './LinksDropDown';
 import Logo from './Logo';
 import NavSearch from './NavSearch';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 function Navbar() {
   return (
     <nav className="border-b">
       <Container className="flex flex-col sm:flex-row sm:justify-between sm:items-center flex-wrap gap-4 py-8">
-        <Logo />
+        <Tooltip>
+          <TooltipTrigger>
+            <Logo />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Home Page</p>
+          </TooltipContent>
+        </Tooltip>
 
         <div className="flex gap-4 items-center sm:order-last">
-          <ContractButton />
-          <CartButton />
+          <Tooltip>
+            <TooltipTrigger>
+              <ContractButton />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Contracts</p>
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger>
+              <CartButton />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Cart</p>
+            </TooltipContent>
+          </Tooltip>
           <DarkMode />
           <div className="ml-auto">
             <LinksDropDown />
+           
           </div>
         </div>
         <Suspense>

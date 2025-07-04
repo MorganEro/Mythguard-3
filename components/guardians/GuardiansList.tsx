@@ -18,21 +18,23 @@ function GuardiansList({ guardians }: { guardians: Guardian[] }) {
             <Link href={`/guardians/${guardianId}`}>
               <Card className="transform group-hover:shadow-xl transition-shadow duration-500 max-w-[50rem]">
                 <CardContent className="p-8 gap-y-4 flex flex-col md:flex-row md:gap-x-4">
-                  <div className="flex-shrink-0 w-full md:w-[10rem]"> 
-                  <div className="relative aspect-[4/5] w-full overflow-hidden">
-                    <Image
-                      src={image}
-                      alt={name}
-                      fill
-                      className="rounded-md object-cover object-top"
-                      sizes="(max-width:768px) 100vw, (max-width:1200px) 10vw, 12vw"
-                      priority
-                    />
-                  </div>
+                  <div className="flex-shrink-0 w-full md:w-[10rem]">
+                    <div className="relative aspect-[4/5] w-full overflow-hidden">
+                      <Image
+                        src={image}
+                        alt={name}
+                        fill
+                        className="rounded-md object-cover object-top"
+                        sizes="(max-width:768px) 100vw, (max-width:1200px) 10vw, 12vw"
+                        priority
+                      />
+                    </div>
                   </div>
                   <div className="flex flex-col p-4 gap-y-2 md:gap-y-4 md:mt-4">
                     <h2 className="text-xl font-semibold capitalize">{name}</h2>
-                    <p className="text-muted-foreground mt-2">{shortDescription}</p>
+                    <p className="text-muted-foreground mt-2">
+                      {shortDescription}
+                    </p>
                   </div>
                 </CardContent>
               </Card>

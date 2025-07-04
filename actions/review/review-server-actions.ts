@@ -6,13 +6,8 @@ import { ReviewAllResponse } from '@/types';
 import db from '@/lib/db';
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
+import { renderError } from '@/lib/utils/error';
 
-const renderError = (error: unknown): { message: string } => {
-  return {
-    message:
-      error instanceof Error ? error.message : 'An unexpected error occurred',
-  };
-};
 const fieldMap = {
   product: 'productId',
   guardian: 'guardianId',

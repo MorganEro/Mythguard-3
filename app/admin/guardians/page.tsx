@@ -14,7 +14,7 @@ import { IconButton } from '@/components/form/Button';
 import FormContainer from '@/components/form/FormContainer';
 import ToastMessage from '@/components/global/ToastMessage';
 import { deleteGuardianAction } from '@/actions/guardian/guardian-server-actions';
-import { fetchAdminGuardians } from '@/actions/guardian/guardian-client-actions';
+import { fetchAdminGuardians } from '@/actions/guardian/guardian-server-actions';
 import { Guardian } from '@/types';
 import { PlusIcon } from 'lucide-react';
 

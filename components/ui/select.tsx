@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
+import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
+import Image from 'next/image';
 
 import { cn } from '@/lib/utils';
 
@@ -119,9 +120,14 @@ function SelectItem({
         className
       )}
       {...props}>
-      <span className="absolute right-2 flex size-3.5 items-center justify-center">
+      <span className="absolute right-2 flex size-7.5 items-center justify-center">
         <SelectPrimitive.ItemIndicator>
-          <CheckIcon className="size-4" />
+          <Image
+            src="/images/mythguard-emblem.svg"
+            alt="Selected"
+            width={30}
+            height={30}
+          />
         </SelectPrimitive.ItemIndicator>
       </span>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>

@@ -1,4 +1,9 @@
-import { fetchAdminProgramDetails, updateProgramAction, updateProgramImageAction } from '@/actions/program/program-server-actions';
+import {
+  fetchAdminProgramDetails,
+  fetchRelatedGuardians,
+  updateProgramAction,
+  updateProgramImageAction,
+} from '@/actions/program/program-server-actions';
 import { SubmitButton } from '@/components/form/Button';
 import FormContainer from '@/components/form/FormContainer';
 import FormInput from '@/components/form/FormInput';
@@ -6,6 +11,8 @@ import ImageInputContainer from '@/components/form/ImageInputContainer';
 import TextAreaInput from '@/components/form/TextAreaInput';
 import { Button } from '@/components/ui/button';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
+import { GuardianSelector } from '@/components/form/GuardianSelector';
+import { fetchAdminGuardians } from '@/actions/guardian/guardian-server-actions';
 
 async function EditProgramPage({
   params,
@@ -14,15 +21,17 @@ async function EditProgramPage({
 }) {
   const { id } = await params;
   const program = await fetchAdminProgramDetails(id);
+  const guardians = await fetchAdminGuardians();
+  const relatedGuardians = await fetchRelatedGuardians(id);
 
   if ('message' in program) {
     return <div>{program.message}</div>;
+  }
+
+  if ('message' in relatedGuardians) {
+    return <div>{relatedGuardians.message}</div>;
   } else {
-    const {
-      id: programId,
-      name,
-      description,
-    } = program;
+    const { id: programId, name, description } = program;
 
     return (
       <section>
@@ -71,6 +80,12 @@ async function EditProgramPage({
                 labelText="Program Description"
                 defaultValue={description}
               />
+              <div className="grid md:w-1/2">
+                <GuardianSelector
+                  guardians={guardians}
+                  selectedGuardians={relatedGuardians}
+                />
+              </div>
               <div className="mt-6">
                 <Button
                   type="reset"

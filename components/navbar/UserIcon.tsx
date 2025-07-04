@@ -15,7 +15,6 @@ function UserIcon() {
         width={24}
         height={24}
         priority
-        unoptimized
         referrerPolicy="no-referrer"
       />
     );

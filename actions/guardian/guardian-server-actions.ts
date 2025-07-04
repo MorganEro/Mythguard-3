@@ -1,18 +1,55 @@
 'use server';
 
 import db from '@/lib/db';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
-import { cookies } from 'next/headers';
 import { checkRole } from '@/lib/roles';
-import { auth, currentUser } from '@clerk/nextjs/server';
-import { imageSchema, guardianSchema, validateWithZodSchema, type Guardian } from '@/types';
 import { deleteImage, uploadImage } from '@/lib/supabase';
-const renderError = (error: unknown): { message: string } => {
-  return {
-    message:
-      error instanceof Error ? error.message : 'An unexpected error occurred',
-  };
+import { renderError } from '@/lib/utils/error';
+import {
+  guardianSchema,
+  imageSchema,
+  validateWithZodSchema,
+  type Guardian,
+} from '@/types';
+import { auth } from '@clerk/nextjs/server';
+import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+
+export const fetchAllGuardians = ({ search = '' }: { search: string }) => {
+  return db.guardian.findMany({
+      where: {
+          OR: [
+              {
+                  name: {
+                      contains: search,
+                      mode: 'insensitive',
+                  },
+              },
+          ],
+      },
+      orderBy: {
+          name: 'asc',
+      },
+  });
+};
+export const fetchAdminGuardians = async () => {
+  const guardians = await db.guardian.findMany({
+      orderBy: {
+          name: 'asc',
+      },
+  });
+  return guardians;
+};
+export const fetchSingleGuardian = async (guardianId: string) => {
+  const guardian = await db.guardian.findUnique({
+      where: {
+          id: guardianId,
+      },
+  });
+
+  if (!guardian) redirect('/guardians');
+
+  return guardian;
 };
 
 export const createGuardianAction = async (
@@ -124,7 +161,10 @@ export const updateGuardianImageAction = async (
     const oldImageUrl = formData.get('url') as string;
 
     const validatedFile = validateWithZodSchema(imageSchema, { image });
-    const uploadedImagePath = await uploadImage(validatedFile.image, 'GUARDIANS');
+    const uploadedImagePath = await uploadImage(
+      validatedFile.image,
+      'GUARDIANS'
+    );
     await deleteImage(oldImageUrl, 'GUARDIANS');
     await db.guardian.update({
       where: {
@@ -145,9 +185,9 @@ export const updateGuardianImageAction = async (
   }
 };
 
-export const deleteGuardianAction = async (
-  prevState: { guardianId: string }
-): Promise<{ message: string }> => {
+export const deleteGuardianAction = async (prevState: {
+  guardianId: string;
+}): Promise<{ message: string }> => {
   if (!checkRole('admin')) {
     return { message: 'Unauthorized. Admin access required.' };
   }
@@ -165,7 +205,7 @@ export const deleteGuardianAction = async (
 };
 
 export const fetchLikeId = async ({ guardianId }: { guardianId: string }) => {
-  const { userId} = await auth();
+  const { userId } = await auth();
 
   if (!userId) {
     return { message: 'Unauthorized. Please sign in.' };
@@ -184,12 +224,12 @@ export const toggleLikeAction = async (prevState: {
   pathname: string;
 }) => {
   const { guardianId, likeId, pathname, guardianName } = prevState;
-  const { userId} = await auth();
+  const { userId } = await auth();
 
   if (!userId) {
     return { message: 'Unauthorized. Please sign in.' };
   }
-  
+
   try {
     if (likeId) {
       // Remove favorite
@@ -217,7 +257,7 @@ export const toggleLikeAction = async (prevState: {
 };
 
 export const fetchUserLikes = async () => {
-  const { userId} = await auth();
+  const { userId } = await auth();
 
   if (!userId) {
     return { message: 'Unauthorized. Please sign in.' };

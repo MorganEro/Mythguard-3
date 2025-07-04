@@ -2,21 +2,52 @@
 
 import db from '@/lib/db';
 
-import { imageSchema, productSchema, validateWithZodSchema, type Product } from '@/types';
+import {
+  imageSchema,
+  productSchema,
+  validateWithZodSchema,
+  type Product,
+} from '@/types';
 import { auth } from '@clerk/nextjs/server';
 import { deleteImage, uploadImage } from '@/lib/supabase';
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { checkRole } from '@/lib/roles';
+import { renderError } from '@/lib/utils/error';
 
-const renderError = (error: unknown): { message: string } => {
-  return {
-    message:
-      error instanceof Error ? error.message : 'An unexpected error occurred',
-  };
+
+export const fetchFeaturedProducts = async () => {
+  const products = await db.product.findMany({
+      where: {
+          featured: true,
+      },
+  });
+  return products;
 };
 
+
+
+export const fetchSingleProduct = async (productId: string) => {
+  const product = await db.product.findUnique({
+      where: {
+          id: productId,
+      },
+  });
+
+  if (!product) redirect('/products');
+
+  return product;
+};
+
+export const fetchAdminProducts = async () => {
+  const products = await db.product.findMany({
+      orderBy: {
+          createdAt: 'desc',
+      },
+  });
+  return products;
+};
 export const createProductAction = async (
   prevState: unknown,
   formData: FormData
@@ -152,7 +183,10 @@ export const updateProductImageAction = async (
     const oldImageUrl = formData.get('url') as string;
 
     const validatedFile = validateWithZodSchema(imageSchema, { image });
-    const uploadedImagePath = await uploadImage(validatedFile.image, 'PRODUCTS');
+    const uploadedImagePath = await uploadImage(
+      validatedFile.image,
+      'PRODUCTS'
+    );
     await deleteImage(oldImageUrl, 'PRODUCTS');
     await db.product.update({
       where: {

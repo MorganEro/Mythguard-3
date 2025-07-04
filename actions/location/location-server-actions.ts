@@ -5,21 +5,84 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { checkRole } from '@/lib/roles';
-import { currentUser } from '@clerk/nextjs/server';
-import { imageSchema, locationSchema, validateWithZodSchema, type Location } from '@/types';
+import {
+  imageSchema,
+  locationSchema,
+  validateWithZodSchema,
+  type Location,
+} from '@/types';
 import { deleteImage, uploadImage } from '@/lib/supabase';
-const renderError = (error: unknown): { message: string } => {
-  return {
-    message:
-      error instanceof Error ? error.message : 'An unexpected error occurred',
-  };
+import { renderError } from '@/lib/utils/error';
+
+export const fetchAllLocations = ({ search = '' }: { search: string }) => {
+  return db.location.findMany({
+      where: {
+          OR: [
+              {
+                  name: {
+                      contains: search,
+                      mode: 'insensitive',
+                  },
+              },
+          ],
+      },
+      select: {
+        id: true,
+        name: true,
+        subtitle: true,
+        shortDescription: true,
+        description: true,
+        address: true,
+        image: true,
+        mapIcon: true,
+        lat: true,
+        lng: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+      orderBy: {
+          name: 'asc',
+      },
+  });
+};
+export const fetchAdminLocations = async () => {
+  const locations = await db.location.findMany({
+      select: {
+        id: true,
+        name: true,
+        subtitle: true,
+        shortDescription: true,
+        description: true,
+        address: true,
+        image: true,
+        mapIcon: true,
+        lat: true,
+        lng: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+      orderBy: {
+          name: 'asc',
+      },
+  });
+  return locations;
+};
+export const fetchSingleLocation = async (locationId: string) => {
+  const location = await db.location.findUnique({
+      where: {
+          id: locationId,
+      },
+  });
+
+  if (!location) redirect('/locations');
+
+  return location;
 };
 
 export const createLocationAction = async (
   prevState: unknown,
   formData: FormData
 ): Promise<{ message: string; redirectTo?: string }> => {
-  const user = await currentUser();
   if (!checkRole('admin')) {
     return { message: 'Unauthorized. Admin access required.' };
   }
@@ -32,13 +95,17 @@ export const createLocationAction = async (
 
     const imageFile = formData.get('image') as File;
     const mapIconFile = formData.get('mapIcon') as File;
-    
-    const validatedImage = validateWithZodSchema(imageSchema, { image: imageFile });
-    const validatedMapIcon = validateWithZodSchema(imageSchema, { image: mapIconFile });
+
+    const validatedImage = validateWithZodSchema(imageSchema, {
+      image: imageFile,
+    });
+    const validatedMapIcon = validateWithZodSchema(imageSchema, {
+      image: mapIconFile,
+    });
 
     const [uploadedImage, uploadedMapIcon] = await Promise.all([
       uploadImage(validatedImage.image, 'LOCATIONS'),
-      uploadImage(validatedMapIcon.image, 'LOCATIONS')
+      uploadImage(validatedMapIcon.image, 'LOCATIONS'),
     ]);
 
     uploadedImagePath = uploadedImage;
@@ -132,7 +199,10 @@ export const updateLocationImageAction = async (
     const oldImageUrl = formData.get('url') as string;
 
     const validatedFile = validateWithZodSchema(imageSchema, { image });
-    const uploadedImagePath = await uploadImage(validatedFile.image, 'LOCATIONS');
+    const uploadedImagePath = await uploadImage(
+      validatedFile.image,
+      'LOCATIONS'
+    );
     await deleteImage(oldImageUrl, 'LOCATIONS');
     const field = formData.get('field') as 'image' | 'mapIcon';
     await db.location.update({
@@ -154,9 +224,9 @@ export const updateLocationImageAction = async (
   }
 };
 
-export const deleteLocationAction = async (
-  prevState: { locationId: string }
-): Promise<{ message: string }> => {
+export const deleteLocationAction = async (prevState: {
+  locationId: string;
+}): Promise<{ message: string }> => {
   if (!checkRole('admin')) {
     return { message: 'Unauthorized. Admin access required.' };
   }
@@ -172,6 +242,3 @@ export const deleteLocationAction = async (
     return renderError(error);
   }
 };
-
-
-

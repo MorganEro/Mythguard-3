@@ -4,8 +4,11 @@ import FormContainer from '@/components/form/FormContainer';
 import FormInput from '@/components/form/FormInput';
 import ImageInput from '@/components/form/ImageInput';
 import TextAreaInput from '@/components/form/TextAreaInput';
+import { fetchAdminGuardians } from '@/actions/guardian/guardian-server-actions';
+import { GuardianSelector } from '@/components/form/GuardianSelector';
 
-function CreateProgramPage() {
+async function CreateProgramPage() {
+  const guardians = await fetchAdminGuardians();
   return (
     <section>
       <h1 className="text-2xl font-semibold mb-8 capitalize">create program</h1>
@@ -24,7 +27,7 @@ function CreateProgramPage() {
               labelText="Program Description"
               defaultValue=""
             />
-
+            <GuardianSelector guardians={guardians} />
             <SubmitButton
               text="Create Program"
               className="mt-8"

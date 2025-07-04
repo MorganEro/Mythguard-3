@@ -9,6 +9,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import {
   agencyLinks,
   guardiansLinks,
   links,
@@ -35,14 +40,21 @@ function LinksDropDown() {
   const iconClassName = 'w-4 h-4 text-inherit col-span-1';
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          className="flex gap-4 max-w-[100px] group">
-          <RxDoubleArrowDown className="w-7 h-7 text-orange-500 transition-transform group-data-[state=open]:rotate-180" />
-          <UserIcon />
-        </Button>
-      </DropdownMenuTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="outline"
+              className="flex gap-4 max-w-[100px] group">
+              <RxDoubleArrowDown className="w-7 h-7 text-orange-500 transition-transform group-data-[state=open]:rotate-180" />
+              <UserIcon />
+            </Button>
+          </DropdownMenuTrigger>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Links</p>
+        </TooltipContent>
+      </Tooltip>
       <DropdownMenuContent
         className="w-40"
         align="start"

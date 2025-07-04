@@ -1,19 +1,22 @@
 'use client';
 
-import { fetchAllReviewsByUser, fetchReviewByUserAndCategory } from "@/actions/review/review-server-actions";
-import { ReviewAllResponse, ReviewCategory } from "@/types";
-import { useState, useEffect } from "react";
-import CategoryFilter from "@/components/ui/categoryFilter";
-import ReviewCard from "@/components/reviews/ReviewCard";
-import LoadingReviews from "@/components/global/loadingPages/LoadingReviews";
-import SectionTitle from "@/components/global/SectionTitle";
-import DeleteReview from "@/components/reviews/DeleteReview";
+import {
+  fetchAllReviewsByUser,
+  fetchReviewByUserAndCategory,
+} from '@/actions/review/review-server-actions';
+import { ReviewAllResponse, ReviewCategory } from '@/types';
+import { useState, useEffect } from 'react';
+import CategoryFilter from '@/components/ui/categoryFilter';
+import ReviewCard from '@/components/reviews/ReviewCard';
+import LoadingReviews from '@/components/global/loadingPages/LoadingReviews';
+import SectionTitle from '@/components/global/SectionTitle';
+import DeleteReview from '@/components/reviews/DeleteReview';
 
 const reviewTypeLabels: Record<ReviewCategory, string> = {
-    guardian: 'Guardian',
-    program: 'Program',
-    product: 'Product'
-}
+  guardian: 'Guardian',
+  program: 'Program',
+  product: 'Product',
+};
 
 function ReviewsPage() {
   const [selectedTypes, setSelectedTypes] = useState<ReviewCategory[]>([]);
@@ -22,10 +25,10 @@ function ReviewsPage() {
   useEffect(() => {
     const loadReviews = async () => {
       setLoading(true);
-        if (selectedTypes.length === 0) {
-          const all = await fetchAllReviewsByUser();
+      if (selectedTypes.length === 0) {
+        const all = await fetchAllReviewsByUser();
         setReviews(all as ReviewAllResponse[]);
-            } else {
+      } else {
         const results = await Promise.all(
           selectedTypes.map(type => fetchReviewByUserAndCategory(type))
         );
@@ -59,7 +62,7 @@ function ReviewsPage() {
             const { id, comment, rating, product, guardian, program } = review;
             const item = product || guardian || program;
             if (!item) return null;
-            
+
             return (
               <ReviewCard
                 key={id}
@@ -67,9 +70,8 @@ function ReviewsPage() {
                   comment,
                   rating,
                   image: item.image,
-                  name: item.name
-                }}
-              >
+                  name: item.name,
+                }}>
                 <DeleteReview reviewId={id} />
               </ReviewCard>
             );

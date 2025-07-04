@@ -11,6 +11,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 function DarkMode() {
   const { setTheme } = useTheme();
@@ -23,22 +28,29 @@ function DarkMode() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={toggleTheme}>
-          {!isDark ? (
-            <Sun className="h-[1.2rem] w-[1.2rem]" />
-          ) : (
-            <Moon className="h-[1.2rem] w-[1.2rem]" />
-          )}
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </DropdownMenuTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={toggleTheme}>
+              {!isDark ? (
+                <Sun className="h-[1.2rem] w-[1.2rem]" />
+              ) : (
+                <Moon className="h-[1.2rem] w-[1.2rem]" />
+              )}
+              <span className="sr-only">Toggle theme</span>
+            </Button>
+          </DropdownMenuTrigger>
+        </TooltipTrigger>
+        <TooltipContent>Toggle Theme</TooltipContent>
+      </Tooltip>
       <DropdownMenuContent align="end">
         <DropdownMenuItem
-          className= {isDark === false ? 'bg-secondary text-secondary-foreground' : ''}
+          className={
+            isDark === false ? 'bg-secondary text-secondary-foreground' : ''
+          }
           onClick={() => {
             setIsDark(false);
             setTheme('light');
@@ -46,7 +58,9 @@ function DarkMode() {
           <Sun /> Light
         </DropdownMenuItem>
         <DropdownMenuItem
-          className= {isDark === true ? 'bg-secondary text-secondary-foreground' : ''}
+          className={
+            isDark === true ? 'bg-secondary text-secondary-foreground' : ''
+          }
           onClick={() => {
             setIsDark(true);
             setTheme('dark');

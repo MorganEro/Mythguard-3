@@ -1,4 +1,4 @@
-import { fetchFeaturedProducts } from '@/actions/product/product-client-actions';
+import { fetchFeaturedProducts } from '@/actions/product/product-server-actions';
 import EmptyList from '../global/EmptyList';
 import SectionTitle from '../global/SectionTitle';
 import ProductsGrid from '../products/ProductsGrid';

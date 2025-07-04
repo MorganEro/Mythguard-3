@@ -1,6 +1,6 @@
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
-import { fetchAllLocations } from '@/actions/location/location-client-actions';
+import { fetchAllLocations } from '@/actions/location/location-server-actions';
 import { Card, CardContent } from '../ui/card';
 import Image from 'next/image';
 import GoogleMapWrapper from './GoogleMapWrapper';

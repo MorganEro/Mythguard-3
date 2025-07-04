@@ -4,7 +4,7 @@ import { LuLayoutGrid, LuList } from 'react-icons/lu';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
-import { fetchAllGuardians } from '@/actions/guardian/guardian-client-actions';
+import { fetchAllGuardians } from '@/actions/guardian/guardian-server-actions';
 
 async function GuardiansContainer({
   layout,
