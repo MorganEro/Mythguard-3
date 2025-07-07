@@ -12,13 +12,13 @@ import {
 } from '@/components/ui/table';
 import { IconButton } from '@/components/form/Button';
 import FormContainer from '@/components/form/FormContainer';
-import ToastMessage from '@/components/global/ToastMessage';
 import { deleteProductAction } from '@/actions/product/product-server-actions';
 import { fetchAdminProducts } from '@/actions/product/product-server-actions';
 import { formatCurrency } from '@/lib/format';
-import { Product } from '@/types';
 import { PlusIcon } from 'lucide-react';
 import Image from 'next/image';
+import { toast } from 'sonner';
+import { Product } from '@prisma/client';
 
 async function AdminProductsPage() {
   const cookieStore = await cookies();
@@ -37,7 +37,7 @@ async function AdminProductsPage() {
 
   return (
     <section>
-      {success && <ToastMessage message={success} />}
+      {success && toast.success(success)}
 
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Products</h1>

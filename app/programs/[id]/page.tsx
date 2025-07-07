@@ -1,5 +1,4 @@
-import { fetchSingleProgram } from '@/actions/program/program-server-actions';
-import { fetchRelatedGuardians } from '@/actions/program/program-server-actions';
+import { fetchSingleProgramWithDetails } from '@/actions/program/program-server-actions';
 import EmptyList from '@/components/global/EmptyList';
 import SubSectionTitle from '@/components/global/SubSectionTitle';
 import GuardianThumbnailCard from '@/components/guardians/GuardianThumbnailCard';
@@ -13,15 +12,10 @@ async function SingleGuardianPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const program = await fetchSingleProgram(id);
+  const program = await fetchSingleProgramWithDetails(id);
   const { name, image, description } = program;
-  const relatedGuardians = await fetchRelatedGuardians(id);
 
-  if ('message' in relatedGuardians) {
-    return <div>{relatedGuardians.message}</div>;
-  }
-
-  const totalGuardians = relatedGuardians.length;
+  const totalGuardians = program.guardians.length;
 
   return (
     <section>
@@ -55,7 +49,7 @@ async function SingleGuardianPage({
           {totalGuardians === 0 ? (
             <EmptyList heading="No Guardians Found" />
           ) : (
-            relatedGuardians.map(guardian => (
+            program.guardians.map(guardian => (
               <GuardianThumbnailCard
                 key={guardian.id}
                 id={guardian.id}

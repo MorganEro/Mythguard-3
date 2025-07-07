@@ -1,28 +1,90 @@
 import { z, ZodSchema } from 'zod';
 
-export const productSchema: ZodSchema = z.object({
+export const contractSchema: ZodSchema = z.object({
+  title: z
+    .string()
+    .min(2, { message: 'Name must be at least 2 characters' })
+    .max(50, { message: 'name must be less than 50 characters' }),
+  description: z.string().refine(
+    description => {
+      const wordCount = description.split(' ').length;
+      return wordCount >= 2 && wordCount <= 400;
+    },
+
+    {
+      message: 'Description must have between 2 and 400 words',
+    }
+  ),
+  startDate: z
+    .instanceof(Date, { message: 'Invalid date' })
+    .refine(date => !isNaN(date.getTime()), {
+      message: 'Invalid date value',
+    }),
+  endDate: z
+    .instanceof(Date, { message: 'Invalid date' })
+    .refine(date => !isNaN(date.getTime()), {
+      message: 'Invalid date value',
+    }),
+});
+export const eventSchema: ZodSchema = z.object({
   name: z
     .string()
     .min(2, { message: 'Name must be at least 2 characters' })
     .max(50, { message: 'name must be less than 50 characters' }),
-  company: z.string().min(4, { message: 'Company is required' }),
-  price: z.coerce
-    .number()
-    .int()
-    .min(0, { message: 'Price must be a positive number' }),
+  locationArea: z
+    .string()
+    .min(2, { message: 'Location area is required' })
+    .max(100, { message: 'Location area must be less than 100 characters' }),
+  eventDate: z.coerce
+    .date({ required_error: 'Event date is required' })
+    .min(new Date(), { message: 'Event date must be in the future' }),
+  shortDescription: z.string().refine(
+    description => {
+      const wordCount = description.split(' ').length;
+      return wordCount >= 2 && wordCount <= 40;
+    },
+
+    {
+      message: 'Description must have between 2 and 40 words',
+    }
+  ),
   description: z.string().refine(
     description => {
       const wordCount = description.split(' ').length;
-      return wordCount >= 2 && wordCount <= 800;
+      return wordCount >= 2 && wordCount <= 400;
     },
+
     {
-      message: 'Description must have between 2 and 800 words',
+      message: 'Description must have between 2 and 400 words',
     }
   ),
-
-  featured: z.coerce.boolean(),
 });
+export const guardianSchema: ZodSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: 'Name must be at least 2 characters' })
+    .max(50, { message: 'name must be less than 50 characters' }),
+  description: z.string().refine(
+    description => {
+      const wordCount = description.split(' ').length;
+      return wordCount >= 2 && wordCount <= 400;
+    },
 
+    {
+      message: 'Description must have between 2 and 400 words',
+    }
+  ),
+  shortDescription: z.string().refine(
+    description => {
+      const wordCount = description.split(' ').length;
+      return wordCount >= 2 && wordCount <= 40;
+    },
+
+    {
+      message: 'Description must have between 2 and 40 words',
+    }
+  ),
+});
 export const locationSchema: ZodSchema = z.object({
   name: z
     .string()
@@ -64,32 +126,27 @@ export const locationSchema: ZodSchema = z.object({
     .min(-180, { message: 'Longitude must be between -180 and 180 degrees' })
     .max(180, { message: 'Longitude must be between -180 and 180 degrees' }),
 });
-
-export const guardianSchema: ZodSchema = z.object({
+export const productSchema: ZodSchema = z.object({
   name: z
     .string()
     .min(2, { message: 'Name must be at least 2 characters' })
     .max(50, { message: 'name must be less than 50 characters' }),
+  company: z.string().min(4, { message: 'Company is required' }),
+  price: z.coerce
+    .number()
+    .int()
+    .min(0, { message: 'Price must be a positive number' }),
   description: z.string().refine(
     description => {
       const wordCount = description.split(' ').length;
-      return wordCount >= 2 && wordCount <= 400;
+      return wordCount >= 2 && wordCount <= 800;
     },
-
     {
-      message: 'Description must have between 2 and 400 words',
+      message: 'Description must have between 2 and 800 words',
     }
   ),
-  shortDescription: z.string().refine(
-    description => {
-      const wordCount = description.split(' ').length;
-      return wordCount >= 2 && wordCount <= 40;
-    },
 
-    {
-      message: 'Description must have between 2 and 40 words',
-    }
-  ),
+  featured: z.coerce.boolean(),
 });
 export const programSchema: ZodSchema = z.object({
   name: z
@@ -107,7 +164,6 @@ export const programSchema: ZodSchema = z.object({
     }
   ),
 });
-
 export const reviewSchema = z
   .object({
     productId: z.string().optional(),

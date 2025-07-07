@@ -23,6 +23,7 @@ export const adminLinks: NavLink[] = [
     admin: true,
     section: 'programs',
   },
+  
   {
     href: '/admin/guardians',
     label: 'Guardians',
@@ -72,7 +73,22 @@ export const adminLinks: NavLink[] = [
     admin: true,
     section: 'programs',
   },
-  { href: '/admin/sales', label: 'Sales', admin: true, section: 'products' },
+  { href: '/admin/events', 
+    label: 'Events', 
+    admin: true, 
+    section: 'programs' 
+  },
+  { href: '/admin/events/create', 
+    label: 'add event', 
+    admin: true, 
+    section: 'programs' 
+  },
+ 
+  { href: '/admin/sales', 
+    label: 'Sales', 
+    admin: true, 
+    section: 'products' 
+  },
 ];
 
 export const userLinks: NavLink[] = [];

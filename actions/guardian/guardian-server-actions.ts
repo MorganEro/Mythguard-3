@@ -5,46 +5,30 @@ import { checkRole } from '@/lib/roles';
 import { deleteImage, uploadImage } from '@/lib/supabase';
 import { renderError } from '@/lib/utils/error';
 import {
+  errorMessage,
   guardianSchema,
   imageSchema,
   validateWithZodSchema,
-  type Guardian,
 } from '@/types';
 import { auth } from '@clerk/nextjs/server';
+import { Guardian } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-export const fetchAllGuardians = async ({ search = '' }: { search: string }) => {
-  return db.guardian.findMany({
-      where: {
-          OR: [
-              {
-                  name: {
-                      contains: search,
-                      mode: 'insensitive',
-                  },
-              },
-          ],
-      },
-      orderBy: {
-          name: 'asc',
-      },
-  });
-};
-export const fetchAdminGuardians = async () => {
+export const fetchAllGuardians = async () => {
   const guardians = await db.guardian.findMany({
-      orderBy: {
-          name: 'asc',
-      },
+    orderBy: {
+      name: 'asc',
+    },
   });
   return guardians;
 };
 export const fetchSingleGuardian = async (guardianId: string) => {
   const guardian = await db.guardian.findUnique({
-      where: {
-          id: guardianId,
-      },
+    where: {
+      id: guardianId,
+    },
   });
 
   if (!guardian) redirect('/guardians');
@@ -98,13 +82,9 @@ export const createGuardianAction = async (
   }
 };
 
-interface ErrorMessage {
-  message: string;
-}
-
 export const fetchAdminGuardianDetails = async (
   guardianId: string
-): Promise<Guardian | ErrorMessage> => {
+): Promise<Guardian | errorMessage> => {
   if (!checkRole('admin')) {
     return { message: 'Unauthorized. Admin access required.' };
   }

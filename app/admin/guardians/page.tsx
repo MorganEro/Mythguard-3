@@ -12,16 +12,16 @@ import {
 } from '@/components/ui/table';
 import { IconButton } from '@/components/form/Button';
 import FormContainer from '@/components/form/FormContainer';
-import ToastMessage from '@/components/global/ToastMessage';
 import { deleteGuardianAction } from '@/actions/guardian/guardian-server-actions';
-import { fetchAdminGuardians } from '@/actions/guardian/guardian-server-actions';
-import { Guardian } from '@/types';
+import { fetchAllGuardians } from '@/actions/guardian/guardian-server-actions';
 import { PlusIcon } from 'lucide-react';
+import { toast } from 'sonner';
+import { Guardian } from '@prisma/client';
 
 async function AdminGuardiansPage() {
   const cookieStore = await cookies();
   const success = cookieStore.get('success')?.value;
-  const items: Guardian[] = await fetchAdminGuardians();
+  const items: Guardian[] = await fetchAllGuardians();
 
   if (items.length === 0) return <EmptyList />;
 
@@ -36,7 +36,7 @@ async function AdminGuardiansPage() {
 
   return (
     <section>
-      {success && <ToastMessage message={success} />}
+      {success && toast.success(success)}
 
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-bold">Guardians</h3>

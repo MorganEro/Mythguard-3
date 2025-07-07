@@ -3,10 +3,10 @@
 import db from '@/lib/db';
 
 import {
+  errorMessage,
   imageSchema,
   productSchema,
   validateWithZodSchema,
-  type Product,
 } from '@/types';
 import { auth } from '@clerk/nextjs/server';
 import { deleteImage, uploadImage } from '@/lib/supabase';
@@ -15,19 +15,10 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { checkRole } from '@/lib/roles';
 import { renderError } from '@/lib/utils/error';
+import { Product } from '@prisma/client';
 
-export const fetchAllProducts = async ({ search = '' }: { search: string }) => {
+export const fetchAllProducts = async () => {
   return db.product.findMany({
-      where: {
-          OR: [
-              {
-                  name: {
-                      contains: search,
-                      mode: 'insensitive',
-                  },
-              },
-          ],
-      },
       orderBy: {
           name: 'asc',
       },
@@ -138,13 +129,10 @@ export const deleteProductAction = async (prevState: { productId: string }) => {
   }
 };
 
-interface ErrorMessage {
-  message: string;
-}
 
 export const fetchAdminProductDetails = async (
   productId: string
-): Promise<Product | ErrorMessage> => {
+): Promise<Product | errorMessage> => {
   if (!checkRole('admin')) {
     return { message: 'Unauthorized. Admin access required.' };
   }

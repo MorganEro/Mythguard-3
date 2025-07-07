@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useAuth } from '@clerk/nextjs';
-import SelectProductAmount, { Mode } from './SelectProductAmount';
+import SelectProductQuantity, { Mode } from './SelectProductQuantity';
 import FormContainer from '@/components/form/FormContainer';
 import { CartSignInButton, SubmitButton } from '@/components/form/Button';
 import { addToCartAction } from '@/actions/cart/cart-server-actions';
@@ -12,10 +12,10 @@ function AddToCart({ productId }: { productId: string }) {
   const { userId } = useAuth();
   return (
     <div className="mt-4">
-      <SelectProductAmount
+      <SelectProductQuantity
         mode={Mode.SingleProduct}
-        amount={quantity}
-        setAmount={setQuantity}
+        quantity={quantity}
+        setQuantity={setQuantity}
       />
       {userId ? (
         <FormContainer action={addToCartAction}>

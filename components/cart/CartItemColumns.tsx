@@ -14,9 +14,9 @@ export const SecondColumn = ({name, company, productId}: {name: string, company:
     return (
         <div className="sm:w-48">
             <Link href={`/products/${productId}`}>
-                <h3 className="capitalize font-medium hover:underline">{name}</h3>
+                <h3 className="capitalize font-bold hover:underline text-primary">{name}</h3>
             </Link>
-            <h4 className="text-xs capitalize mt-2">{company}</h4>
+            <h4 className="text-xs capitalize mt-2 font-medium">{company}</h4>
         </div>
     );
 }

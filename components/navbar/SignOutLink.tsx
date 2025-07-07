@@ -5,13 +5,7 @@ import { toast } from 'sonner';
 import { GrLogout } from 'react-icons/gr';
 function SignOutLink() {
   const handleLogOut = () => {
-    toast('You have successfully logged out', {
-      style: {
-        backgroundColor: 'white',
-        color: '#24313e',
-        border: '1px solid #e2e8f0',
-      },
-    });
+    toast.success('You have successfully logged out');
   };
 
   return (

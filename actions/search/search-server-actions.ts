@@ -109,7 +109,31 @@ async function searchLocations(query: string): Promise<SearchResult[]> {
   }));
 }
 
-// Add more search functions for other entities as needed...
+async function searchEvents(query: string): Promise<SearchResult[]> {
+  const events = await db.event.findMany({
+    where: {
+      OR: [
+        { name: { contains: query, mode: 'insensitive' } },
+        { locationArea: { contains: query, mode: 'insensitive' } },
+      ],
+    },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      image: true,
+    },
+  });
+
+  return events.map(event => ({
+    id: event.id,
+    type: 'events' as SearchCategory,
+    name: event.name,
+    description: event.description || '',
+    image: event.image,
+    url: `/events/${event.id}`,
+  }));
+}
 
 export async function searchAll({
   query,
@@ -130,7 +154,7 @@ export async function searchAll({
     products: searchProducts,
     programs: searchPrograms,
     guardians: searchGuardians,
-    events: async () => [], // Implement when needed
+    events: searchEvents,
     locations: searchLocations,
   };
 

@@ -2,11 +2,11 @@
 
 import { GoogleMap, useLoadScript, MarkerF, InfoWindow } from '@react-google-maps/api';
 import { useCallback, useRef, useState } from 'react';
-import { Location } from '@/types/location';
 import Image from 'next/image';
 import Link from 'next/link';
 import LoadingMap from '../global/loadingPages/LoadingMap';
 import { Card, CardContent } from '../ui/card';
+import { Location } from '@prisma/client';
 
 type Props = {
   locations: Location[];
@@ -89,7 +89,7 @@ export default function GoogleMapWrapper({ locations }: Props) {
                           height={48}
                           className="rounded w-20 h-20 md:w-24 md:h-24"
                         />
-                        <p>{location.address}</p>
+                        <p className="text-foreground">{location.address}</p>
                       </div>
                     </CardContent>
                   </Link>

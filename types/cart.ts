@@ -1,18 +1,5 @@
 import { Prisma } from "@prisma/client";
 
-// export type Cart = {
-//     id: string;
-//     clerkId: string;
-//     numItemsInCart: number;
-//     cartTotal: number;
-//     shipping: number;
-//     tax: number;
-//     taxRate: number;
-//     orderTotal: number;
-//     createdAt: Date;
-//     updatedAt: Date;
-// }
-
 export type CartItem = {
     productId: string;
     image: string;

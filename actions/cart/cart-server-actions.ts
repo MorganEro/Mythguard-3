@@ -4,6 +4,7 @@ import db from '@/lib/db';
 import { renderError } from '@/lib/utils/error';
 import { auth } from '@clerk/nextjs/server';
 import { Cart } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 const includeProductClause = {
@@ -52,7 +53,10 @@ export const updateCart = async (cart: Cart) => {
     },
     include: {
       product: true,
-    }
+    },
+    orderBy: {
+      createdAt: 'asc',
+    },
   });
   let numItemsInCart = 0;
   let cartTotal = 0;
@@ -79,7 +83,7 @@ export const updateCart = async (cart: Cart) => {
     },
     include: includeProductClause,
   });
-  return currentCart;
+  return {currentCart, cartItems};
 };
 export const fetchCartItems = async () => {
   const { userId } = await auth();
@@ -142,10 +146,49 @@ export const addToCartAction = async (
   }
   redirect('/cart');
 };
-export const removeCartItemAction = async () => { };
-export const updateCartItemAction = async () => { };
+export const removeCartItemAction = async (prevState: unknown, formData: FormData) => {
+    const { userId } = await auth();
+    if (!userId) {
+      return { message: 'Unauthorized. Please sign in.' };
+    }
+    try {
+      const cartItemId = formData.get('id') as string;
+      const cart = await fetchOrCreateCart({ userId, errorOnFailure: true });
+      await db.cartItem.delete({
+        where: {
+          id: cartItemId,
+          cartId: cart.id,
+        },
+      });
+      await updateCart(cart);
+      revalidatePath('/cart');
+      return {message: 'Item removed from cart'}
+    } catch (error) {
+      return renderError(error);
+    }
+};
+export const updateCartItemAction = async ({cartItemId, quantity}: {cartItemId: string, quantity: number}) => {
+    const { userId } = await auth();
+    if (!userId) {
+      return { message: 'Unauthorized. Please sign in.' };
+    }
+    try {
+      const cart = await fetchOrCreateCart({ userId, errorOnFailure: true });
+      await db.cartItem.update({
+        where: {
+          id: cartItemId,
+          cartId: cart.id,
+        },
+        data: {
+          quantity,
+        },
+      });
+      await updateCart(cart);
+      revalidatePath('/cart');
+      return {message: 'Item updated in cart'}
+    } catch (error) {
+      return renderError(error);
+    }
+};
 
 
-export const createOrderAction = async (prevState: unknown, formData: FormData) => {
-  return {message: 'Order created successfully'}
- }

@@ -6,59 +6,28 @@ import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { checkRole } from '@/lib/roles';
 import {
+  errorMessage,
   imageSchema,
   locationSchema,
   validateWithZodSchema,
-  type Location,
 } from '@/types';
 import { deleteImage, uploadImage } from '@/lib/supabase';
 import { renderError } from '@/lib/utils/error';
+import { Location } from '@prisma/client';
 
-export const fetchAllLocations = async ({ search = '' }: { search: string }) => {
+export const fetchAllLocations = async () => {
   return db.location.findMany({
-      where: {
-          OR: [
-              {
-                  name: {
-                      contains: search,
-                      mode: 'insensitive',
-                  },
-              },
-          ],
-      },
-      orderBy: {
-          name: 'asc',
-      },
+    orderBy: {
+      name: 'asc',
+    },
   });
 };
 
-export const fetchAdminLocations = async () => {
-  const locations = await db.location.findMany({
-      select: {
-        id: true,
-        name: true,
-        subtitle: true,
-        shortDescription: true,
-        description: true,
-        address: true,
-        image: true,
-        mapIcon: true,
-        lat: true,
-        lng: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-      orderBy: {
-          name: 'asc',
-      },
-  });
-  return locations;
-};
 export const fetchSingleLocation = async (locationId: string) => {
   const location = await db.location.findUnique({
-      where: {
-          id: locationId,
-      },
+    where: {
+      id: locationId,
+    },
   });
 
   if (!location) redirect('/locations');
@@ -123,13 +92,9 @@ export const createLocationAction = async (
   }
 };
 
-interface ErrorMessage {
-  message: string;
-}
-
 export const fetchAdminLocationDetails = async (
   locationId: string
-): Promise<Location | ErrorMessage> => {
+): Promise<Location | errorMessage> => {
   if (!checkRole('admin')) {
     return { message: 'Unauthorized. Admin access required.' };
   }

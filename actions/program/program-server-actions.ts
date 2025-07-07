@@ -6,33 +6,16 @@ import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { checkRole } from '@/lib/roles';
 import {
-  Guardian,
+  errorMessage,
   imageSchema,
   programSchema,
   validateWithZodSchema,
-  type Program,
 } from '@/types';
 import { deleteImage, uploadImage } from '@/lib/supabase';
 import { renderError } from '@/lib/utils/error';
+import { Program, Guardian } from '@prisma/client';
 
-export const fetchAllPrograms = async ({ search = '' }: { search: string }) => {
-  return db.program.findMany({
-      where: {
-          OR: [
-              {
-                  name: {
-                      contains: search,
-                      mode: 'insensitive',
-                  },
-              },
-          ],
-      },
-      orderBy: {
-          name: 'asc',
-      },
-  });
-};
-export const fetchAdminPrograms = async () => {
+export const fetchAllPrograms = async () => {
   const programs = await db.program.findMany({
     orderBy: {
       name: 'asc',
@@ -40,10 +23,20 @@ export const fetchAdminPrograms = async () => {
   });
   return programs;
 };
-export const fetchSingleProgram = async (programId: string) => {
+export const fetchSingleProgramWithDetails = async (programId: string) => {
   const program = await db.program.findUnique({
     where: {
       id: programId,
+    },
+    include: {
+      guardians:{
+        select: {
+          id: true,
+          name: true,
+          image: true,
+        },
+      },
+
     },
   });
 
@@ -52,8 +45,6 @@ export const fetchSingleProgram = async (programId: string) => {
   return program;
 };
 
-
-
 export const createProgramAction = async (
   prevState: unknown,
   formData: FormData
@@ -61,7 +52,6 @@ export const createProgramAction = async (
   if (!checkRole('admin')) {
     return { message: 'Unauthorized. Admin access required.' };
   }
-  console.log('Creating program with formData:', formData);
 
   let uploadedImagePath: string | undefined;
 
@@ -115,13 +105,9 @@ export const createProgramAction = async (
   }
 };
 
-interface ErrorMessage {
-  message: string;
-}
-
 export const fetchAdminProgramDetails = async (
   programId: string
-): Promise<Program | ErrorMessage> => {
+): Promise<Program | errorMessage> => {
   if (!checkRole('admin')) {
     return { message: 'Unauthorized. Admin access required.' };
   }
@@ -239,7 +225,7 @@ export const deleteProgramAction = async (prevState: {
 
 export const fetchRelatedGuardians = async (
   programId: string
-): Promise<Guardian[] | ErrorMessage> => {
+): Promise<Guardian[] | errorMessage> => {
   if (!checkRole('admin')) {
     return { message: 'Unauthorized. Admin access required.' };
   }

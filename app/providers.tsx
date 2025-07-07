@@ -6,7 +6,7 @@ import { Toaster } from '@/components/ui/sonner';
 function Providers({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Toaster richColors />
+      <Toaster richColors expand visibleToasts={1}/>
       <ThemeProvider
         attribute="class"
         defaultTheme="system"

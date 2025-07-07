@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Guardian } from '@/types';
+import { Guardian } from '@prisma/client';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import Image from 'next/image';
@@ -9,11 +9,13 @@ import Image from 'next/image';
 type GuardianSelectorProps = {
   guardians: Guardian[];
   selectedGuardians?: Guardian[];
+  selectSingleGuardian?: boolean;
 };
 
 export function GuardianSelector({
   guardians,
   selectedGuardians = [],
+  selectSingleGuardian = false,
 }: GuardianSelectorProps) {
   const [selectedIds, setSelectedIds] = useState<string[]>(
     selectedGuardians.map(g => g.id)
@@ -36,7 +38,7 @@ export function GuardianSelector({
             <Checkbox
               name={`guardian-checkbox-${item.id}`}
               id={item.id}
-              checked={selectedIds.includes(item.id)}
+              checked={selectSingleGuardian ? selectedIds.includes(item.id) : selectedIds.includes(item.id)}
               onCheckedChange={checked =>
                 handleCheckChange(item.id, checked as boolean)
               }
@@ -58,7 +60,6 @@ export function GuardianSelector({
         type="hidden"
         name="guardianIds"
         value={selectedIds.join(',')}
-        data-testid="guardian-ids-hidden"
       />
     </div>
   );

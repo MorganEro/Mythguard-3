@@ -31,8 +31,8 @@ function GuardiansList({ guardians }: { guardians: Guardian[] }) {
                     </div>
                   </div>
                   <div className="flex flex-col p-4 gap-y-2 md:gap-y-4 md:mt-4">
-                    <h2 className="text-xl font-semibold capitalize">{name}</h2>
-                    <p className="text-muted-foreground mt-2">
+                  <h2 className="text-xl  capitalize font-bold tracking-wider text-primary">{name}</h2>
+                  <p className="text-muted-foreground mt-2">
                       {shortDescription}
                     </p>
                   </div>

@@ -3,8 +3,8 @@ import { Cart } from "@prisma/client";
 import { Separator } from "../ui/separator";
 import { Card, CardTitle } from "../ui/card";
 import FormContainer from "../form/FormContainer";
-import { createOrderAction } from "@/actions/cart/cart-server-actions";
 import { SubmitButton } from "../form/Button";
+import { createOrderAction } from "@/actions/order/order-server-action";
 
 function CartTotals({ cart }: { cart: Cart }) {
     const { shipping, cartTotal, tax, orderTotal } = cart;

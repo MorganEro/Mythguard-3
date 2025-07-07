@@ -12,16 +12,16 @@ import {
 } from '@/components/ui/table';
 import { IconButton } from '@/components/form/Button';
 import FormContainer from '@/components/form/FormContainer';
-import ToastMessage from '@/components/global/ToastMessage';
 import { deleteLocationAction } from '@/actions/location/location-server-actions';
-import { fetchAdminLocations } from '@/actions/location/location-server-actions';
+import { fetchAllLocations } from '@/actions/location/location-server-actions';
 import { Location } from '@/types';
 import { PlusIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
 async function AdminLocationsPage() {
   const cookieStore = await cookies();
   const success = cookieStore.get('success')?.value;
-  const items: Location[] = await fetchAdminLocations();
+  const items: Location[] = await fetchAllLocations();
 
   if (items.length === 0) return <EmptyList />;
 
@@ -36,7 +36,7 @@ async function AdminLocationsPage() {
 
   return (
     <section>
-      {success && <ToastMessage message={success} />}
+      {success && toast.success(success)}
 
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-bold">Locations</h3>

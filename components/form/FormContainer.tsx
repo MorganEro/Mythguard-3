@@ -40,13 +40,6 @@ function FormContainer({
             <div key={idx}>{line}</div>
           ))}
         </div>,
-        {
-          style: {
-            backgroundColor: 'white',
-            color: '#24313e',
-            border: '1px solid #e2e8f0',
-          },
-        }
       );
     }
   }, [state]);

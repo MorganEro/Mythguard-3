@@ -30,7 +30,7 @@ function GuardiansGrid({ guardians }: { guardians: Guardian[] }) {
                     />
                   </div>
                   <div className="mt-4 text-center">
-                    <h2 className="text-lg  capitalize">{name}</h2>
+                    <h2 className="text-xl  capitalize font-bold tracking-wider text-primary">{name}</h2>
                   </div>
                 </CardContent>
               </Card>

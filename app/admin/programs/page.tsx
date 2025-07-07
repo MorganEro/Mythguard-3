@@ -12,16 +12,16 @@ import {
 } from '@/components/ui/table';
 import { IconButton } from '@/components/form/Button';
 import FormContainer from '@/components/form/FormContainer';
-import ToastMessage from '@/components/global/ToastMessage';
 import { deleteProgramAction } from '@/actions/program/program-server-actions';
-import { fetchAdminPrograms } from '@/actions/program/program-server-actions';
+import { fetchAllPrograms } from '@/actions/program/program-server-actions';
 import { Program } from '@/types';
 import { PlusIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
 async function AdminProgramsPage() {
   const cookieStore = await cookies();
   const success = cookieStore.get('success')?.value;
-  const items: Program[] = await fetchAdminPrograms();
+  const items: Program[] = await fetchAllPrograms();
 
   if (items.length === 0) return <EmptyList />;
 
@@ -36,7 +36,7 @@ async function AdminProgramsPage() {
 
   return (
     <section>
-      {success && <ToastMessage message={success} />}
+      {success && toast.success(success)}
 
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-bold">Programs</h3>

@@ -12,7 +12,7 @@ import TextAreaInput from '@/components/form/TextAreaInput';
 import { Button } from '@/components/ui/button';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
 import { GuardianSelector } from '@/components/form/GuardianSelector';
-import { fetchAdminGuardians } from '@/actions/guardian/guardian-server-actions';
+import { fetchAllGuardians } from '@/actions/guardian/guardian-server-actions';
 
 async function EditProgramPage({
   params,
@@ -21,7 +21,7 @@ async function EditProgramPage({
 }) {
   const { id } = await params;
   const program = await fetchAdminProgramDetails(id);
-  const guardians = await fetchAdminGuardians();
+  const guardians = await fetchAllGuardians();
   const relatedGuardians = await fetchRelatedGuardians(id);
 
   if ('message' in program) {
