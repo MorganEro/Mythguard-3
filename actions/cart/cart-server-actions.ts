@@ -87,6 +87,9 @@ export const updateCart = async (cart: Cart) => {
 };
 export const fetchCartItems = async () => {
   const { userId } = await auth();
+  if (!userId) {
+    return { message: 'Unauthorized. Please sign in.' };
+  }
   const cart = await db.cart.findFirst({
     where: {
       clerkId: userId ?? '',

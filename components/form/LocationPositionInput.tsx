@@ -22,7 +22,7 @@ function LocationPositionInput({
   placeholder,
 }: LocationPositionInputProps) {
   return (
-    <div className="grid w-2/5 items-center gap-2 mb-2">
+    <div className="grid w-full items-center gap-2 mb-2">
       <Label
         htmlFor={name}
         className="capitalize">

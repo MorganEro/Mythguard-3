@@ -6,11 +6,19 @@ import ImageInput from '@/components/form/ImageInput';
 import TextAreaInput from '@/components/form/TextAreaInput';
 import { fetchAllGuardians } from '@/actions/guardian/guardian-server-actions';
 import { GuardianSelector } from '@/components/form/GuardianSelector';
+import BreadCrumbs from '@/components/ui/BreadCrumbs';
 
 async function CreateProgramPage() {
   const guardians = await fetchAllGuardians();
   return (
     <section>
+      <BreadCrumbs
+        homeName="Admin"
+        homeLink="/admin"
+        previousName="Programs"
+        previousLink="/admin/programs"
+        currentName="Create Program"
+      />
       <h1 className="text-2xl font-semibold mb-8 capitalize">create program</h1>
       <div className="border p-8 rounded-md">
         <FormContainer action={createProgramAction}>
@@ -28,10 +36,12 @@ async function CreateProgramPage() {
               defaultValue=""
             />
             <GuardianSelector guardians={guardians} />
-            <SubmitButton
-              text="Create Program"
-              className="mt-8"
-            />
+            <div className="md:col-span-2 md:flex md:justify-end">
+              <SubmitButton
+                text="Create Program"
+                className="mt-8 w-full md:w-auto"
+              />
+            </div>
           </div>
         </FormContainer>
       </div>

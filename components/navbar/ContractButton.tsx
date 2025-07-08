@@ -11,7 +11,7 @@ async function ContractButton() {
       variant="outline"
       size="icon"
       className="flex justify-center items-center relative">
-      <Link href="/contract">
+      <Link href="/contracts">
         <Clipboard className="w-6 h-6" />
         <span className="absolute -top-2 -right-2 bg-primary text-white rounded-full w-4 h-4 flex justify-center items-center text-xs">
           {numActiveContracts}

@@ -10,7 +10,7 @@ function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
         <div className="sm:col-span-2">
           <Sidebar />
         </div>
-        <div className="sm:col-span-10 mt-10">{children}</div>
+        <div className="sm:col-span-10 mt-10 md:mt-2">{children}</div>
       </section>
     </>
   );

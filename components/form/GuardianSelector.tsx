@@ -22,19 +22,23 @@ export function GuardianSelector({
   );
 
   const handleCheckChange = (id: string, checked: boolean) => {
-    setSelectedIds(prev =>
-      checked ? [...prev, id] : prev.filter(item => item !== id)
-    );
+    if (selectSingleGuardian) {
+      setSelectedIds([id]);
+    } else {
+      setSelectedIds(prev =>
+        checked ? [...prev, id] : prev.filter(item => item !== id)
+      );
+    }
   };
 
   return (
-    <div className="grid gap-2">
+    <div className="grid gap-2 ">
       <Label className="capitalize">Guardians</Label>
-      <div className="grid gap-2 max-h-60 overflow-y-auto p-2">
+      <div className="grid gap-2 max-h-67 overflow-y-auto p-4 border border-border rounded-md scrollbar-none">
         {guardians.map(item => (
           <div
             key={item.id}
-            className="flex items-center space-x-2 p-2 border rounded-md">
+            className="flex items-center space-x-2 p-2 border border-border rounded-md">
             <Checkbox
               name={`guardian-checkbox-${item.id}`}
               id={item.id}
@@ -58,8 +62,8 @@ export function GuardianSelector({
       </div>
       <input
         type="hidden"
-        name="guardianIds"
-        value={selectedIds.join(',')}
+        name={selectSingleGuardian ? "guardianId" : "guardianIds"}
+        value={selectSingleGuardian ? selectedIds[0] || '' : selectedIds.join(',')}
       />
     </div>
   );

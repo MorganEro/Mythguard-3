@@ -127,10 +127,12 @@ async function EditEventPage({ params }: { params: Promise<{ id: string }> }) {
                   className="mt-8 mr-3 sm:mr-4">
                   Reset
                 </Button>
-                <SubmitButton
-                  text="Update Event"
-                  className="mt-8"
-                />
+                <div className="md:col-span-2 md:flex md:justify-end">
+                  <SubmitButton
+                    text="Update Event"
+                    className="mt-8 w-full md:w-auto"
+                  />
+                </div>
               </div>
             </div>
           </FormContainer>

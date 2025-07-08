@@ -1,7 +1,7 @@
 import { z, ZodSchema } from 'zod';
 
-export const contractSchema: ZodSchema = z.object({
-  title: z
+export const contractSchema = z.object({
+  name: z
     .string()
     .min(2, { message: 'Name must be at least 2 characters' })
     .max(50, { message: 'name must be less than 50 characters' }),
@@ -15,16 +15,12 @@ export const contractSchema: ZodSchema = z.object({
       message: 'Description must have between 2 and 400 words',
     }
   ),
-  startDate: z
-    .instanceof(Date, { message: 'Invalid date' })
-    .refine(date => !isNaN(date.getTime()), {
-      message: 'Invalid date value',
-    }),
-  endDate: z
-    .instanceof(Date, { message: 'Invalid date' })
-    .refine(date => !isNaN(date.getTime()), {
-      message: 'Invalid date value',
-    }),
+  startDate: z.coerce.date({ required_error: 'Start date is required' })
+    .min(new Date(), { message: 'Start date must be in the future' }),
+  endDate: z.coerce.date({ required_error: 'End date is required' })
+}).refine((data) => data.endDate > data.startDate, {
+  message: 'End date must be after start date',
+  path: ['endDate'],
 });
 export const eventSchema: ZodSchema = z.object({
   name: z

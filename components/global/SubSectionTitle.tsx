@@ -1,9 +1,9 @@
 import { Separator } from '../ui/separator';
-function SubSectionTitle({ text }: { text: string }) {
+function SubSectionTitle({ text, lined }: { text: string; lined?: boolean }) {
   return (
     <div>
-      <h3 className="text-2xl font-bold">{text}</h3>
-      <Separator />
+      <h3 className="text-xl font-bold">{text}</h3>
+      {lined && <Separator />}
     </div>
   );
 }

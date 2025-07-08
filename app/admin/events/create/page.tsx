@@ -9,12 +9,18 @@ import { fetchAllGuardians } from '@/actions/guardian/guardian-server-actions';
 import { fetchAllLocations } from '@/actions/location/location-server-actions';
 import { LocationSelector } from '@/components/form/LocationSelector';
 import DateInput from '@/components/form/DateInput';
+import BreadCrumbs from '@/components/ui/BreadCrumbs';
 
 async function CreateEventPage() {
   const guardians = await fetchAllGuardians();
   const locations = await fetchAllLocations();
   return (
     <section>
+      <BreadCrumbs
+        previousName="Events"
+        previousLink="/admin/events"
+        currentName="Create Event"
+      />
       <h1 className="text-2xl font-semibold mb-8 capitalize">create event</h1>
       <div className="border p-8 rounded-md">
         <FormContainer action={createEventAction}>
@@ -25,16 +31,15 @@ async function CreateEventPage() {
               label="Event Name"
               defaultValue=""
             />
-
+            <DateInput
+              name="eventDate"
+              labelText="Event Date"
+              defaultValue=""
+            />
             <FormInput
               type="text"
               name="locationArea"
               label="Event Location Area"
-              defaultValue=""
-            />
-            <DateInput
-              name="eventDate"
-              labelText="Event Date"
               defaultValue=""
             />
             <ImageInput />
@@ -50,10 +55,12 @@ async function CreateEventPage() {
             />
             <GuardianSelector guardians={guardians} />
             <LocationSelector locations={locations} />
-            <SubmitButton
-              text="Create Event"
-              className="mt-8"
-            />
+            <div className="md:col-span-2 md:flex md:justify-end">
+              <SubmitButton
+                text="Create Event"
+                className="mt-8 w-full md:w-auto"
+              />
+            </div>
           </div>
         </FormContainer>
       </div>

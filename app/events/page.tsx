@@ -1,4 +1,3 @@
-import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
@@ -10,11 +9,8 @@ async function EventsPage() {
   const totalEvents = events.length;
 
   return (
-    <>
-      {/* HEADER */}
-      <section>
+    <section>
         <SectionTitle text="Events" />
-      </section>
       {/* EVENTS */}
       <div>
         {totalEvents === 0 ? (
@@ -36,8 +32,8 @@ async function EventsPage() {
 
                 return (
                   <article
-                    key={eventId}
-                    className="group">
+                  key={eventId}
+                  className="group">
                     <Link href={`/events/${eventId}`}>
                       <Card className="transform group-hover:shadow-xl transition-shadow duration-500 h-full">
                         <CardContent className="p-8 gap-y-4 flex flex-col md:flex-row items-center h-full">
@@ -48,7 +44,7 @@ async function EventsPage() {
                               fill
                               className="object-cover"
                               priority
-                            />
+                              />
                           </div>
                           <div className="flex flex-col p-4 gap-y-2 md:gap-y-4 flex-grow">
                             <h2 className="text-xl font-semibold capitalize text-primary">
@@ -74,7 +70,7 @@ async function EventsPage() {
           </>
         )}
       </div>
-    </>
+    </section>
   );
 }
 export default EventsPage;

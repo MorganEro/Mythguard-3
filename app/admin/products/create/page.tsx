@@ -36,21 +36,23 @@ function CreateProductPage() {
             />
             <PriceInput defaultValue={0} />
             <ImageInput />
-            <TextAreaInput
-              name="description"
-              labelText="product Description"
-              defaultValue=""
-            />
-            <div>
-              <CheckboxInput
-                name="featured"
-                label="Featured"
+            <div className="md:col-span-2">
+              <TextAreaInput
+                name="description"
+                labelText="product Description"
+                defaultValue=""
               />
             </div>
-            <SubmitButton
-              text="Create Product"
-              className="mt-8"
+            <CheckboxInput
+              name="featured"
+              label="Featured"
             />
+            <div className="md:col-span-2 md:flex md:justify-end">
+              <SubmitButton
+                text="Create Product"
+                className="mt-8 w-full md:w-auto"
+              />
+            </div>
           </div>
         </FormContainer>
       </div>

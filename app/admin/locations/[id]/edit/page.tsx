@@ -147,10 +147,12 @@ async function EditLocationPage({
                   className="mt-8 mr-3 sm:mr-4">
                   Reset
                 </Button>
-                <SubmitButton
-                  text="Update Location"
-                  className="mt-8"
-                />
+                <div className="md:col-span-2 md:flex md:justify-end">
+                  <SubmitButton
+                    text="Update Location"
+                    className="mt-8 w-full md:w-auto"
+                  />
+                </div>
               </div>
             </div>
           </FormContainer>

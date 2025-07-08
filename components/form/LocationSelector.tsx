@@ -29,7 +29,7 @@ export function LocationSelector({
       return (
         <div className="grid gap-2 content-start">
             <Label className="capitalize">Locations</Label>
-            <div className="grid gap-2 max-h-60 overflow-y-auto p-2">
+            <div className="grid gap-2 max-h-72 overflow-y-auto p-4 border border-border rounded-md scrollbar-none">
                 {locations.map(item => (
                     <div
                         key={item.id}

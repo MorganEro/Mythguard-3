@@ -38,10 +38,12 @@ function CreateGuardianPage() {
               defaultValue=""
             />
 
-            <SubmitButton
-              text="Create Guardian"
-              className="mt-8"
-            />
+            <div className="md:col-span-2 md:flex md:justify-end">
+              <SubmitButton
+                text="Create Guardian"
+                className="mt-8 w-full md:w-auto"
+              />
+            </div>
           </div>
         </FormContainer>
       </div>

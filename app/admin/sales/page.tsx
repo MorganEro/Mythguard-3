@@ -1,9 +1,8 @@
 import { fetchAdminOrders } from "@/actions/order/order-server-action";
-import SectionTitle from "@/components/global/SectionTitle";
 import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
-import { Order } from "@/types/order";
 import { formatCurrency, formatDate } from "@/lib/format";
 import { Separator } from "@/components/ui/separator";
+import { Order } from "@prisma/client";
 
 async function SalesPage() {
   const orders = await fetchAdminOrders() as Order[];

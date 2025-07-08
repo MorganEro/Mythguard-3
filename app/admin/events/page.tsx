@@ -68,7 +68,7 @@ async function AdminEventsPage() {
                   </Link>
                 </TableCell>
                 <TableCell className="md:max-w-[240px] lg:max-w-[400px] truncate">
-                  <div className="truncate">{item.description}</div>
+                  <div className="truncate">{item.shortDescription}</div>
                 </TableCell>
                 <TableCell className="flex items-center gap-x-2">
                   <Link href={`/admin/events/${item.id}/edit`}>
@@ -90,7 +90,7 @@ async function AdminEventsPage() {
             key={item.id}
             className="rounded-lg border p-4 shadow-sm bg-background flex flex-col gap-2">
             <h4 className="text-lg font-semibold capitalize">{item.name}</h4>
-            <p className="text-muted-foreground text-sm">{item.description}</p>
+            <p className="text-muted-foreground text-sm">{item.shortDescription}</p>
             <div className="flex gap-2 mt-2 justify-end">
               <Link href={`/admin/events/${item.id}/edit`}>
                 <IconButton actionType="edit" />
