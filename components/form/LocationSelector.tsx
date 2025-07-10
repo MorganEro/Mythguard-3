@@ -20,9 +20,7 @@ export function LocationSelector({
       );
 
       const handleCheckChange = (id: string, checked: boolean) => {
-        setSelectedId(prev =>
-          checked ? id : ''
-        );
+        setSelectedId(checked ? id : '');
       };
 
 

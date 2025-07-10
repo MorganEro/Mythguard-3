@@ -15,10 +15,10 @@ import FormContainer from '@/components/form/FormContainer';
 import { deleteProductAction } from '@/actions/product/product-server-actions';
 import { fetchAdminProducts } from '@/actions/product/product-server-actions';
 import { formatCurrency } from '@/lib/format';
-import { PlusIcon } from 'lucide-react';
 import Image from 'next/image';
 import { toast } from 'sonner';
 import { Product } from '@prisma/client';
+import { AddNewButton } from '@/components/form/Button';
 
 async function AdminProductsPage() {
   const cookieStore = await cookies();
@@ -41,11 +41,7 @@ async function AdminProductsPage() {
 
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Products</h1>
-        <Link
-          href="/admin/products/create"
-          className="bg-primary text-primary-foreground p-2 rounded-md hover:bg-primary/90">
-          <PlusIcon className="w-4 h-4" />
-        </Link>
+        <AddNewButton href="/admin/products/create" />
       </div>
 
       {/* TABLE for larger screens */}

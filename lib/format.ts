@@ -7,10 +7,12 @@ export const formatCurrency = (amount: number | null) => {
 };
 
 
-export const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    }).format(date);
+export const formatDate = (date: Date, weekDay?: boolean) => {
+  return new Intl.DateTimeFormat('en-US', {
+    weekday: weekDay ? 'long' : undefined,
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(date);
 }
+

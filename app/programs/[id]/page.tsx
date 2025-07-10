@@ -2,9 +2,9 @@ import { fetchSingleProgramWithDetails } from '@/actions/program/program-server-
 import EmptyList from '@/components/global/EmptyList';
 import SubSectionTitle from '@/components/global/SubSectionTitle';
 import GuardianThumbnailCard from '@/components/guardians/GuardianThumbnailCard';
-import CreateContract from '@/components/guardians/single-guardian/CreateContract';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
 import Image from 'next/image';
+import { CreateContractButton } from '@/components/form/Button';
 
 async function SingleGuardianPage({
   params,
@@ -38,9 +38,7 @@ async function SingleGuardianPage({
         </div>
 
         <p className="text-muted-foreground mt-6 leading-8">{description}</p>
-        <div className="flex justify-start md:absolute right-0 top-0">
-          <CreateContract id={id} />
-        </div>
+       
       </div>
 
       <article className="mt-10">
@@ -66,6 +64,7 @@ async function SingleGuardianPage({
           </h4>
         </div>
       </article>
+      <CreateContractButton programId={id} />
     </section>
   );
 }

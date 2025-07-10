@@ -8,21 +8,21 @@ import { Checkbox } from "../ui/checkbox";
 type ProgramSelectorProps = {
     programs: Program[];
     selectedProgram?: Program;
+    defaultValue?: string;
 };
 
 
 export function ProgramSelector({
     programs,
     selectedProgram,
+    defaultValue,
 }: ProgramSelectorProps) {
     const [selectedId, setSelectedId] = useState<string>(
-        selectedProgram?.id ?? ''
+        defaultValue ?? selectedProgram?.id ?? ''
       );
 
       const handleCheckChange = (id: string, checked: boolean) => {
-        setSelectedId(prev =>
-          checked ? id : ''
-        );
+        setSelectedId(checked ? id : '');
       };
 
 

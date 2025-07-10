@@ -9,11 +9,11 @@ import ProductsList from '@/components/products/ProductsList';
 async function ProductsPage({
   searchParams,
 }: {
-  searchParams: { layout: 'grid' | 'list' };
+  searchParams: Promise<{ layout: 'grid' | 'list' }>;
 }) {
   const products = await fetchAllProducts();
   const totalProducts = products.length;
-  const layout = searchParams?.layout === 'list' ? 'list' : 'grid';
+  const layout = (await searchParams)?.layout === 'list' ? 'list' : 'grid';
 
   return (
     <>

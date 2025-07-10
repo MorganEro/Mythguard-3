@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import CartItemList from "@/components/cart/CartItemList";
 import CartTotals from "@/components/cart/CartTotals";
+import BreadCrumbs from "@/components/ui/BreadCrumbs";
 
 async function CartPage() {
   const { userId } = await auth();
@@ -20,6 +21,11 @@ async function CartPage() {
   return <>
     <SectionTitle text="Shopping cart" />
     <div className='mt-8 grid gap-4 lg:grid-cols-12'>
+      <BreadCrumbs
+        homeName="Products"
+        homeLink="/products"
+        currentName="Shopping cart"
+      />
       <div className='lg:col-span-8'>
         <CartItemList cartItems={cartItems  } />
       </div>

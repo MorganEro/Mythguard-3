@@ -5,6 +5,7 @@ import GuardianThumbnailCard from '@/components/guardians/GuardianThumbnailCard'
 import LocationThumbnailCard from '@/components/locations/LocationThumbnailCard';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
 import Image from 'next/image';
+import { formatDate } from '@/lib/format';
 
 async function SingleEventPage({
   params,
@@ -38,12 +39,7 @@ async function SingleEventPage({
         <h1 className=" capitalize text-3xl font-bold"> {name}</h1>
         <p className="text-muted-foreground">
           Event Date:{' '}
-          {eventDate.toLocaleDateString('en-US', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
+          {formatDate(eventDate, true)}
         </p>
         <p className="leading-8">{description}</p>
       </div>

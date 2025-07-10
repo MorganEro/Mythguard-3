@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { fetchAllEvents } from '@/actions/event/event-server-actions';
 import SectionTitle from '@/components/global/SectionTitle';
+import { formatDate } from '@/lib/format';
 
 async function EventsPage() {
   const events = await fetchAllEvents();
@@ -52,12 +53,7 @@ async function EventsPage() {
                             </h2>
                             <p className="mt-2">{shortDescription}</p>
                             <p className="text-muted-foreground mt-1">
-                              {eventDate.toLocaleDateString('en-US', {
-                                weekday: 'long',
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                              })}
+                              {formatDate(eventDate)}
                             </p>
                           </div>
                         </CardContent>

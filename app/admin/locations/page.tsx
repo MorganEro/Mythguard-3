@@ -1,6 +1,5 @@
 import { cookies } from 'next/headers';
 import EmptyList from '@/components/global/EmptyList';
-import Link from 'next/link';
 import {
   Table,
   TableBody,
@@ -14,9 +13,10 @@ import { IconButton } from '@/components/form/Button';
 import FormContainer from '@/components/form/FormContainer';
 import { deleteLocationAction } from '@/actions/location/location-server-actions';
 import { fetchAllLocations } from '@/actions/location/location-server-actions';
-import { Location } from '@/types';
-import { PlusIcon } from 'lucide-react';
 import { toast } from 'sonner';
+import { Location } from '@prisma/client';
+import { AddNewButton } from '@/components/form/Button';
+import Link from 'next/link';
 
 async function AdminLocationsPage() {
   const cookieStore = await cookies();
@@ -40,11 +40,7 @@ async function AdminLocationsPage() {
 
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-bold">Locations</h3>
-        <Link
-          href="/admin/locations/create"
-          className="bg-primary text-primary-foreground p-2 rounded-md hover:bg-primary/90">
-          <PlusIcon className="w-3 h-3" />
-        </Link>
+        <AddNewButton href="/admin/locations/create" />
       </div>
 
       {/* Table for larger screens */}

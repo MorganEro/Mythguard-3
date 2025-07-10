@@ -46,6 +46,19 @@ export const fetchAllUsersContracts = async ({userId}: {userId: string}) => {
     return contracts;
 }
 
+export const fetchNumberOfContracts = async () => {
+    const { userId } = await auth();
+    if (!userId) {
+        return { message: 'Unauthorized. Please sign in.' };
+    }
+    const contracts = await db.contract.findMany({
+        where: {
+            clerkId: userId,
+        },
+    });
+    return contracts?.length || 0;
+}
+
 export const fetchSingleContractWithRelatedFields = async (contractId: string) => {
     const { userId } = await auth();
     if (!userId) {

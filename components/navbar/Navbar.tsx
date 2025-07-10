@@ -11,8 +11,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { auth } from '@clerk/nextjs/server';
 
-function Navbar() {
+async function Navbar() {
+  const { userId } = await auth();
+
   return (
     <nav className="border-b">
       <Container className="flex flex-col sm:flex-row sm:justify-between sm:items-center flex-wrap gap-4 py-8">
@@ -24,28 +27,31 @@ function Navbar() {
             <p>Home Page</p>
           </TooltipContent>
         </Tooltip>
-
         <div className="flex gap-4 items-center sm:order-last">
-          <Tooltip>
-            <TooltipTrigger>
-              <ContractButton />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Contracts</p>
-            </TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger>
-              <CartButton />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Cart</p>
-            </TooltipContent>
-          </Tooltip>
+          {userId && (
+            <>
+              <Tooltip>
+                <TooltipTrigger>
+                  <ContractButton />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Contracts</p>
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger>
+                  <CartButton />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Cart</p>
+                </TooltipContent>
+              </Tooltip>
+            </>
+          )}
+
           <DarkMode />
           <div className="ml-auto">
             <LinksDropDown />
-           
           </div>
         </div>
         <Suspense>

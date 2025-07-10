@@ -14,9 +14,9 @@ import { IconButton } from '@/components/form/Button';
 import FormContainer from '@/components/form/FormContainer';
 import { deleteGuardianAction } from '@/actions/guardian/guardian-server-actions';
 import { fetchAllGuardians } from '@/actions/guardian/guardian-server-actions';
-import { PlusIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { Guardian } from '@prisma/client';
+import { AddNewButton } from '@/components/form/Button';
 
 async function AdminGuardiansPage() {
   const cookieStore = await cookies();
@@ -40,11 +40,7 @@ async function AdminGuardiansPage() {
 
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-bold">Guardians</h3>
-        <Link
-          href="/admin/guardians/create"
-          className="bg-primary text-primary-foreground p-2 rounded-md hover:bg-primary/90">
-          <PlusIcon className="w-3 h-3" />
-        </Link>
+      <AddNewButton href="/admin/guardians/create" />
       </div>
 
       {/* Table for larger screens */}

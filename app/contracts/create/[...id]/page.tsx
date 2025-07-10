@@ -10,9 +10,16 @@ import { ProgramSelector } from '@/components/form/ProgramSelector';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
 import DateInput from '@/components/form/DateInput';
 
-async function CreateContractPage() {
+
+
+async function CreateContractPage({ params }: { params: Promise<{ id: string[] }> }) {
+  const { id } = await params;
+  const [type, targetId] = id;
   const guardians = await fetchAllGuardians();
   const programs = await fetchAllPrograms();
+
+  const selectedGuardianId = type === 'guardian' ? targetId : undefined;
+  const selectedProgramId = type === 'program' ? targetId : undefined;
 
   return (
     <section>
@@ -41,8 +48,12 @@ async function CreateContractPage() {
             <GuardianSelector
               guardians={guardians}
               selectSingleGuardian={true}
+              defaultValue={selectedGuardianId}
             />
-            <ProgramSelector programs={programs} />
+            <ProgramSelector 
+              programs={programs}
+              defaultValue={selectedProgramId}
+            />
             <div className="md:col-span-2">
               <div className="grid gap-4 lg:grid-cols-2 my-4 content-start items-start lg:w-1/2" >
                 <DateInput

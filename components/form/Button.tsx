@@ -14,6 +14,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { PlusIcon } from 'lucide-react';
+import Link from 'next/link';
 
 type btnSize = 'default' | 'lg' | 'sm';
 
@@ -23,6 +25,8 @@ type SubmitButtonProps = {
   size?: btnSize;
   onClick?: () => void;
 };
+
+
 
 export function SubmitButton({
   className = '',
@@ -145,8 +149,8 @@ export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
           {pending
             ? 'Please wait...'
             : isFavorite
-            ? 'Favorite'
-            : 'Add to Favorite'}
+              ? 'Favorite'
+              : 'Add to Favorite'}
         </p>
       </TooltipContent>
     </Tooltip>
@@ -175,5 +179,36 @@ export const LikeSubmitButton = ({ isLiked }: { isLiked: boolean }) => {
         <p>{pending ? 'Please wait...' : isLiked ? 'Liked' : 'Like'}</p>
       </TooltipContent>
     </Tooltip>
+  );
+};
+
+export const AddNewButton = ({ href }: { href: string }) => {
+  return (
+    <Link
+      href={href}
+      className="bg-primary text-primary-foreground p-2 rounded-md hover:bg-primary/90">
+      <PlusIcon className="w-3 h-3" />
+    </Link>
+  );
+};
+
+type CreateContractButtonProps ={
+  guardianId?: string;
+  programId?: string;
+}
+
+export const CreateContractButton = ({ guardianId, programId }: CreateContractButtonProps) => {
+  const path = guardianId 
+    ? `/contracts/create/guardian/${guardianId}`
+    : programId
+    ? `/contracts/create/program/${programId}`
+    : '/contracts/create';
+
+  return (
+    <Link
+      href={path}
+      className="text-xs bg-primary text-primary-foreground p-2 rounded-sm fixed bottom-6 right-8 z-50 opacity-70 hover:opacity-100 transition-opacity duration-300">
+      Select for Contract
+    </Link>
   );
 };

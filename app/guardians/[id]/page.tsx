@@ -1,13 +1,13 @@
-import GuardianRating from '@/components/guardians/single-guardian/GuardianRating';
 import { fetchSingleGuardian } from '@/actions/guardian/guardian-server-actions';
+import { fetchExistingReview } from '@/actions/review/review-server-actions';
+import { CreateContractButton } from '@/components/form/Button';
 import LikeToggleButton from '@/components/guardians/LikeToggleButton';
-import CreateContract from '@/components/guardians/single-guardian/CreateContract';
-import ZoomableImage from '@/components/ui/zoomable-image';
-import BreadCrumbs from '@/components/ui/BreadCrumbs';
+import GuardianRating from '@/components/guardians/single-guardian/GuardianRating';
 import Reviews from '@/components/reviews/Reviews';
 import SubmitReview from '@/components/reviews/SubmitReview';
+import BreadCrumbs from '@/components/ui/BreadCrumbs';
+import ZoomableImage from '@/components/ui/zoomable-image';
 import { auth } from '@clerk/nextjs/server';
-import { fetchExistingReview } from '@/actions/review/review-server-actions';
 
 async function SingleGuardianPage({
   params,
@@ -61,7 +61,6 @@ async function SingleGuardianPage({
             category="guardian"
           />
           <p className="text-muted-foreground mt-6 leading-8">{description}</p>
-          <CreateContract id={id} />
         </div>
       </div>
       <Reviews
@@ -74,6 +73,7 @@ async function SingleGuardianPage({
           category="guardian"
         />
       )}
+      <CreateContractButton guardianId={id} />
     </section>
   );
 }

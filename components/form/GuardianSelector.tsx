@@ -6,19 +6,26 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import Image from 'next/image';
 
+type SelectedAmount = Guardian[] | Guardian;
+
 type GuardianSelectorProps = {
   guardians: Guardian[];
-  selectedGuardians?: Guardian[];
+  selectedGuardians?: SelectedAmount;
   selectSingleGuardian?: boolean;
+  defaultValue?: string;
 };
 
 export function GuardianSelector({
   guardians,
   selectedGuardians = [],
   selectSingleGuardian = false,
+  defaultValue,
 }: GuardianSelectorProps) {
   const [selectedIds, setSelectedIds] = useState<string[]>(
-    selectedGuardians.map(g => g.id)
+    defaultValue ? [defaultValue] :
+    selectedGuardians instanceof Array
+      ? selectedGuardians.map(g => g.id)
+      : selectedGuardians.id ? [selectedGuardians.id] : []
   );
 
   const handleCheckChange = (id: string, checked: boolean) => {

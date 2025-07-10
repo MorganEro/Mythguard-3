@@ -15,7 +15,7 @@ import FormContainer from '@/components/form/FormContainer';
 import { deleteProgramAction } from '@/actions/program/program-server-actions';
 import { fetchAllPrograms } from '@/actions/program/program-server-actions';
 import { Program } from '@/types';
-import { PlusIcon } from 'lucide-react';
+import { AddNewButton } from '@/components/form/Button';
 import { toast } from 'sonner';
 
 async function AdminProgramsPage() {
@@ -40,11 +40,7 @@ async function AdminProgramsPage() {
 
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-bold">Programs</h3>
-        <Link
-          href="/admin/programs/create"
-          className="bg-primary text-primary-foreground p-2 rounded-md hover:bg-primary/90">
-          <PlusIcon className="w-3 h-3" />
-        </Link>
+        <AddNewButton href="/admin/programs/create" />
       </div>
 
       {/* Table for larger screens */}
