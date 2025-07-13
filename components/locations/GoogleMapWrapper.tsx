@@ -74,13 +74,13 @@ export default function GoogleMapWrapper({ locations }: Props) {
               onCloseClick={() => setHoveredMarkerId(null)}
             >
               <>
-                <Link href={`https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=${location.lat},${location.lng}`} target="_blank" rel="noopener noreferrer" className="absolute top-4 left-1/2 transform -translate-x-1/2 text-blue-600 hover:underline text-base">
+                <Link href={`https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=${location.lat},${location.lng}`} target="_blank" rel="noopener noreferrer" className="absolute top-4 left-1/2 transform -translate-x-1/2 text-primary hover:underline text-base w-full text-center">
                   Get Directions
                 </Link>
-                <Card>
+                <Card className="rounded">
                   <Link href={`/locations/${location.id}`}>
                     <CardContent>
-                      <div className="flex flex-col items-center justify-center gap-2 text-xs font-medium text-gray-800 text-center p-2 cursor-pointer">
+                      <div className="flex flex-col items-center justify-center gap-2 text-xs font-medium text-gray-800 text-center p-2 cursor-pointer max-w-[90px] max-h-[170px]">
                         <strong className="text-primary text-base">{location.name}</strong>
                         <Image
                           src={location.image}

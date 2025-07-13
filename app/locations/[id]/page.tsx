@@ -1,6 +1,7 @@
 import { fetchSingleLocation } from '@/actions/location/location-server-actions';
 import ZoomableImage from '@/components/ui/zoomable-image';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
+import Link from 'next/link';
 
 async function SingleLocationPage({
   params,
@@ -38,6 +39,11 @@ async function SingleLocationPage({
           </div>
           <p className="italic mt-2 leading-8">{subtitle}</p>
           <p className="text-muted-foreground mt-2 leading-8">{address}</p>
+          <div className="mt-2">
+            <Link href={`https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=${location.lat},${location.lng}`} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+              Get Directions
+            </Link>
+          </div>
           <p className="mt-6 leading-8">{description}</p>
         </div>
       </div>

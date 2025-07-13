@@ -1,0 +1,44 @@
+'use client';
+
+import { useRouter, useSearchParams } from 'next/navigation';
+import { LuLayoutGrid, LuList } from 'react-icons/lu';
+import { Button } from '@/components/ui/button';
+import { useTransition } from 'react';
+
+export default function LayoutToggle({
+  currentLayout,
+}: {
+  currentLayout: 'grid' | 'list';
+}) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
+
+  const updateLayout = (layout: 'grid' | 'list') => {
+    const params = new URLSearchParams(searchParams);
+    params.set('layout', layout);
+
+    startTransition(() => {
+      router.push(`/products?${params.toString()}`, { scroll: false });
+    });
+  };
+
+  return (
+    <div className="flex gap-x-4">
+      <Button
+        variant={currentLayout === 'grid' ? 'default' : 'ghost'}
+        size="icon"
+        onClick={() => updateLayout('grid')}
+        disabled={isPending}>
+        <LuLayoutGrid />
+      </Button>
+      <Button
+        variant={currentLayout === 'list' ? 'default' : 'ghost'}
+        size="icon"
+        onClick={() => updateLayout('list')}
+        disabled={isPending}>
+        <LuList />
+      </Button>
+    </div>
+  );
+}

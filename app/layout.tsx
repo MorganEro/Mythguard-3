@@ -35,7 +35,7 @@ export default function RootLayout({
           className={`${cinzel.variable} ${open_Sans.variable} antialiased`}>
           <Providers>
             <Navbar />
-            <Container className="py-20">{children}</Container>
+            <Container className="py-8">{children}</Container>
           </Providers>
         </body>
       </html>

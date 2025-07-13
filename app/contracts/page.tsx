@@ -72,7 +72,7 @@ async function ContractsPage() {
                               </p>
                             </div>
                             <p>{description}</p>
-                            <div className="grid gap-x-4 text-muted-foreground mt-4">
+                            <div className="grid gap-x-4 text-muted-foreground my-4">
                               <p>
                                 Created: {formatDate(createdAt)}
                               </p>
@@ -85,7 +85,7 @@ async function ContractsPage() {
 
                           </div>
                         </Link>
-                          <div className="flex gap-2 mt-2 items-end justify-end absolute bottom-10 right-6 md:right-10">
+                          <div className="flex gap-2 mt-2 items-end justify-end absolute bottom-6 md:bottom-10 right-6 md:right-10">
                             <Link href={`/contracts/${contractId}/edit`}>
                               <IconButton actionType="edit" />
                             </Link>

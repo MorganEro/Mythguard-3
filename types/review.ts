@@ -27,11 +27,11 @@ export type ReviewDisplay = {
     category: ReviewCategory;
 }
 
-export type ReviewAllResponse ={
-    id: string;
-  rating: number;
-  comment: string;
-  product?: { name: string; image: string } | null;
-  guardian?: { name: string; image: string } | null;
-  program?: { name: string; image: string } | null;
-}
+// export type ReviewAllResponse ={
+//     id: string;
+//   rating: number;
+//   comment: string;
+//   product?: { name: string; image: string } | null;
+//   guardian?: { name: string; image: string } | null;
+//   program?: { name: string; image: string } | null;
+// }

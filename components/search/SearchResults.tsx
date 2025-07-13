@@ -94,7 +94,7 @@ export default function SearchResults({
             <CardContent>
               <Link
                 href={result.url}
-                className="text-sm text-blue-500 hover:underline">
+                className="text-sm text-primary hover:underline">
                 View details →
               </Link>
             </CardContent>

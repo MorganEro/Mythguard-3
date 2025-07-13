@@ -2,11 +2,11 @@
 
 import { auth } from '@clerk/nextjs/server';
 import { reviewSchema, validateWithZodSchema } from '@/types';
-import { ReviewAllResponse } from '@/types';
 import db from '@/lib/db';
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { renderError } from '@/lib/utils/error';
+import { Review } from '@prisma/client';
 
 const fieldMap = {
   product: 'productId',
@@ -63,9 +63,7 @@ export const deleteReviewAction = async (prevState: { reviewId: string }) => {
   }
 };
 
-export const fetchAllReviewsByUser = async (): Promise<
-  ReviewAllResponse[] | { message: string }
-> => {
+export const fetchAllReviewsByUserWithDetails = async (): Promise<Review[] | { message: string }> => {
   const { userId } = await auth();
   if (!userId) {
     return { message: 'Unauthorized. Please sign in.' };
@@ -74,57 +72,15 @@ export const fetchAllReviewsByUser = async (): Promise<
     where: {
       clerkId: userId,
     },
-    select: {
-      id: true,
-      rating: true,
-      comment: true,
-      product: {
-        select: {
-          name: true,
-          image: true,
-        },
-      },
-      guardian: {
-        select: {
-          name: true,
-          image: true,
-        },
-      },
-      program: {
-        select: {
-          name: true,
-          image: true,
-        },
-      },
-    },
+    include: {
+      product: true,
+      guardian: true,
+      program: true,
+    },    
   });
-  return reviews as unknown as ReviewAllResponse[];
+  return reviews;
 };
-export const fetchReviewByUserAndCategory = async (
-  category: 'product' | 'guardian' | 'program'
-): Promise<ReviewAllResponse[] | { message: string }> => {
-  const { userId } = await auth();
-  if (!userId) {
-    return { message: 'Unauthorized. Please sign in.' };
-  }
-  const reviews = await db.review.findMany({
-    where: {
-      clerkId: userId,
-    },
-    select: {
-      id: true,
-      rating: true,
-      comment: true,
-      [category]: {
-        select: {
-          name: true,
-          image: true,
-        },
-      },
-    },
-  });
-  return reviews as unknown as ReviewAllResponse[];
-};
+
 
 export const fetchReviewByCategory = async (
   categoryId: string,

@@ -2,7 +2,7 @@ import { use } from 'react';
 import SearchResults from '@/components/search/SearchResults';
 import { SearchCategory } from '@/types/search';
 import { searchAll } from '@/actions/search/search-server-actions';
-import SectionTitle from '@/components/global/SectionTitle';
+import SubSectionTitle from '@/components/global/SubSectionTitle';
 
 interface SearchPageProps {
   searchParams: Promise<{
@@ -25,7 +25,7 @@ export default function SearchPage({
 
   return (
     <>
-    <SectionTitle text={`Search Results for &quot;${query}&quot;`} />
+    <SubSectionTitle text={`Search Results for "${query}"`} />
     <section className="container mx-auto py-8">
       <SearchResults
         response={searchResponse}
