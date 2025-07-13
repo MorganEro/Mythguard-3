@@ -12,15 +12,15 @@ import DateInput from '@/components/form/DateInput';
 
 
 
-async function CreateContractPage({ params }: { params?: { id?: string[] } }) {
+async function CreateContractPage({ params }: {params: Promise<{ id?: string[] } | undefined> }) {
   const guardians = await fetchAllGuardians();
   const programs = await fetchAllPrograms();
 
   let selectedGuardianId: string | undefined;
   let selectedProgramId: string | undefined;
 
-  if (params?.id) {
-    const [type, targetId] = params.id;
+  if ((await params)?.id?.length === 2) {
+    const [type, targetId] = (await params)?.id ?? [];
     selectedGuardianId = type === 'guardian' ? targetId : undefined;
     selectedProgramId = type === 'program' ? targetId : undefined;
   }

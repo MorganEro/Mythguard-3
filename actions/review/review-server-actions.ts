@@ -6,7 +6,13 @@ import db from '@/lib/db';
 import { cookies } from 'next/headers';
 import { revalidatePath } from 'next/cache';
 import { renderError } from '@/lib/utils/error';
-import { Review } from '@prisma/client';
+import { Review, Product, Guardian, Program } from '@prisma/client';
+
+type ReviewWithDetails = Review & {
+  product?: Product | null;
+  guardian?: Guardian | null;
+  program?: Program | null;
+};
 
 const fieldMap = {
   product: 'productId',
@@ -63,7 +69,7 @@ export const deleteReviewAction = async (prevState: { reviewId: string }) => {
   }
 };
 
-export const fetchAllReviewsByUserWithDetails = async (): Promise<Review[] | { message: string }> => {
+export const fetchAllReviewsByUserWithDetails = async (): Promise<ReviewWithDetails[] | { message: string }> => {
   const { userId } = await auth();
   if (!userId) {
     return { message: 'Unauthorized. Please sign in.' };

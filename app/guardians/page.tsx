@@ -1,10 +1,8 @@
-import { LuLayoutGrid, LuList } from 'react-icons/lu';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import Link from 'next/link';
 import { fetchAllGuardians } from '@/actions/guardian/guardian-server-actions';
 import GuardiansGrid from '@/components/guardians/GuardiansGrid';
 import GuardiansList from '@/components/guardians/GuardiansList';
+import LayoutToggle from '@/components/ui/LayoutToggle';
 
 async function GuardiansPage({
   searchParams,
@@ -23,26 +21,7 @@ async function GuardiansPage({
           <h4 className="font-medium text-lg">
             {totalGuardians} {totalGuardians === 1 ? 'Guardian' : 'Guardians'}
           </h4>
-          <div className="flex gap-x-4">
-            <Button
-              asChild
-              variant={layout === 'grid' ? 'default' : 'ghost'}
-              size="icon"
-              className="flex items-center gap-2">
-              <Link href={`/guardians?layout=grid`}>
-                <LuLayoutGrid />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant={layout === 'list' ? 'default' : 'ghost'}
-              size="icon"
-              className="flex items-center gap-2">
-              <Link href={`/guardians?layout=list`}>
-                <LuList />
-              </Link>
-            </Button>
-          </div>
+          <LayoutToggle currentLayout={layout} />
         </div>
         <Separator className="mt-4" />
       </section>

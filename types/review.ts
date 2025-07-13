@@ -1,3 +1,5 @@
+import { Product, Guardian, Program } from "@prisma/client";
+
 export type ReviewCategory = 'guardian' | 'program' | 'product';
 
 export type Review = {
@@ -27,11 +29,8 @@ export type ReviewDisplay = {
     category: ReviewCategory;
 }
 
-// export type ReviewAllResponse ={
-//     id: string;
-//   rating: number;
-//   comment: string;
-//   product?: { name: string; image: string } | null;
-//   guardian?: { name: string; image: string } | null;
-//   program?: { name: string; image: string } | null;
-// }
+export type ReviewWithDetails = Review & {
+  product?: Product | null;
+  guardian?: Guardian | null;
+  program?: Program | null;
+};

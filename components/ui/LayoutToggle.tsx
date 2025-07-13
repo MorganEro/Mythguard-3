@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { LuLayoutGrid, LuList } from 'react-icons/lu';
 import { Button } from '@/components/ui/button';
 import { useTransition } from 'react';
@@ -12,6 +12,7 @@ export default function LayoutToggle({
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
 
   const updateLayout = (layout: 'grid' | 'list') => {
@@ -19,7 +20,7 @@ export default function LayoutToggle({
     params.set('layout', layout);
 
     startTransition(() => {
-      router.push(`/products?${params.toString()}`, { scroll: false });
+      router.push(`${pathname}?${params.toString()}`, { scroll: false });
     });
   };
 

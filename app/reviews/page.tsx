@@ -1,14 +1,15 @@
 'use client';
 
-import { ReviewCategory } from '@/types';
-import { useState, useEffect } from 'react';
-import CategoryFilter from '@/components/ui/categoryFilter';
-import ReviewCard from '@/components/reviews/ReviewCard';
+import { fetchAllReviewsByUserWithDetails } from '@/actions/review/review-server-actions';
 import LoadingReviews from '@/components/global/loadingPages/LoadingReviews';
 import SectionTitle from '@/components/global/SectionTitle';
 import DeleteReview from '@/components/reviews/DeleteReview';
-import { Review } from '@prisma/client';
-import { fetchAllReviewsByUserWithDetails, fetchReviewByCategory } from '@/actions/review/review-server-actions';
+import ReviewCard from '@/components/reviews/ReviewCard';
+import CategoryFilter from '@/components/ui/categoryFilter';
+import { ReviewCategory } from '@/types';
+import { useEffect, useState } from 'react';
+import { ReviewWithDetails } from '@/types';
+
 
 const reviewTypeLabels: Record<ReviewCategory, string> = {
   guardian: 'Guardian',
@@ -17,14 +18,14 @@ const reviewTypeLabels: Record<ReviewCategory, string> = {
 };
 
 function ReviewsPage() {
-  const [userReviews, setUserReviews] = useState<any[]>([]);
+  const [userReviews, setUserReviews] = useState<ReviewWithDetails[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<ReviewCategory[]>([]);
-  const [filteredReviews, setFilteredReviews] = useState<any[]>([]);
+  const [filteredReviews, setFilteredReviews] = useState<ReviewWithDetails[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadReviews = async () => {
-      const reviews = await fetchAllReviewsByUserWithDetails();
+      const reviews = await fetchAllReviewsByUserWithDetails() as ReviewWithDetails[];
       if (!('message' in reviews)) {
         setUserReviews(reviews);
         setFilteredReviews(reviews);
@@ -90,7 +91,9 @@ function ReviewsPage() {
                   image: item.image,
                   name: item.name,
                 }}
-              />
+              >
+                <DeleteReview reviewId={id} />
+              </ReviewCard>
             );
           })}
         </section>
