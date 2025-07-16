@@ -187,52 +187,45 @@ export const deleteGuardianAction = async (prevState: {
 export const fetchLikeId = async ({ guardianId }: { guardianId: string }) => {
   const { userId } = await auth();
 
-  if (!userId) {
-    return { message: 'Unauthorized. Please sign in.' };
-  }
+  if (!userId) return null;
+
   const like = await db.like.findFirst({
-    where: { guardianId, clerkId: userId },
-    select: { id: true },
+    where: {
+      guardianId,
+      clerkId: userId,
+    },
   });
+
   return like?.id || null;
 };
 
-export const toggleLikeAction = async (prevState: {
+type ToggleLikeParams = {
   guardianId: string;
   likeId: string | null;
-  guardianName: string;
-  pathname: string;
-}) => {
-  const { guardianId, likeId, pathname, guardianName } = prevState;
-  const { userId } = await auth();
+};
 
-  if (!userId) {
-    return { message: 'Unauthorized. Please sign in.' };
-  }
+export const toggleLikeAction = async ({ guardianId, likeId }: ToggleLikeParams) => {
+  const { userId } = await auth();
+  if (!userId) return null;
 
   try {
     if (likeId) {
-      // Remove favorite
       await db.like.delete({
         where: { id: likeId },
       });
+      return null;
     } else {
-      // Add favorite
-      await db.like.create({
+      const like = await db.like.create({
         data: {
           guardianId,
           clerkId: userId,
         },
       });
+      return like.id;
     }
-    revalidatePath(pathname);
-    return {
-      message: likeId
-        ? `Guardian ${guardianName} has been unliked`
-        : `Guardian ${guardianName} is liked`,
-    };
   } catch (error) {
-    return renderError(error);
+    console.error('Error toggling like:', error);
+    return null;
   }
 };
 
@@ -240,7 +233,7 @@ export const fetchUserLikes = async () => {
   const { userId } = await auth();
 
   if (!userId) {
-    return { message: 'Unauthorized. Please sign in.' };
+    return [];
   }
 
   const likes = await db.like.findMany({

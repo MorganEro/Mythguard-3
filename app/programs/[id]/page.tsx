@@ -6,7 +6,7 @@ import BreadCrumbs from '@/components/ui/BreadCrumbs';
 import Image from 'next/image';
 import { CreateContractButton } from '@/components/form/Button';
 
-async function SingleGuardianPage({
+async function SingleProgramPage({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -20,8 +20,6 @@ async function SingleGuardianPage({
   return (
     <section>
       <BreadCrumbs
-        homeName="Home"
-        homeLink="/"
         previousName="Programs"
         previousLink="/programs"
         currentName={name}
@@ -35,10 +33,15 @@ async function SingleGuardianPage({
             height={40}
           />
           <h1 className="capitalize text-3xl font-bold"> {name}</h1>
+          <div className="hidden md:block md:ms-auto">
+            <CreateContractButton programId={id} />
+          </div>
         </div>
-
+        
         <p className="text-muted-foreground mt-6 leading-8">{description}</p>
-       
+        <div className="md:hidden">
+            <CreateContractButton programId={id} />
+        </div>
       </div>
 
       <article className="mt-10">
@@ -64,8 +67,7 @@ async function SingleGuardianPage({
           </h4>
         </div>
       </article>
-      <CreateContractButton programId={id} />
     </section>
   );
 }
-export default SingleGuardianPage;
+export default SingleProgramPage;

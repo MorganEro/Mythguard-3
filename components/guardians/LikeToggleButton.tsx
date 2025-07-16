@@ -1,26 +1,36 @@
-import { fetchLikeId } from '@/actions/guardian/guardian-server-actions';
+'use client';
+
 import { CardSignInButton } from '../form/Button';
 import LikeToggleForm from './LikeToggleForm';
-import { auth } from '@clerk/nextjs/server';
+import { useUser } from '@clerk/nextjs';
+import { Spinner } from '../ui/spinner';
+import { useGuardianLikeQuery } from '@/lib/queries/guardian';
 
-async function LikeToggleButton({
-  guardianId,
-  guardianName,
-}: {
+type LikeToggleButtonProps = {
   guardianId: string;
-  guardianName: string;
-}) {
-  const { userId } = await auth();
-  if (!userId) return <CardSignInButton />;
-  const likeId = await fetchLikeId({ guardianId }) as string;
+};
+
+export default function LikeToggleButton({ guardianId }: LikeToggleButtonProps) {
+  const { user, isLoaded } = useUser();
+  const { data: likeId, isLoading } = useGuardianLikeQuery({
+    guardianId,
+    enabled: !!user,
+  });
+
+  if (!isLoaded || isLoading) {
+    return (
+      <div className="flex justify-center p-2">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (!user) return <CardSignInButton />;
 
   return (
     <LikeToggleForm
       guardianId={guardianId}
-      likeId={likeId}
-      guardianName={guardianName}
+      likeId={likeId ?? null}
     />
   );
 }
-
-export default LikeToggleButton;

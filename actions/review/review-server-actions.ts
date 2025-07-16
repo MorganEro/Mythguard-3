@@ -48,26 +48,18 @@ export const createReviewAction = async (
   }
 };
 
-export const deleteReviewAction = async (prevState: { reviewId: string }) => {
-  const { reviewId } = prevState;
-  const { userId } = await auth();
-  if (!userId) {
-    return { message: 'Unauthorized. Please sign in.' };
-  }
 
-  try {
-    await db.review.delete({
-      where: {
-        id: reviewId,
-        clerkId: userId,
-      },
-    });
-    revalidatePath('/reviews');
-    return { message: 'Review deleted successfully' };
-  } catch (error) {
-    return renderError(error);
-  }
+export const fetchAllReviewsWithDetails = async (): Promise<ReviewWithDetails[] | { message: string }> => {
+  const reviews = await db.review.findMany({
+    include: {
+      product: true,
+      guardian: true,
+      program: true,
+    },
+  });
+  return reviews;
 };
+
 
 export const fetchAllReviewsByUserWithDetails = async (): Promise<ReviewWithDetails[] | { message: string }> => {
   const { userId } = await auth();

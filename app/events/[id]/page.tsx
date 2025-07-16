@@ -21,8 +21,6 @@ async function SingleEventPage({
   return (
     <section>
       <BreadCrumbs
-        homeName="Home"
-        homeLink="/"
         previousName="Events"
         previousLink="/events"
         currentName={name}

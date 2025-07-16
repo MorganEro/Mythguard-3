@@ -98,6 +98,8 @@ model Like {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([clerkId, guardianId])
+
   guardian   Guardian @relation(fields: [guardianId], references: [id], onDelete: Cascade)
 }
 

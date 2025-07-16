@@ -55,7 +55,7 @@ export function SubmitButton({
 
 type actionType = 'edit' | 'delete';
 
-export const IconButton = ({ actionType }: { actionType: actionType }) => {
+export const IconButton = ({ actionType, onClick }: { actionType: actionType; onClick?: () => void }) => {
   const { pending } = useFormStatus();
   const renderIcon = () => {
     switch (actionType) {
@@ -73,6 +73,7 @@ export const IconButton = ({ actionType }: { actionType: actionType }) => {
     <Button
       type="submit"
       variant="link"
+      onClick={onClick}
       disabled={pending}
       className="p-2 cursor-pointer"
       size="icon">
@@ -156,18 +157,18 @@ export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
     </Tooltip>
   );
 };
-export const LikeSubmitButton = ({ isLiked }: { isLiked: boolean }) => {
-  const { pending } = useFormStatus();
+export const LikeSubmitButton = ({ isLiked, isLoading }: { isLiked: boolean; isLoading?: boolean }) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
         <Button
-          type="submit"
-          size="icon"
+          type="button"
+          disabled={isLoading}
           variant="outline"
+          size="icon"
           className="p-2 cursor-pointer">
-          {pending ? (
-            <IoReload className="mr-2 h-4 w-4 animate-spin" />
+          {isLoading ? (
+            <IoReload className="h-4 w-4 animate-spin" />
           ) : isLiked ? (
             <AiFillLike className="text-yellow-500" />
           ) : (
@@ -176,7 +177,7 @@ export const LikeSubmitButton = ({ isLiked }: { isLiked: boolean }) => {
         </Button>
       </TooltipTrigger>
       <TooltipContent>
-        <p>{pending ? 'Please wait...' : isLiked ? 'Liked' : 'Like'}</p>
+        <p>{isLoading ? 'Please wait...' : isLiked ? 'Liked' : 'Like'}</p>
       </TooltipContent>
     </Tooltip>
   );
@@ -207,7 +208,7 @@ export const CreateContractButton = ({ guardianId, programId }: CreateContractBu
   return (
     <Link
       href={path}
-      className="text-xs bg-primary text-primary-foreground p-2 rounded-sm fixed bottom-6 right-8 z-50 opacity-70 hover:opacity-100 transition-opacity duration-300">
+      className="text-xs bg-primary text-primary-foreground p-2 rounded-sm ">
       Select for Contract
     </Link>
   );

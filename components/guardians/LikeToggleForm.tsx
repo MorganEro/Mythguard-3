@@ -1,32 +1,36 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
-import FormContainer from '../form/FormContainer';
+import { useGuardianLike } from '@/lib/queries/guardian';
 import { LikeSubmitButton } from '../form/Button';
-import { toggleLikeAction } from '@/actions/guardian/guardian-server-actions';
+import { useState } from 'react';
 
 type LikeToggleFormProps = {
   guardianId: string;
   likeId: string | null;
-  guardianName: string;
 };
 
 function LikeToggleForm({
   guardianId,
-  likeId,
-  guardianName,
+  likeId: initialLikeId,
 }: LikeToggleFormProps) {
-  const pathname = usePathname();
-  const toggleAction = toggleLikeAction.bind(null, {
+  const [currentLikeId, setCurrentLikeId] = useState(initialLikeId);
+  const isLiked = !!currentLikeId;
+
+  const { mutate, isLoading } = useGuardianLike({
     guardianId,
-    likeId,
-    guardianName,
-    pathname,
+    likeId: currentLikeId,
+    onSuccess: setCurrentLikeId
   });
+
+  const handleClick = () => {
+    mutate();
+  };
+
   return (
-    <FormContainer action={toggleAction}>
-      <LikeSubmitButton isLiked={!!likeId} />
-    </FormContainer>
+    <div onClick={handleClick}>
+      <LikeSubmitButton isLiked={isLiked} isLoading={isLoading} />
+    </div>
   );
 }
+
 export default LikeToggleForm;

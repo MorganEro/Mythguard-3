@@ -29,8 +29,6 @@ async function SingleGuardianPage({
   return (
     <section>
       <BreadCrumbs
-        homeName="Home"
-        homeLink="/"
         previousName="Guardians"
         previousLink="/guardians"
         currentName={name}
@@ -53,14 +51,19 @@ async function SingleGuardianPage({
             <h1 className="capitalize text-3xl font-bold"> {name}</h1>
             <LikeToggleButton
               guardianId={id}
-              guardianName={name}
             />
+            <div className="hidden md:block ms-auto">
+              <CreateContractButton guardianId={id} />
+            </div>
           </div>
           <GuardianRating
             guardianId={id}
             category="guardian"
           />
           <p className="text-muted-foreground mt-6 leading-8">{description}</p>
+        </div>
+        <div className="md:hidden">
+          <CreateContractButton guardianId={id} />
         </div>
       </div>
       <Reviews
@@ -73,7 +76,6 @@ async function SingleGuardianPage({
           category="guardian"
         />
       )}
-      <CreateContractButton guardianId={id} />
     </section>
   );
 }
