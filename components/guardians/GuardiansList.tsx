@@ -43,7 +43,6 @@ function GuardiansList({ guardians }: { guardians: Guardian[] }) {
             <div className="absolute bottom-8 right-8 z-5">
               <LikeToggleButton
                 guardianId={guardianId}
-                guardianName={name}
               />
             </div>
           </article>

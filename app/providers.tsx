@@ -29,19 +29,16 @@ function Providers({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (user) {
-      // Prefetch reviews
       queryClient.prefetchQuery({
         queryKey: ['reviews', 'user', user.id],
         queryFn: fetchAllReviewsByUserWithDetails,
       });
-
-      // Prefetch guardian likes
       queryClient.prefetchQuery({
         queryKey: guardianKeys.likes,
         queryFn: fetchUserLikes,
       });
     }
-  }, [user]);
+  }, [user, queryClient]);
 
   return (
     <>

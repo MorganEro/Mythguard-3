@@ -38,7 +38,6 @@ function GuardiansGrid({ guardians }: { guardians: Guardian[] }) {
             <div className="absolute top-7 right-7 z-5">
               <LikeToggleButton
                 guardianId={guardianId}
-                guardianName={name}
               />
             </div>
           </article>
