@@ -27,6 +27,7 @@ export default function LayoutToggle({
   return (
     <div className="flex gap-x-4">
       <Button
+        className="cursor-pointer"
         variant={currentLayout === 'grid' ? 'default' : 'ghost'}
         size="icon"
         onClick={() => updateLayout('grid')}
@@ -34,6 +35,7 @@ export default function LayoutToggle({
         <LuLayoutGrid />
       </Button>
       <Button
+        className="cursor-pointer"
         variant={currentLayout === 'list' ? 'default' : 'ghost'}
         size="icon"
         onClick={() => updateLayout('list')}
