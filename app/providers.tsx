@@ -1,10 +1,13 @@
 'use client';
 
+import { fetchAllGuardians, fetchUserLikes } from '@/actions/guardian/guardian-server-actions';
+import { fetchAllProducts, fetchUserFavorites } from '@/actions/product/product-server-actions';
 import { fetchAllReviewsByUserWithDetails } from '@/actions/review/review-server-actions';
-import { fetchUserLikes } from '@/actions/guardian/guardian-server-actions';
-import { guardianKeys } from '@/lib/queries/guardian';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
+import { guardianKeys } from '@/lib/queries/guardian';
+import { productKeys } from '@/lib/queries/product';
+import { useUser } from '@clerk/nextjs';
 import {
   HydrationBoundary,
   QueryClient,
@@ -12,7 +15,6 @@ import {
   dehydrate,
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { useUser } from '@clerk/nextjs';
 import { useEffect } from 'react';
 
 function Providers({ children }: { children: React.ReactNode }) {
@@ -36,6 +38,18 @@ function Providers({ children }: { children: React.ReactNode }) {
       queryClient.prefetchQuery({
         queryKey: guardianKeys.likes,
         queryFn: fetchUserLikes,
+      });
+      queryClient.prefetchQuery({
+        queryKey: productKeys.favorites,
+        queryFn: fetchUserFavorites,
+      });
+      queryClient.prefetchQuery({
+        queryKey: ['products'],
+        queryFn: fetchAllProducts,
+      });
+      queryClient.prefetchQuery({
+        queryKey: ['guardians'],
+        queryFn: fetchAllGuardians,
       });
     }
   }, [user, queryClient]);

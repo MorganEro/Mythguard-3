@@ -1,14 +1,16 @@
-import { Product } from '@prisma/client';
+'use client';
 import Link from 'next/link';
 import { Card, CardContent } from '../ui/card';
 import Image from 'next/image';
 import FavoriteToggleButton from './FavoriteToggleButton';
 import { formatCurrency } from '@/lib/format';
+import { useProductsQuery } from '@/lib/queries/product';
 
-function ProductsGrid({ products }: { products: Product[] }) {
+function ProductsGrid() {
+  const { data: products } = useProductsQuery();
   return (
     <div className="pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {products.map(product => {
+      {products?.map(product => {
         const { name, price, image } = product;
         const productId = product.id;
         const dollarsAmount = formatCurrency(price);
@@ -42,7 +44,6 @@ function ProductsGrid({ products }: { products: Product[] }) {
             <div className="absolute top-7 right-7 z-5">
               <FavoriteToggleButton
                 productId={productId}
-                productName={name}
               />
             </div>
           </article>

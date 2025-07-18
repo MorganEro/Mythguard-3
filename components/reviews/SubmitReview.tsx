@@ -17,7 +17,6 @@ function SubmitReview({categoryId, category,}: {categoryId: string, category: Re
     return (
         <div>
             <Button
-            size= 'lg'
             className='mb-5'
             onClick={() => setIsReviewFormVisible(prev => !prev)}
             disabled={!user}

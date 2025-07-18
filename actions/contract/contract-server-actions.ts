@@ -8,6 +8,7 @@ import { checkRole } from "@/lib/roles";
 import { redirect } from "next/navigation";
 import { Contract } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { MAX_CONTRACTS_PER_USER } from "@/lib/utils/constants";
 
 function canAccessContract(userId: string, isAdmin: boolean, contractData?: Contract | Contract[]) {
     if (!contractData) return isAdmin;
@@ -104,8 +105,17 @@ export const createContractAction = async (prevState: unknown, formData: FormDat
         const guardianId = formData.get('guardianId') as string;
         const programId = formData.get('programId') as string;
         const validatedFields = validateWithZodSchema(contractSchema, rawData);
-        console.log(validatedFields);
         
+        const existingContracts = await db.contract.count({
+            where: {
+            clerkId: userId,
+            },
+        });
+
+        if (existingContracts >= MAX_CONTRACTS_PER_USER) {
+            return { message: `You have reached your maximum of ${MAX_CONTRACTS_PER_USER} contracts.` };
+        }
+
         await db.contract.create({
             data: {
                 ...validatedFields,

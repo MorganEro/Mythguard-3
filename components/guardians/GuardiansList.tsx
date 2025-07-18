@@ -1,13 +1,16 @@
-import Link from 'next/link';
+'use client'
+
 import { Card, CardContent } from '@/components/ui/card';
-import { Guardian } from '@prisma/client';
+import { useGuardiansQuery } from '@/lib/queries/guardian';
 import Image from 'next/image';
+import Link from 'next/link';
 import LikeToggleButton from './LikeToggleButton';
 
-function GuardiansList({ guardians }: { guardians: Guardian[] }) {
+function GuardiansList() {
+  const { data: guardians } = useGuardiansQuery();
   return (
     <div className="mt-12 grid gap-8 justify-center">
-      {guardians.map(guardian => {
+      {guardians?.map(guardian => {
         const { name, image, shortDescription } = guardian;
         const guardianId = guardian.id;
 

@@ -1,23 +1,32 @@
 'use client';
 
-import { CardSignInButton } from '../form/Button';
-import LikeToggleForm from './LikeToggleForm';
+import { useGuardianLike, useGuardianLikeQuery } from '@/lib/queries/guardian';
 import { useUser } from '@clerk/nextjs';
+import { useState } from 'react';
+import { LikeSignInButton, LikeSubmitButton } from '../form/Button';
 import { Spinner } from '../ui/spinner';
-import { useGuardianLikeQuery } from '@/lib/queries/guardian';
 
 type LikeToggleButtonProps = {
   guardianId: string;
 };
 
-export default function LikeToggleButton({ guardianId }: LikeToggleButtonProps) {
-  const { user, isLoaded } = useUser();
-  const { data: likeId, isLoading } = useGuardianLikeQuery({
+function LikeToggleButton({ guardianId }: LikeToggleButtonProps) {
+  const { user } = useUser();
+  const { data: initialLikeId, isLoading: isQueryLoading } = useGuardianLikeQuery({
     guardianId,
     enabled: !!user,
   });
 
-  if (!isLoaded || isLoading) {
+  const [currentLikeId, setCurrentLikeId] = useState<string | null>(initialLikeId);
+  const isLiked = !!currentLikeId;
+
+  const { mutate, isLoading: isMutating } = useGuardianLike({
+    guardianId,
+    likeId: currentLikeId,
+    onSuccess: setCurrentLikeId
+  });
+
+  if (isQueryLoading) {
     return (
       <div className="flex justify-center p-2">
         <Spinner />
@@ -25,12 +34,17 @@ export default function LikeToggleButton({ guardianId }: LikeToggleButtonProps) 
     );
   }
 
-  if (!user) return <CardSignInButton />;
+  if (!user) return <LikeSignInButton />;
+
+  const handleClick = () => {
+    mutate();
+  };
 
   return (
-    <LikeToggleForm
-      guardianId={guardianId}
-      likeId={likeId ?? null}
-    />
+    <div onClick={handleClick}>
+      <LikeSubmitButton isLiked={isLiked} isLoading={isMutating} />
+    </div>
   );
 }
+
+export default LikeToggleButton;

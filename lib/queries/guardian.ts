@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchUserLikes, toggleLikeAction } from '@/actions/guardian/guardian-server-actions';
+import { fetchAllGuardians, fetchUserLikes, toggleLikeAction } from '@/actions/guardian/guardian-server-actions';
 import { toast } from 'sonner';
-
+import { Guardian } from '@prisma/client';
 type Like = {
   id: string;
   guardianId: string;
@@ -17,6 +17,15 @@ export const guardianKeys = {
 };
 
 // Queries
+export const useGuardiansQuery = () => {
+  return useQuery<Guardian[]>({
+    queryKey: ['guardians'],
+    queryFn: fetchAllGuardians,
+    staleTime: 0,
+    retry: false
+  });
+}
+
 export const useUserLikesQuery = (enabled = true) => {
   return useQuery<Like[]>({
     queryKey: guardianKeys.likes,

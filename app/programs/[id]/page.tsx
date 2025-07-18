@@ -5,6 +5,11 @@ import GuardianThumbnailCard from '@/components/guardians/GuardianThumbnailCard'
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
 import Image from 'next/image';
 import { CreateContractButton } from '@/components/form/Button';
+import { Separator } from '@/components/ui/separator';
+import Reviews from '@/components/reviews/Reviews';
+import { fetchExistingReview } from '@/actions/review/review-server-actions';
+import { auth } from '@clerk/nextjs/server';
+import SubmitReview from '@/components/reviews/SubmitReview';
 
 async function SingleProgramPage({
   params,
@@ -17,6 +22,16 @@ async function SingleProgramPage({
 
   const totalGuardians = program.guardians.length;
 
+  const { userId } = await auth();
+
+  const reviewDoesNotExist =
+    userId &&
+    !(await fetchExistingReview({
+      userId,
+      categoryId: id,
+      category: 'program',
+    }));
+
   return (
     <section>
       <BreadCrumbs
@@ -24,7 +39,7 @@ async function SingleProgramPage({
         previousLink="/programs"
         currentName={name}
       />
-      <div className="mt-6 flex flex-col gap-y-8 relative">
+      <article className="mt-6 flex flex-col gap-y-8 relative">
         <div className="flex gap-x-4 items-center">
           <Image
             src={image}
@@ -42,10 +57,10 @@ async function SingleProgramPage({
         <div className="md:hidden">
             <CreateContractButton programId={id} />
         </div>
-      </div>
+      </article>
 
       <article className="mt-10">
-        <SubSectionTitle text="Related Guardians" />
+        <SubSectionTitle text={`${totalGuardians} Related ${totalGuardians === 1 ? 'Guardian' : 'Guardians'}`} />
         <div className="mt-6 flex gap-4 overflow-x-scroll scrollbar-none h-65">
           {totalGuardians === 0 ? (
             <EmptyList heading="No Guardians Found" />
@@ -60,12 +75,19 @@ async function SingleProgramPage({
             ))
           )}
         </div>
-        <div className="flex items-center justify-between">
-          <h4 className="text-muted-foreground">
-            {totalGuardians} related{' '}
-            {totalGuardians === 1 ? 'Guardian' : 'Guardians'}
-          </h4>
-        </div>
+      </article>
+      <Separator className="mb-6" />
+      <article>
+        <Reviews
+          categoryId={id}
+          category="program"
+        />
+        {reviewDoesNotExist && (
+          <SubmitReview
+            categoryId={id}
+            category="program"
+          />
+        )}
       </article>
     </section>
   );

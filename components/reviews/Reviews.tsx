@@ -1,7 +1,7 @@
-import { ReviewCategory } from '@/types/review';
 import { fetchReviewByCategory } from '@/actions/review/review-server-actions';
-import ReviewCard from './ReviewCard';
+import { ReviewCategory } from '@/types/review';
 import SubSectionTitle from '../global/SubSectionTitle';
+import ReviewCard from './ReviewCard';
 
 async function Reviews({
   categoryId,
@@ -12,9 +12,9 @@ async function Reviews({
 }) {
   const reviews = await fetchReviewByCategory(categoryId, category);
   return (
-    <div className="mt-16">
+    <>
       <SubSectionTitle text={`Reviews`} />
-      <div className="grid md:grid-cols-2 gap-8 my-8">
+      <div className="grid md:grid-cols-2 gap-8 my-2">
         {reviews.map(review => {
           const { comment, rating, authorName, authorImageUrl } = review;
           const reviewInfo = {
@@ -31,7 +31,7 @@ async function Reviews({
           );
         })}
       </div>
-    </div>
+    </>
   );
 }
 

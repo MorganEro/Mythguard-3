@@ -1,4 +1,4 @@
-import { fetchAllProducts } from '@/actions/product/product-server-actions';
+import { fetchProductCount } from '@/actions/product/product-server-actions';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import ProductsList from '@/components/products/ProductsList';
 import LayoutToggle from '@/components/ui/LayoutToggle';
@@ -9,8 +9,7 @@ async function ProductsPage({
 }: {
   searchParams: Promise<{ layout: 'grid' | 'list' }>;
 }) {
-  const products = await fetchAllProducts();
-  const totalProducts = products.length;
+  const totalProducts = await fetchProductCount();
   const layout = (await searchParams)?.layout === 'list' ? 'list' : 'grid';
 
   return (
@@ -32,9 +31,9 @@ async function ProductsPage({
             Sorry, no products matched your search...
           </h5>
         ) : layout === 'grid' ? (
-          <ProductsGrid products={products} />
+          <ProductsGrid />
         ) : (
-          <ProductsList products={products} />
+          <ProductsList />
         )}
       </div>
     </>

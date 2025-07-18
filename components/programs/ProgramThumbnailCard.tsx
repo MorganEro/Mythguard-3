@@ -13,21 +13,21 @@ async function ProgramThumbnailCard({
 }) {
   return (
     <Link href={`/programs/${id}`}>
-      <Card className="w-40 h-55 flex flex-col shadow-md gap-2">
-        <CardHeader className="text-center flex-shrink-0 text-primary font-medium">
+      <Card className="w-40 h-55 flex flex-col shadow-md gap-0">
+        <CardHeader className="text-center flex-shrink-0 text-primary">
           <CardTitle>
             <h4 className="text-sm font-semibold tracking-wide">
               {name}
             </h4>
           </CardTitle>
         </CardHeader>
-        <CardContent className="flex-1 flex items-center justify-center px-4">
+        <CardContent className="flex-1 flex items-center justify-center">
           <div className="relative h-3/4 w-3/4">
             <Image
               src={image}
               alt={name}
               fill
-              className="object-cover transform transition-transform duration-500 hover:scale-105 rounded"
+              className="object-contain transform transition-transform duration-500 hover:scale-105 rounded"
             />
           </div>
         </CardContent>

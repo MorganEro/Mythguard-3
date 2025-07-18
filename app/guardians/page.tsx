@@ -32,9 +32,9 @@ async function GuardiansPage({
             Sorry, no guardians matched your search...
           </h5>
         ) : layout === 'grid' ? (
-          <GuardiansGrid guardians={guardians} />
+          <GuardiansGrid />
         ) : (
-          <GuardiansList guardians={guardians} />
+          <GuardiansList />
         )}
       </div>
     </>

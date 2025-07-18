@@ -16,7 +16,7 @@ async function FavoritesPage() {
   return (
     <div>
       <SectionTitle text="Your Favorite Products" />
-      <ProductsGrid products={favorites.map(favorite => favorite.product)} />
+      <ProductsGrid />
     </div>
   );
 }

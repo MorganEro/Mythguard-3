@@ -23,7 +23,7 @@ function ReviewCard({ reviewInfo, children }: ReviewCardProps) {
                         alt={reviewInfo.name}
                         width={48}
                         height={48}
-                        className="rounded-full w-12 h-12 object-cover"
+                        className="rounded w-12 h-12 object-cover"
                     />
                     <div className="ml-4">
                         <h3 className="font-bold text-sm capitalize mb-1">{reviewInfo.name}</h3>

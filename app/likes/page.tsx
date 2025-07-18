@@ -14,7 +14,7 @@ async function LikesPage() {
   return (
     <div>
       <SectionTitle text="Your Liked Guardians" />
-      <GuardiansGrid guardians={likes.map(like => like.guardian)} />
+      <GuardiansGrid />
     </div>
   );
 }

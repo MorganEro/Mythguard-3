@@ -86,7 +86,7 @@ export const IconButton = ({ actionType, onClick }: { actionType: actionType; on
   );
 };
 
-export const CardSignInButton = () => {
+export const FavoriteSignInButton = () => {
   return (
     <SignInButton mode="modal">
       <Button
@@ -126,8 +126,7 @@ export const CartSignInButton = () => {
   );
 };
 
-export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
-  const { pending } = useFormStatus();
+export const FavoriteSubmitButton = ({ isFavorite, isLoading }: { isFavorite: boolean; isLoading?: boolean }) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -136,7 +135,7 @@ export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
           size="icon"
           variant="outline"
           className="p-2 cursor-pointer">
-          {pending ? (
+          {isLoading ? (
             <IoReload className="mr-2 h-4 w-4 animate-spin" />
           ) : isFavorite ? (
             <FaHeart className="text-orange-700" />
@@ -147,7 +146,7 @@ export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
       </TooltipTrigger>
       <TooltipContent>
         <p>
-          {pending
+          {isLoading
             ? 'Please wait...'
             : isFavorite
               ? 'Favorite'
@@ -208,7 +207,7 @@ export const CreateContractButton = ({ guardianId, programId }: CreateContractBu
   return (
     <Link
       href={path}
-      className="text-xs bg-primary text-primary-foreground p-2 rounded-sm ">
+      className="bg-primary text-primary-foreground px-4 py-2 rounded-sm font-medium text-sm">
       Select for Contract
     </Link>
   );

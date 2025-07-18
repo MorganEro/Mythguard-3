@@ -8,6 +8,8 @@ import SubmitReview from '@/components/reviews/SubmitReview';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
 import ZoomableImage from '@/components/ui/zoomable-image';
 import { auth } from '@clerk/nextjs/server';
+import { fetchNumberOfContracts } from '@/actions/contract/contract-server-actions';
+import { MAX_CONTRACTS_PER_USER } from '@/lib/utils/constants';
 
 async function SingleGuardianPage({
   params,
@@ -18,6 +20,8 @@ async function SingleGuardianPage({
   const guardian = await fetchSingleGuardian(id);
   const { name, image, description } = guardian;
   const { userId } = await auth();
+  const numContracts = await fetchNumberOfContracts() as number;
+
   const reviewDoesNotExist =
     userId &&
     !(await fetchExistingReview({
@@ -33,7 +37,7 @@ async function SingleGuardianPage({
         previousLink="/guardians"
         currentName={name}
       />
-      <div className="mt-6 grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:gap-x-16 lg:h-[30rem]">
+      <article className="mt-6 grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:gap-x-16 lg:h-[30rem]">
         {/* IMAGE FIRST COL */}
         <ZoomableImage
           src={image}
@@ -52,9 +56,11 @@ async function SingleGuardianPage({
             <LikeToggleButton
               guardianId={id}
             />
-            <div className="hidden md:block ms-auto">
-              <CreateContractButton guardianId={id} />
-            </div>
+            {numContracts < MAX_CONTRACTS_PER_USER && (
+              <div className="hidden md:block ms-auto">
+                <CreateContractButton guardianId={id} />
+              </div>
+            )}
           </div>
           <GuardianRating
             guardianId={id}
@@ -63,19 +69,23 @@ async function SingleGuardianPage({
           <p className="text-muted-foreground mt-6 leading-8">{description}</p>
         </div>
         <div className="md:hidden">
-          <CreateContractButton guardianId={id} />
+          {numContracts < MAX_CONTRACTS_PER_USER && (
+            <CreateContractButton guardianId={id} />
+          )}
         </div>
-      </div>
-      <Reviews
-        categoryId={id}
-        category="guardian"
-      />
-      {reviewDoesNotExist && (
-        <SubmitReview
+      </article>
+      <article className="mt-6">
+        <Reviews
           categoryId={id}
           category="guardian"
         />
-      )}
+        {reviewDoesNotExist && (
+          <SubmitReview
+            categoryId={id}
+            category="guardian"
+          />
+        )}
+      </article>
     </section>
   );
 }

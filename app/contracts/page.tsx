@@ -7,10 +7,11 @@ import { AddNewButton, IconButton } from '@/components/form/Button';
 import { deleteContractAction } from '@/actions/contract/contract-server-actions';
 import FormContainer from '@/components/form/FormContainer';
 import { formatDate } from '@/lib/format';
+import { MAX_CONTRACTS_PER_USER } from '@/lib/utils/constants';
 
 async function ContractsPage() {
   const contracts = await fetchAllContracts();
-
+ 
   if ('message' in contracts) {
     return (
       console.error(contracts.message)
@@ -37,11 +38,12 @@ async function ContractsPage() {
         ) : (
           <>
             <div className="flex items-center justify-between mt-8">
-              <p className="font-semibold">
-                You currently have {totalContracts}/5 contracts.
+              <p className="text-muted-foreground">
+                You currently have <span className="font-bold">{totalContracts}/{MAX_CONTRACTS_PER_USER}</span> contracts.
               </p>
-
-              <AddNewButton href="/contracts/create" />
+              {totalContracts < MAX_CONTRACTS_PER_USER && (
+                <AddNewButton href="/contracts/create" />
+              )}
             </div>
             <div className="mt-12 grid lg:grid-cols-2 gap-8">
 

@@ -56,7 +56,6 @@ async function SingleProductPage({
             <h1 className="capitalize text-3xl font-bold"> {name}</h1>
             <FavoriteToggleButton
               productId={id}
-              productName={name}
             />
           </div>
           <ProductRating

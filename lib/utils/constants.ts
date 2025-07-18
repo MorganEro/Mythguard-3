@@ -1,0 +1,1 @@
+export const MAX_CONTRACTS_PER_USER: number = 5;

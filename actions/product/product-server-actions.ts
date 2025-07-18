@@ -25,6 +25,10 @@ export const fetchAllProducts = async () => {
   });
 };
 
+export const fetchProductCount = async () => {
+  return db.product.count();
+};
+
 
 export const fetchFeaturedProducts = async () => {
   const products = await db.product.findMany({
@@ -225,42 +229,33 @@ export const fetchFavoriteId = async ({ productId }: { productId: string }) => {
   return favorite?.id || null;
 };
 
-export const toggleFavoriteAction = async (prevState: {
+type ToggleFavoriteParams = {
   productId: string;
   favoriteId: string | null;
-  productName: string;
-  pathname: string;
-}) => {
-  const { productId, favoriteId, pathname, productName } = prevState;
-  const { userId } = await auth();
+};
 
-  if (!userId) {
-    return { message: 'Unauthorized. Please log in.' };
-  }
+export const toggleFavoriteAction = async ({ productId, favoriteId }: ToggleFavoriteParams) => {
+  const { userId } = await auth();
+  if (!userId) return null;
 
   try {
     if (favoriteId) {
-      // Remove favorite
       await db.favorite.delete({
         where: { id: favoriteId },
       });
+      return null;
     } else {
-      // Add favorite
-      await db.favorite.create({
+      const favorite = await db.favorite.create({
         data: {
           productId,
           clerkId: userId,
         },
       });
+      return favorite.id;
     }
-    revalidatePath(pathname);
-    return {
-      message: favoriteId
-        ? `Product ${productName} removed from favorites`
-        : `Product ${productName} added to favorites`,
-    };
   } catch (error) {
-    return renderError(error);
+    console.error('Error toggling favorite:', error);
+    return null;
   }
 };
 
@@ -268,7 +263,7 @@ export const fetchUserFavorites = async () => {
   const { userId } = await auth();
 
   if (!userId) {
-    return { message: 'Unauthorized. Please sign in.' };
+   return [];
   }
 
   const favorites = await db.favorite.findMany({

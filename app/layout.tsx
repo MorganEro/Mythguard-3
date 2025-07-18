@@ -5,6 +5,7 @@ import Navbar from '@/components/navbar/Navbar';
 import Container from '@/components/global/Container';
 import Providers from './providers';
 import { ClerkProvider } from '@clerk/nextjs';
+import CalendarButton from '@/components/calendar/Calendar_Button';
 
 const cinzel = Cinzel({
   variable: '--font-cinzel',
@@ -35,7 +36,10 @@ export default function RootLayout({
           className={`${cinzel.variable} ${open_Sans.variable} antialiased`}>
           <Providers>
             <Navbar />
-            <Container className="py-8">{children}</Container>
+            <Container className="py-8">
+              {children}
+              <CalendarButton />
+            </Container>
           </Providers>
         </body>
       </html>
