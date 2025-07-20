@@ -13,7 +13,7 @@ import TextAreaInput from '@/components/form/TextAreaInput';
 import { Button } from '@/components/ui/button';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
 import { GuardianSelector } from '@/components/form/GuardianSelector';
-import { fetchAllGuardians } from '@/actions/guardian/guardian-server-actions';
+import { fetchAllGuardiansWithPrograms } from '@/actions/guardian/guardian-server-actions';
 import { fetchAllLocations } from '@/actions/location/location-server-actions';
 import { LocationSelector } from '@/components/form/LocationSelector';
 import DateInput from '@/components/form/DateInput';
@@ -21,7 +21,7 @@ import DateInput from '@/components/form/DateInput';
 async function EditEventPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const event = await fetchAdminEventDetails(id);
-  const guardians = await fetchAllGuardians();
+  const guardians = await fetchAllGuardiansWithPrograms();
   const relatedGuardians = await fetchRelatedGuardians(id);
   const locations = await fetchAllLocations();
   const relatedLocation = await fetchRelatedLocation(id);

@@ -23,20 +23,24 @@ export const fetchAllPrograms = async () => {
   });
   return programs;
 };
+export const fetchAllProgramsWithGuardians = async () => {
+  const programs = await db.program.findMany({
+    orderBy: {
+      name: 'asc',
+    },
+    include: {
+      guardians: true,
+    },
+  });
+  return programs;
+};
 export const fetchSingleProgramWithDetails = async (programId: string) => {
   const program = await db.program.findUnique({
     where: {
       id: programId,
     },
     include: {
-      guardians:{
-        select: {
-          id: true,
-          name: true,
-          image: true,
-        },
-      },
-
+      guardians: true,
     },
   });
 

@@ -4,12 +4,12 @@ import FormContainer from '@/components/form/FormContainer';
 import FormInput from '@/components/form/FormInput';
 import ImageInput from '@/components/form/ImageInput';
 import TextAreaInput from '@/components/form/TextAreaInput';
-import { fetchAllGuardians } from '@/actions/guardian/guardian-server-actions';
+import { fetchAllGuardiansWithPrograms } from '@/actions/guardian/guardian-server-actions';
 import { GuardianSelector } from '@/components/form/GuardianSelector';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
 
 async function CreateProgramPage() {
-  const guardians = await fetchAllGuardians();
+  const guardians = await fetchAllGuardiansWithPrograms();
   return (
     <section>
       <BreadCrumbs

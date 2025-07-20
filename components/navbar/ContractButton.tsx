@@ -1,16 +1,17 @@
+'use client'
+
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import { Clipboard } from 'lucide-react';
-import { fetchNumberOfContracts } from '@/actions/contract/contract-server-actions';
-import { MAX_CONTRACTS_PER_USER } from '@/lib/utils/constants';
+import { useUserContracts } from '@/lib/queries/contract';
 
-async function ContractButton() {
-  
-  const numActiveContracts = await fetchNumberOfContracts();
+function ContractButton() {
+  const { data: contracts } = useUserContracts();
+  const numActiveContracts = contracts?.length;
   if (typeof numActiveContracts !== 'number') {
     return null;
   }
-  if (numActiveContracts <= MAX_CONTRACTS_PER_USER) {
+
     return (
       <Button
         asChild
@@ -25,6 +26,5 @@ async function ContractButton() {
         </Link>
       </Button>
     );
-  }
 }
 export default ContractButton;

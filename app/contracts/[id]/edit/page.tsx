@@ -3,9 +3,9 @@ import { SubmitButton } from '@/components/form/Button';
 import FormContainer from '@/components/form/FormContainer';
 import FormInput from '@/components/form/FormInput';
 import TextAreaInput from '@/components/form/TextAreaInput';
-import { fetchAllGuardians } from '@/actions/guardian/guardian-server-actions';
+import { fetchAllGuardiansWithPrograms } from '@/actions/guardian/guardian-server-actions';
 import { GuardianSelector } from '@/components/form/GuardianSelector';
-import { fetchAllPrograms } from '@/actions/program/program-server-actions';
+import { fetchAllProgramsWithGuardians } from '@/actions/program/program-server-actions';
 import { ProgramSelector } from '@/components/form/ProgramSelector';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
 import DateInput from '@/components/form/DateInput';
@@ -20,8 +20,8 @@ async function EditContractPage({ params }: { params: Promise<{ id: string }> })
   }
   const { name, description, startDate, endDate, guardian, program } = contract;
 
-  const guardians = await fetchAllGuardians();
-  const programs = await fetchAllPrograms();
+  const guardians = await fetchAllGuardiansWithPrograms();
+  const programs = await fetchAllProgramsWithGuardians();
 
   return (
     <section>

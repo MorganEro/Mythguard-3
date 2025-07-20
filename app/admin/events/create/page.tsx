@@ -5,14 +5,14 @@ import FormInput from '@/components/form/FormInput';
 import ImageInput from '@/components/form/ImageInput';
 import TextAreaInput from '@/components/form/TextAreaInput';
 import { GuardianSelector } from '@/components/form/GuardianSelector';
-import { fetchAllGuardians } from '@/actions/guardian/guardian-server-actions';
+import { fetchAllGuardiansWithPrograms } from '@/actions/guardian/guardian-server-actions';
 import { fetchAllLocations } from '@/actions/location/location-server-actions';
 import { LocationSelector } from '@/components/form/LocationSelector';
 import DateInput from '@/components/form/DateInput';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
 
 async function CreateEventPage() {
-  const guardians = await fetchAllGuardians();
+  const guardians = await fetchAllGuardiansWithPrograms();
   const locations = await fetchAllLocations();
   return (
     <section>

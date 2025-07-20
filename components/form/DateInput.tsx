@@ -48,6 +48,7 @@ function DateInput({ name, labelText, defaultValue }: DateInputProps) {
           align="start">
           <Calendar
             mode="single"
+            disabled={(date) => date < new Date()}
             selected={date}
             captionLayout="dropdown"
             onSelect={date => {

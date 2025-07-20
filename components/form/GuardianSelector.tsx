@@ -5,14 +5,16 @@ import { Guardian } from '@prisma/client';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import Image from 'next/image';
+import { GuardianWithPrograms } from '@/types';
 
 type SelectedAmount = Guardian[] | Guardian;
 
 type GuardianSelectorProps = {
-  guardians: Guardian[];
+  guardians: GuardianWithPrograms[];
   selectedGuardians?: SelectedAmount;
   selectSingleGuardian?: boolean;
   defaultValue?: string;
+  onChange?: (id: string) => void;
 };
 
 export function GuardianSelector({
@@ -20,17 +22,22 @@ export function GuardianSelector({
   selectedGuardians = [],
   selectSingleGuardian = false,
   defaultValue,
+  onChange,
 }: GuardianSelectorProps) {
   const [selectedIds, setSelectedIds] = useState<string[]>(
-    defaultValue ? [defaultValue] :
-    selectedGuardians instanceof Array
+    defaultValue
+      ? [defaultValue]
+      : selectedGuardians instanceof Array
       ? selectedGuardians.map(g => g.id)
-      : selectedGuardians.id ? [selectedGuardians.id] : []
+      : selectedGuardians.id
+      ? [selectedGuardians.id]
+      : []
   );
 
   const handleCheckChange = (id: string, checked: boolean) => {
     if (selectSingleGuardian) {
       setSelectedIds([id]);
+      onChange?.(id);
     } else {
       setSelectedIds(prev =>
         checked ? [...prev, id] : prev.filter(item => item !== id)
@@ -49,7 +56,11 @@ export function GuardianSelector({
             <Checkbox
               name={`guardian-checkbox-${item.id}`}
               id={item.id}
-              checked={selectSingleGuardian ? selectedIds.includes(item.id) : selectedIds.includes(item.id)}
+              checked={
+                selectSingleGuardian
+                  ? selectedIds.includes(item.id)
+                  : selectedIds.includes(item.id)
+              }
               onCheckedChange={checked =>
                 handleCheckChange(item.id, checked as boolean)
               }
@@ -69,8 +80,10 @@ export function GuardianSelector({
       </div>
       <input
         type="hidden"
-        name={selectSingleGuardian ? "guardianId" : "guardianIds"}
-        value={selectSingleGuardian ? selectedIds[0] || '' : selectedIds.join(',')}
+        name={selectSingleGuardian ? 'guardianId' : 'guardianIds'}
+        value={
+          selectSingleGuardian ? selectedIds[0] || '' : selectedIds.join(',')
+        }
       />
     </div>
   );

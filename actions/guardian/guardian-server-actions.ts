@@ -24,6 +24,17 @@ export const fetchAllGuardians = async () => {
   });
   return guardians;
 };
+export const fetchAllGuardiansWithPrograms = async () => {
+  const guardians = await db.guardian.findMany({
+    orderBy: {
+      name: 'asc',
+    },
+    include: {
+      programs: true,
+    },
+  });
+  return guardians;
+};
 export const fetchSingleGuardian = async (guardianId: string) => {
   const guardian = await db.guardian.findUnique({
     where: {
@@ -204,7 +215,10 @@ type ToggleLikeParams = {
   likeId: string | null;
 };
 
-export const toggleLikeAction = async ({ guardianId, likeId }: ToggleLikeParams) => {
+export const toggleLikeAction = async ({
+  guardianId,
+  likeId,
+}: ToggleLikeParams) => {
   const { userId } = await auth();
   if (!userId) return null;
 
