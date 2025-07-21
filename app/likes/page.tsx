@@ -1,6 +1,9 @@
 import { fetchUserLikes } from '@/actions/guardian/guardian-server-actions';
-import SectionTitle from '@/components/global/SectionTitle';
-import GuardiansGrid from '@/components/guardians/GuardiansGrid';
+import Section from '@/components/global/sections/Section';
+import GuardiansGridCard from '@/components/guardians/GuardiansGridCard';
+import ThreeColumnGrid from '@/components/global/grids/ThreeColumnGrid';
+import EmptyList from '@/components/global/EmptyList';
+
 
 async function LikesPage() {
   const likes = await fetchUserLikes();
@@ -8,14 +11,23 @@ async function LikesPage() {
   if ('message' in likes) {
     return console.log(likes.message);
   }
-  if (!likes || likes.length === 0)
-    return <SectionTitle text="You have no likes yet." />;
-
+ 
   return (
-    <div>
-      <SectionTitle text="Your Liked Guardians" />
-      <GuardiansGrid />
-    </div>
+    <Section title="Your Liked Guardians">
+
+      <ThreeColumnGrid>
+        {likes.length === 0 ? (
+          <EmptyList heading="You have no likes yet." />
+        ) : (
+          likes.map(like => (
+            <GuardiansGridCard  
+            guardian={like.guardian}
+            key={like.id}
+          />
+        ))
+      )}
+      </ThreeColumnGrid>
+    </Section>
   );
 }
 export default LikesPage;

@@ -2,7 +2,7 @@ import { use } from 'react';
 import SearchResults from '@/components/search/SearchResults';
 import { SearchCategory } from '@/types/search';
 import { searchAll } from '@/actions/search/search-server-actions';
-import SubSectionTitle from '@/components/global/SubSectionTitle';
+import Section from '@/components/global/sections/Section';
 
 interface SearchPageProps {
   searchParams: Promise<{
@@ -24,15 +24,12 @@ export default function SearchPage({
   const searchResponse = use(searchAll({ query, types, page }));
 
   return (
-    <>
-    <SubSectionTitle text={`Search Results for "${query}"`} />
-    <section className="container mx-auto py-8">
+    <Section title={`Search Results for "${query}"`}>
       <SearchResults
         response={searchResponse}
         currentQuery={query}
         selectedTypes={types}
         />
-    </section>
-    </>
+    </Section>
   );
 }

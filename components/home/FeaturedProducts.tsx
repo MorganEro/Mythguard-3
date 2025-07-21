@@ -1,7 +1,7 @@
 import { fetchFeaturedProducts } from '@/actions/product/product-server-actions';
 import { formatCurrency } from '@/lib/format';
 import EmptyList from '../global/EmptyList';
-import SectionTitle from '../global/SectionTitle';
+import SectionTitle from '../global/sections/SectionTitle';
 import ProductGridCard from '../products/ProductGridCard';
 
 async function FeaturedProducts() {

@@ -1,14 +1,14 @@
-import BreadCrumbs from '@/components/ui/BreadCrumbs';
+import { fetchSingleProduct } from '@/actions/product/product-server-actions';
+import { fetchExistingReview } from '@/actions/review/review-server-actions';
+import Section from '@/components/global/sections/Section';
 import FavoriteToggleButton from '@/components/products/FavoriteToggleButton';
 import AddToCart from '@/components/products/single-product/AddToCart';
 import ProductRating from '@/components/products/single-product/ProductRating';
-import { fetchSingleProduct } from '@/actions/product/product-server-actions';
-import { formatCurrency } from '@/lib/format';
-import ZoomableImage from '@/components/ui/zoomable-image';
-import SubmitReview from '@/components/reviews/SubmitReview';
 import Reviews from '@/components/reviews/Reviews';
-import { Separator } from '@/components/ui/separator';
-import { fetchExistingReview } from '@/actions/review/review-server-actions';
+import SubmitReview from '@/components/reviews/SubmitReview';
+import BreadCrumbs from '@/components/ui/BreadCrumbs';
+import ZoomableImage from '@/components/ui/zoomable-image';
+import { formatCurrency } from '@/lib/format';
 import { auth } from '@clerk/nextjs/server';
 
 async function SingleProductPage({
@@ -30,15 +30,13 @@ async function SingleProductPage({
     }));
 
   return (
-    <section>
+    <Section title={name}>
       <BreadCrumbs
-        homeName="Home"
-        homeLink="/"
         previousName="Products"
         previousLink="/products"
         currentName={name}
       />
-      <div className="mt-6 grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:gap-x-16 lg:h-[30rem]">
+      <div className="my-4 grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:gap-x-16 lg:h-[30rem]">
         {/* IMAGE FIRST COL */}
         <ZoomableImage
           src={image}
@@ -70,7 +68,6 @@ async function SingleProductPage({
           <AddToCart productId={id} />
         </div>
       </div>
-      <Separator className="my-6" />
       <Reviews
         categoryId={id}
         category="product"
@@ -81,7 +78,7 @@ async function SingleProductPage({
           category="product"
         />
       )}
-    </section>
+    </Section>
   );
 }
 export default SingleProductPage;

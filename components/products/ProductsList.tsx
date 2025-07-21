@@ -5,11 +5,12 @@ import Image from 'next/image';
 import FavoriteToggleButton from './FavoriteToggleButton';
 import { formatCurrency } from '@/lib/format';
 import { useProductsQuery } from '@/lib/queries/product';
+import OneColumnGrid from '../global/grids/OneColumnGrid';
 
 function ProductsList() {
   const { data: products } = useProductsQuery();
   return (
-    <div className="mt-12 grid gap-y-8">
+    <OneColumnGrid>
       {products?.map(product => {
         const { name, price, image, company, description } = product;
         const dollarsAmount = formatCurrency(price);
@@ -20,7 +21,7 @@ function ProductsList() {
             key={productId}
             className="group relative">
             <Link href={`/products/${productId}`}>
-              <Card className="transform group-hover:shadow-xl transition-shadow duration-500 max-w-[100rem]">
+              <Card className="transform group-hover:shadow-xl transition-shadow duration-500 max-w-[50rem]">
                 <CardContent className="p-8 gap-y-4 grid md:grid-cols-3">
                   <div className="relative h-64 md:h-48 md:w-48">
                     <Image
@@ -33,24 +34,24 @@ function ProductsList() {
                     />
                   </div>
                   <div>
-                  <h2 className="text-xl  capitalize font-bold tracking-wider text-primary">{name}</h2>
-                  <h4 className="text-sm text-muted-foreground">{company}</h4>
+                    <h2 className="text-xl  capitalize font-bold tracking-wider text-primary">{name}</h2>
+                    <h4 className="text-sm text-muted-foreground">{company}</h4>
                     <p className="text-sm mt-4">{description}</p>
                   </div>
-                  <p className="text-2xl font-semibold">{dollarsAmount}</p>
+                  <p className="text-2xl text-muted-foreground font-semibold text-end">{dollarsAmount}</p>
                 </CardContent>
               </Card>
             </Link>
-
             <div className="absolute bottom-8 right-8 z-5">
               <FavoriteToggleButton
                 productId={productId}
               />
             </div>
+
           </article>
         );
       })}
-    </div>
+    </OneColumnGrid>
   );
 }
 export default ProductsList;

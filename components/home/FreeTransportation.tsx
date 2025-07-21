@@ -1,7 +1,7 @@
 import transportation from '@/public/images/transportation.webp';
 import Image from 'next/image';
 import { Card, CardContent } from '../ui/card';
-import SectionTitle from '../global/SectionTitle';
+import SectionTitle from '../global/sections/SectionTitle';
 
 function FreeTransportation() {
   return (

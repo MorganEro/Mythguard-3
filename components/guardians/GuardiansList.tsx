@@ -5,11 +5,12 @@ import { useGuardiansQuery } from '@/lib/queries/guardian';
 import Image from 'next/image';
 import Link from 'next/link';
 import LikeToggleButton from './LikeToggleButton';
+import OneColumnGrid from '../global/grids/OneColumnGrid';
 
 function GuardiansList() {
   const { data: guardians } = useGuardiansQuery();
   return (
-    <div className="mt-12 grid gap-8 justify-center">
+    <OneColumnGrid>
       {guardians?.map(guardian => {
         const { name, image, shortDescription } = guardian;
         const guardianId = guardian.id;
@@ -51,7 +52,7 @@ function GuardiansList() {
           </article>
         );
       })}
-    </div>
+    </OneColumnGrid>
   );
 }
 export default GuardiansList;

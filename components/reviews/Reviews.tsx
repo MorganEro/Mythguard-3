@@ -1,6 +1,6 @@
 import { fetchReviewByCategory } from '@/actions/review/review-server-actions';
 import { ReviewCategory } from '@/types/review';
-import SubSectionTitle from '../global/SubSectionTitle';
+import SubSectionTitle from '../global/sections/SubSectionTitle';
 import ReviewCard from './ReviewCard';
 
 async function Reviews({

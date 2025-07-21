@@ -1,32 +1,25 @@
-import { Separator } from '@/components/ui/separator';
-import Link from 'next/link';
 import { fetchAllPrograms } from '@/actions/program/program-server-actions';
-import Image from 'next/image';
+import OneColumnGrid from '@/components/global/grids/OneColumnGrid';
+import ItemsCount from '@/components/global/ItemsCount';
+import Section from '@/components/global/sections/Section';
 import { Card, CardContent } from '@/components/ui/card';
+import Image from 'next/image';
+import Link from 'next/link';
 
 async function ProgramsPage() {
   const programs = await fetchAllPrograms();
   const totalPrograms = programs.length;
 
   return (
-    <>
-      {/* HEADER */}
-      <section>
-        <div className="flex items-center justify-between">
-          <h4 className="font-medium text-lg">
-            {totalPrograms} {totalPrograms === 1 ? 'Program' : 'Programs'}
-          </h4>
-        </div>
-        <Separator className="mt-4" />
-      </section>
-      {/* PROGRAMS */}
+    <Section title="Programs">
+      <ItemsCount count={totalPrograms} text="Program" />
       <div>
         {totalPrograms === 0 ? (
           <h5 className="text-2xl mt-16">
             Sorry, no programs matched your search...
           </h5>
         ) : (
-          <div className="mt-12 grid gap-y-8 justify-center">
+          <OneColumnGrid>
             {programs.map(program => {
               const { name, image, description } = program;
               const programId = program.id;
@@ -36,8 +29,8 @@ async function ProgramsPage() {
                   key={programId}
                   className="group">
                   <Link href={`/programs/${programId}`}>
-                    <Card className="transform group-hover:shadow-xl transition-shadow duration-500 max-w-[50rem]">
-                      <CardContent className="p-8 gap-y-4 flex flex-col md:flex-row">
+                    <Card className="transform group-hover:shadow-xl transition-shadow duration-500 max-w-[50rem] py-0">
+                      <CardContent className="p-4 gap-y-4 flex flex-col md:flex-row">
                         <div className="relative w-32 h-32 md:w-50 md:h-50 mx-auto md:mx-0 overflow-hidden ">
                           <Image
                             src={image}
@@ -59,10 +52,10 @@ async function ProgramsPage() {
                 </article>
               );
             })}
-          </div>
+          </OneColumnGrid>
         )}
       </div>
-    </>
+    </Section>
   );
 }
 export default ProgramsPage;

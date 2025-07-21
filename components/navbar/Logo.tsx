@@ -7,7 +7,7 @@ function Logo() {
     <Link
       href="/"
       className="flex items-center">
-      <h3 className="text-xl font-extrabold ">
+      <h3 className="text-xl font-extrabold font-Cinzel">
         <span>Myth</span>
         <Image
           src={orangeLogo}

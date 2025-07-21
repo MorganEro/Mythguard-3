@@ -2,6 +2,7 @@ import { fetchSingleLocation } from '@/actions/location/location-server-actions'
 import ZoomableImage from '@/components/ui/zoomable-image';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
 import Link from 'next/link';
+import Section from '@/components/global/sections/Section';
 
 async function SingleLocationPage({
   params,
@@ -13,10 +14,8 @@ async function SingleLocationPage({
   const { name, image, subtitle, description, address } = location;
 
   return (
-    <section>
+    <Section title={name}>
       <BreadCrumbs
-        homeName="Home"
-        homeLink="/"
         previousName="Locations"
         previousLink="/locations"
         currentName={name}
@@ -33,21 +32,18 @@ async function SingleLocationPage({
           objectPosition="center"
         />
         {/* LOCATION INFO SECOND COL */}
-        <div>
-          <div className="flex gap-x-8 items-center">
-            <h1 className="capitalize text-3xl font-bold text-primary"> {name}</h1>
-          </div>
-          <p className="italic mt-2 leading-8">{subtitle}</p>
-          <p className="text-muted-foreground mt-2 leading-8">{address}</p>
-          <div className="mt-2">
+        <div className="flex flex-col gap-y-2">
+          <p className="italic">{subtitle}</p>
+          <p className="text-muted-foreground">{address}</p>
+          <div>
             <Link href={`https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=${location.lat},${location.lng}`} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
               Get Directions
             </Link>
           </div>
-          <p className="mt-6 leading-8">{description}</p>
+          <p className="mt-4">{description}</p>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
 export default SingleLocationPage;

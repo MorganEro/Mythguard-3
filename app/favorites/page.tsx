@@ -1,6 +1,9 @@
-import SectionTitle from '@/components/global/SectionTitle';
-import ProductsGrid from '@/components/products/ProductsGrid';
 import { fetchUserFavorites } from '@/actions/product/product-server-actions';
+import Section from '@/components/global/sections/Section';
+import ProductGridCard from '@/components/products/ProductGridCard';
+import { formatCurrency } from '@/lib/format';
+import EmptyList from '@/components/global/EmptyList';
+import ThreeColumnGrid from '@/components/global/grids/ThreeColumnGrid';
 
 async function FavoritesPage() {
   const favorites = await fetchUserFavorites();
@@ -9,15 +12,29 @@ async function FavoritesPage() {
     return console.error(favorites.message);
   }
   
-  if (favorites.length === 0) {
-    return <SectionTitle text="You have no favorites yet." />;
-  }
 
   return (
-    <div>
-      <SectionTitle text="Your Favorite Products" />
-      <ProductsGrid />
-    </div>
+    <Section title="Your Favorite Products">
+      {favorites.length === 0 ? (
+        <EmptyList heading="No favorites found" />
+      ) : (
+       <ThreeColumnGrid>
+          {favorites.map(favorite => {
+            const { name, price, image } = favorite.product;
+            const productId = favorite.product.id;
+            const dollarsAmount = formatCurrency(price);
+        return <ProductGridCard
+          key={favorite.id}
+          productId={productId}
+          name={name}
+          image={image}
+          dollarsAmount={dollarsAmount}
+        />
+      })}
+      </ThreeColumnGrid>
+      )}
+    </Section>
+
   );
 }
 export default FavoritesPage;

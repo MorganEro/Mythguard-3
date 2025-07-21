@@ -1,11 +1,12 @@
 import { fetchSingleEventWithRelatedFields } from '@/actions/event/event-server-actions';
 import EmptyList from '@/components/global/EmptyList';
-import SubSectionTitle from '@/components/global/SubSectionTitle';
 import GuardianThumbnailCard from '@/components/guardians/GuardianThumbnailCard';
 import LocationThumbnailCard from '@/components/locations/LocationThumbnailCard';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
 import Image from 'next/image';
 import { formatDate } from '@/lib/format';
+import Section from '@/components/global/sections/Section';
+import SubSection from '@/components/global/sections/SubSection';
 
 async function SingleEventPage({
   params,
@@ -19,13 +20,13 @@ async function SingleEventPage({
   const totalGuardians = event.guardians && event.guardians.length;
 
   return (
-    <section>
+    <Section title={name}>
       <BreadCrumbs
         previousName="Events"
         previousLink="/events"
         currentName={name}
       />
-      <div className="mt-6 flex flex-col gap-y-2">
+      <div className="my-4 flex flex-col gap-y-2">
         <div className="flex items-center relative h-[300px]">
           <Image
             src={image}
@@ -34,16 +35,15 @@ async function SingleEventPage({
             className="object-cover rounded-md "
           />
         </div>
-        <h1 className=" capitalize text-3xl font-bold"> {name}</h1>
+        <h1 className="mt-2 capitalize text-3xl font-bold"> {name}</h1>
         <p className="text-muted-foreground">
           Event Date:{' '}
           {formatDate(eventDate, true)}
         </p>
         <p className="leading-8">{description}</p>
       </div>
-      <article className="mt-10">
-        <SubSectionTitle text="Related Location" />
-        <div className="mt-6 flex gap-4 h-65">
+      <SubSection title="Related Location">
+        <div className="mt-4 flex gap-4 h-65">
           {event.location ? (
             <LocationThumbnailCard
               id={event.location.id}
@@ -54,13 +54,10 @@ async function SingleEventPage({
             <EmptyList heading="No locations related to this event" />
           )}
         </div>
-      </article>
+      </SubSection>
 
-      <article className="mt-5">
-        <SubSectionTitle
-          text={totalGuardians === 1 ? 'Related Guardian' : 'Related Guardians'}
-        />
-        <div className="mt-6 flex gap-4 overflow-x-scroll scrollbar-none h-65">
+      <SubSection title={totalGuardians === 1 ? 'Related Guardian' : 'Related Guardians'}>
+        <div className="mt-4 flex gap-4 overflow-x-scroll scrollbar-none h-65">
           {totalGuardians === 0 ? (
             <EmptyList heading="No Guardians Found" />
           ) : (
@@ -74,8 +71,8 @@ async function SingleEventPage({
             ))
           )}
         </div>
-      </article>
-    </section>
+      </SubSection>
+    </Section>
   );
 }
 export default SingleEventPage;

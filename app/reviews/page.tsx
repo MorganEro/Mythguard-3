@@ -1,13 +1,14 @@
 'use client';
 
+import ThreeColumnGrid from '@/components/global/grids/ThreeColumnGrid';
 import LoadingReviews from '@/components/global/loadingPages/LoadingReviews';
-import SectionTitle from '@/components/global/SectionTitle';
+import Section from '@/components/global/sections/Section';
 import DeleteReview from '@/components/reviews/DeleteReview';
 import ReviewCard from '@/components/reviews/ReviewCard';
 import CategoryFilter from '@/components/ui/categoryFilter';
-import { ReviewCategory } from '@/types';
-import { useState, useMemo } from 'react';
 import { useUserReviews } from '@/lib/queries/review';
+import { ReviewCategory } from '@/types';
+import { useMemo, useState } from 'react';
 
 const reviewTypeLabels: Record<ReviewCategory, string> = {
   guardian: 'Guardian',
@@ -43,9 +44,8 @@ function ReviewsPage() {
   }
 
   return (
-    <div className="container py-8">
-      <SectionTitle text="My Reviews" />
-      <div className="pt-8">
+    <Section title="My Reviews">
+      <div className="pt-4">
         <CategoryFilter
           categories={reviewTypeLabels}
           selected={selectedTypes}
@@ -59,7 +59,7 @@ function ReviewsPage() {
         />
       </div>
 
-      <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 pt-8">
+      <ThreeColumnGrid>
         {filteredReviews.map(review => {
           const { id, comment, rating, product, guardian, program } = review;
           const item = product || guardian || program;
@@ -79,8 +79,8 @@ function ReviewsPage() {
             </ReviewCard>
           );
         })}
-      </section>
-    </div>
+      </ThreeColumnGrid>
+    </Section>
   );
 }
 

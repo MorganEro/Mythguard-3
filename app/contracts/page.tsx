@@ -2,13 +2,14 @@
 
 import DeleteContract from '@/components/contracts/DeleteContract';
 import { AddNewButton, IconButton } from '@/components/form/Button';
-import SectionTitle from '@/components/global/SectionTitle';
 import { Card, CardContent } from '@/components/ui/card';
 import { formatDate } from '@/lib/format';
 import { MAX_CONTRACTS_PER_USER } from '@/lib/utils/constants';
 import Link from 'next/link';
 import { useUserContracts } from '@/lib/queries/contract';
 import LoadingContracts from '@/components/global/loadingPages/LoadingContracts';
+import Section from '@/components/global/sections/Section';
+import TwoColumnGrid from '@/components/global/grids/TwoColumnGrid';
 
 function ContractsPage() {
   const { data: contracts = [], isLoading } = useUserContracts();
@@ -16,10 +17,9 @@ function ContractsPage() {
   const totalContracts = contracts.length;
 
   return (
-    <section>
-      <SectionTitle text="Contracts" />
+    <Section title="Contracts">
       <div>
-        <div className="flex items-center justify-between mt-8">
+        <div className="flex items-center justify-between mt-4">
           <p className="text-muted-foreground">
             You currently have{' '}
             <span className="font-bold">
@@ -32,7 +32,7 @@ function ContractsPage() {
           )}
         </div>
 
-        <div className="mt-12 grid lg:grid-cols-2 gap-8">
+        <TwoColumnGrid>
           {isLoading && <LoadingContracts />}
           {contracts.map(contract => {
             const {
@@ -52,10 +52,10 @@ function ContractsPage() {
               <article
                 key={contractId}
                 className="group">
-                <Card className="transform group-hover:shadow-xl transition-shadow duration-500 h-full">
-                  <CardContent className="p-8 gap-y-4 flex flex-col md:flex-row items-center h-full relative">
+                <Card className="transform group-hover:shadow-xl transition-shadow duration-500 h-full py-0">
+                  <CardContent className="p-4 gap-y-4 flex flex-col md:flex-row items-center h-full relative">
                     <Link href={`/contracts/${contractId}`}>
-                      <div className="flex flex-col p-4 gap-y-2 md:gap-y-4">
+                      <div className="flex flex-col gap-y-2 md:gap-y-4">
                         <h2 className="text-2xl font-semibold capitalize text-primary mb-2">
                           {name}
                         </h2>
@@ -87,9 +87,9 @@ function ContractsPage() {
               </article>
             );
           })}
-        </div>
+        </TwoColumnGrid>
       </div>
-    </section>
+    </Section>
   );
 }
 export default ContractsPage;

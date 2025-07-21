@@ -5,11 +5,12 @@ import { Card, CardContent } from '../ui/card';
 import Image from 'next/image';
 import LikeToggleButton from './LikeToggleButton';
 import { useGuardiansQuery } from '@/lib/queries/guardian';
+import ThreeColumnGrid from '../global/grids/ThreeColumnGrid';
 
 function GuardiansGrid() {
   const { data: guardians } = useGuardiansQuery();
   return (
-    <div className="pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <ThreeColumnGrid>
       {guardians?.map(guardian => {
         const { name, image } = guardian;
         const guardianId = guardian.id;
@@ -46,7 +47,7 @@ function GuardiansGrid() {
           </article>
         );
       })}
-    </div>
+    </ThreeColumnGrid>
   );
 }
 export default GuardiansGrid;

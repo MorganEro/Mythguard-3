@@ -1,6 +1,7 @@
 export * from './actions';
 export * from './guardians';
 export * from './cart';
+export * from './contract';
 export * from './navigation';
 export * from './program';
 export * from './review';

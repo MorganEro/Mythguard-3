@@ -1,6 +1,7 @@
 import { fetchSingleContractWithRelatedFields } from '@/actions/contract/contract-server-actions';
 import EmptyList from '@/components/global/EmptyList';
-import SubSectionTitle from '@/components/global/SubSectionTitle';
+import Section from '@/components/global/sections/Section';
+import SubSectionTitle from '@/components/global/sections/SubSectionTitle';
 import GuardianThumbnailCard from '@/components/guardians/GuardianThumbnailCard';
 import ProgramThumbnailCard from '@/components/programs/ProgramThumbnailCard';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
@@ -26,7 +27,7 @@ async function SingleContractPage({
 
 
   return (
-    <section>
+    <Section title={name}>
       <BreadCrumbs
         previousName="Contracts"
         previousLink="/contracts"
@@ -77,7 +78,7 @@ async function SingleContractPage({
         <p>Created: {formatDate(createdAt)}</p>
         {!isUpdated && <p>Last Updated: {formatDate(updatedAt)}</p>}
       </div>
-    </section>
+    </Section>
   );
 }
 export default SingleContractPage;

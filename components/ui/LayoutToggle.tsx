@@ -25,7 +25,7 @@ export default function LayoutToggle({
   };
 
   return (
-    <div className="flex gap-x-4">
+    <div className="gap-x-4 hidden md:flex">
       <Button
         className="cursor-pointer"
         variant={currentLayout === 'grid' ? 'default' : 'ghost'}

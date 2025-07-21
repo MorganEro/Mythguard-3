@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Cinzel, Open_Sans } from 'next/font/google';
+import { Cinzel, Lora, Open_Sans } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/navbar/Navbar';
 import Container from '@/components/global/Container';
@@ -21,6 +21,11 @@ import {
 
 const cinzel = Cinzel({
   variable: '--font-cinzel',
+  subsets: ['latin'],
+});
+
+const lora = Lora({
+  variable: '--font-lora',
   subsets: ['latin'],
 });
 
@@ -81,7 +86,7 @@ export default async function RootLayout({
         lang="en"
         suppressHydrationWarning>
         <body
-          className={`${cinzel.variable} ${open_Sans.variable} antialiased`}>
+          className={`${lora.variable} ${open_Sans.variable} ${cinzel.variable} antialiased`}>
           <Providers state={dehydratedState}>
             <Navbar />
             <Container className="py-8">

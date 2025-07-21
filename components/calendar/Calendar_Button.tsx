@@ -13,7 +13,7 @@ function CalendarButton() {
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button className="rounded p-1 fixed right-8 bottom-8 z-10">
+                <Button className="rounded p-1 fixed right-4 bottom-4 z-10">
                     <FaCalendarAlt />
                 </Button>
             </PopoverTrigger>

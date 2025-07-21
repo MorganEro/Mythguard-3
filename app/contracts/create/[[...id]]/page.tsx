@@ -2,6 +2,7 @@ import { createContractAction } from '@/actions/contract/contract-server-actions
 import { fetchAllGuardiansWithPrograms } from '@/actions/guardian/guardian-server-actions';
 import { fetchAllProgramsWithGuardians } from '@/actions/program/program-server-actions';
 import ContractWrapper from '@/components/contracts/ContractWrapper';
+import Section from '@/components/global/sections/Section';
 import BreadCrumbs from '@/components/ui/BreadCrumbs';
 import { GuardianWithPrograms, ProgramWithGuardians } from '@/types';
 
@@ -25,15 +26,12 @@ async function CreateContractPage({
   }
 
   return (
-    <section>
+    <Section title="Create Contract">
       <BreadCrumbs
         homeName="Contracts"
         homeLink="/contracts"
         currentName="Create Contract"
       />
-      <h1 className="text-2xl font-semibold mb-8 capitalize">
-        create contract
-      </h1>
       <div className="border p-8 rounded-md">
         <ContractWrapper
           guardians={guardians}
@@ -43,7 +41,7 @@ async function CreateContractPage({
           defaultProgramId={selectedProgramId}
         />
       </div>
-    </section>
+    </Section>
   );
 }
 

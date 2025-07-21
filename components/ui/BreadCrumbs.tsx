@@ -9,7 +9,7 @@ import {
 
 function BreadCrumbs({ homeName, homeLink, previousName, previousLink, currentName }: { homeName?: string, homeLink?: string, previousName?: string, previousLink?: string, currentName?: string }) {
   return (
-    <Breadcrumb className="mb-4">
+    <Breadcrumb className="my-4">
       <BreadcrumbList>
         {
           homeName &&

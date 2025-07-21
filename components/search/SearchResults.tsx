@@ -13,6 +13,7 @@ import {
   CardTitle,
 } from '../ui/card';
 import CategoryFilter from '../ui/categoryFilter';
+import ThreeColumnGrid from '../global/grids/ThreeColumnGrid';
 
 type SearchResultsProps = {
   response: SearchResponse;
@@ -69,13 +70,13 @@ export default function SearchResults({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="mt-4">
       <CategoryFilter
         categories={typeLabels}
         selected={ selectedTypes || []}
         onchange={updateTypes}
       />
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <ThreeColumnGrid>
         {response.results.map(result => (
           <Card key={`${result.type}-${result.id}`}>
             <CardHeader>
@@ -100,7 +101,7 @@ export default function SearchResults({
             </CardContent>
           </Card>
         ))}
-      </div>
+      </ThreeColumnGrid>
 
       {response.hasMore && (
         <div className="flex justify-center mt-6">

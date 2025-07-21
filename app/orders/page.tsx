@@ -1,16 +1,16 @@
 import { fetchUserOrders } from "@/actions/order/order-server-action";
-import SectionTitle from "@/components/global/SectionTitle";
-import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
-import { Order } from "@prisma/client";
-import { formatCurrency, formatDate } from "@/lib/format";
+import Section from "@/components/global/sections/Section";
 import { Separator } from "@/components/ui/separator";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { formatCurrency, formatDate } from "@/lib/format";
+import { Order } from "@prisma/client";
+import ItemsCount from "@/components/global/ItemsCount";
 
 async function OrdersPage() {
   const orders = await fetchUserOrders() as Order[];
-  return <>
-    <SectionTitle text="Orders" />
+  return <Section title="Orders">
     {/* TABLE for larger screens */}
-    <div className="hidden sm:block">
+    <div className="hidden sm:block mt-4">
     <Table>
       <TableCaption>Total Orders: {orders.length}</TableCaption>
       <TableHeader>
@@ -38,7 +38,8 @@ async function OrdersPage() {
     </Table>
     </div>
     {/* CARD LAYOUT FOR MOBILE SCREENS */}
-    <div className="block sm:hidden space-y-4">
+    <div className="block sm:hidden space-y-4 mt-4">
+      <ItemsCount count={orders.length} text="Total Order" />
       {orders.map(order => (
         <div
           key={order.id}
@@ -58,8 +59,7 @@ async function OrdersPage() {
           <span className="ml-auto ">{formatCurrency(order.orderTotal)}</span>
         </div>
       ))}
-      <p className="text-center text-muted-foreground mt-4 text-sm">Total Orders: {orders.length}</p>
     </div>
-  </>;
+  </Section>;
 }
 export default OrdersPage;

@@ -1,15 +1,15 @@
 import { fetchSingleProgramWithDetails } from '@/actions/program/program-server-actions';
-import EmptyList from '@/components/global/EmptyList';
-import SubSectionTitle from '@/components/global/SubSectionTitle';
-import GuardianThumbnailCard from '@/components/guardians/GuardianThumbnailCard';
-import BreadCrumbs from '@/components/ui/BreadCrumbs';
-import Image from 'next/image';
-import { CreateContractButton } from '@/components/form/Button';
-import { Separator } from '@/components/ui/separator';
-import Reviews from '@/components/reviews/Reviews';
 import { fetchExistingReview } from '@/actions/review/review-server-actions';
-import { auth } from '@clerk/nextjs/server';
+import { CreateContractButton } from '@/components/form/Button';
+import EmptyList from '@/components/global/EmptyList';
+import Section from '@/components/global/sections/Section';
+import SubSection from '@/components/global/sections/SubSection';
+import GuardianThumbnailCard from '@/components/guardians/GuardianThumbnailCard';
+import Reviews from '@/components/reviews/Reviews';
 import SubmitReview from '@/components/reviews/SubmitReview';
+import BreadCrumbs from '@/components/ui/BreadCrumbs';
+import { auth } from '@clerk/nextjs/server';
+import Image from 'next/image';
 
 async function SingleProgramPage({
   params,
@@ -33,35 +33,32 @@ async function SingleProgramPage({
     }));
 
   return (
-    <section>
+    <Section title={name}>
       <BreadCrumbs
         previousName="Programs"
         previousLink="/programs"
         currentName={name}
       />
-      <article className="mt-6 flex flex-col gap-y-8 relative">
-        <div className="flex gap-x-4 items-center">
+      <article className="my-4 flex flex-col gap-y-8 relative">
+        <div className="flex gap-4 flex-col md:flex-row justify-between">
           <Image
             src={image}
             alt={name}
-            width={40}
-            height={40}
+            width={150}
+            height={150}
           />
-          <h1 className="capitalize text-3xl font-bold"> {name}</h1>
-          <div className="hidden md:block md:ms-auto">
+          <div className="hidden md:block">
             <CreateContractButton programId={id} />
           </div>
         </div>
-        
-        <p className="text-muted-foreground mt-6 leading-8">{description}</p>
+        <p>{description}</p>
         <div className="md:hidden">
-            <CreateContractButton programId={id} />
+          <CreateContractButton programId={id} />
         </div>
       </article>
 
-      <article className="mt-10">
-        <SubSectionTitle text={`${totalGuardians} Related ${totalGuardians === 1 ? 'Guardian' : 'Guardians'}`} />
-        <div className="mt-6 flex gap-4 overflow-x-scroll scrollbar-none h-65">
+      <SubSection title={`${totalGuardians} Related ${totalGuardians === 1 ? 'Guardian' : 'Guardians'}`}>
+        <div className="mt-4 flex gap-4 overflow-x-scroll scrollbar-none h-65">
           {totalGuardians === 0 ? (
             <EmptyList heading="No Guardians Found" />
           ) : (
@@ -75,21 +72,18 @@ async function SingleProgramPage({
             ))
           )}
         </div>
-      </article>
-      <Separator className="mb-6" />
-      <article>
-        <Reviews
-          categoryId={id}
-          category="program"
-        />
-        {reviewDoesNotExist && (
-          <SubmitReview
+      </SubSection>
+      <Reviews
+        categoryId={id}
+        category="program"
+      />
+      {reviewDoesNotExist && (
+        <SubmitReview
             categoryId={id}
             category="program"
           />
         )}
-      </article>
-    </section>
+    </Section>
   );
 }
 export default SingleProgramPage;
