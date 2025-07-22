@@ -38,7 +38,7 @@ function ProductsList() {
                     <h4 className="text-sm text-muted-foreground">{company}</h4>
                     <p className="text-sm mt-4">{description}</p>
                   </div>
-                  <p className="text-2xl text-muted-foreground font-semibold text-end">{dollarsAmount}</p>
+                  <p className="text-2xl text-muted-foreground font-semibold text-start">{dollarsAmount}</p>
                 </CardContent>
               </Card>
             </Link>
