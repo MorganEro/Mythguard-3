@@ -3,6 +3,7 @@ export * from './guardians';
 export * from './cart';
 export * from './contract';
 export * from './navigation';
+export * from './product';
 export * from './program';
 export * from './review';
 export * from './zod-schema';

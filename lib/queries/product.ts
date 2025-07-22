@@ -2,16 +2,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchAllProducts, fetchUserFavorites, toggleFavoriteAction } from '@/actions/product/product-server-actions';
 import { toast } from 'sonner';
 import { Product } from '@prisma/client';
+import { FavoriteWithProduct } from '@/types';
 
-type Favorite = {
-  id: string;
-  productId: string;
-  clerkId: string;
-  product: {
-    id: string;
-    name: string;
-  };
-};
 
 export const productKeys = {
   favorites: ['products', 'favorites'] as const,
@@ -28,7 +20,7 @@ export const useProductsQuery = () => {
 }
 
 export const useUserFavoritesQuery = (enabled = true) => {
-  return useQuery<Favorite[]>({
+  return useQuery<FavoriteWithProduct[]>({
     queryKey: productKeys.favorites,
     queryFn: fetchUserFavorites,
     enabled,
@@ -39,7 +31,7 @@ export const useUserFavoritesQuery = (enabled = true) => {
 
 export const useProductFavoritesQuery = ({ productId, enabled = true }: { productId: string; enabled?: boolean }) => {
   const { data: favorites, isLoading } = useUserFavoritesQuery(enabled);
-  const favoriteId = favorites?.find((favorite: Favorite) => favorite.productId === productId)?.id || null;
+  const favoriteId = favorites?.find((favorite: FavoriteWithProduct) => favorite.productId === productId)?.id || null;
   
   return { data: favoriteId, isLoading };
 };

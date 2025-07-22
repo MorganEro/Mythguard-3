@@ -6,14 +6,11 @@ import { Guardian } from '@prisma/client';
 
 function GuardiansGridCard({
   guardian,
-  key
 }: {
   guardian: Guardian;
-  key: string;
 }) {
   return (
     <article
-    key={key}
     className="group relative">
     <Link href={`/guardians/${guardian.id}`}>
       <Card className="transform group-hover:shadow-xl transition-shadow duration-500">
